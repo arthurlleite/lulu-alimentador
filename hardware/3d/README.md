@@ -29,7 +29,7 @@ A ração fica no tubo de PVC, apoiada na **rampa inclinada**, que tem um furo. 
 
 | Peça | Medida | Onde comprar |
 |---|---|---|
-| Tubo PVC esgoto 100 mm | **300 mm** de comprimento, Ø externo 101,5 mm | barra de 1 m em loja de material de construção ([exemplo](https://www.termoline.com.br/tubo-pvc-esgoto-100mm-barra-1-metro)) |
+| Tubo PVC esgoto 100 mm | **300 mm** de comprimento, Ø externo 101,5 mm | barra de 1 m em loja de material de construção ([Hidrauconex](https://www.hidrauconex.com/tubo-cano-pvc-esgoto-branco-de-100mm-barra-6-metros), [Mercado Livre](https://lista.mercadolivre.com.br/tubo-pvc-100-mm-esgoto)) |
 | Cap PVC esgoto 100 mm | fecha a base | [exemplo](https://www.hidrauconex.com/cap-tampao-pvc-esgoto-de-100mm) |
 | Servo MG996R | 40,7 × 19,7 × 42,9 mm | ver a [lista de materiais](../../documentacao/materiais.md) |
 

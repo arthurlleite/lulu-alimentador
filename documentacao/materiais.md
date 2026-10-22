@@ -52,7 +52,7 @@ Ferro de solda e estanho, mini retífica (ou serra copo de 25–35 mm) para abri
 - ESP32-S3 N16R8: [Curto Circuito](https://curtocircuito.com.br/placa-devkitc-1-esp32-s3-n16r8.html) (R$ 94,30 na promoção), [SmartKits](https://www.smartkits.com.br/placa-esp32-s3-devkitc-n16r8-com-conector-ipex) (R$ 85,41 à vista), [Mercado Livre](https://www.mercadolivre.com.br/placa-devkitc-1-esp32-s3-n16r8-16mb-flash-8mb-psram-wifi-tipo-c-duplo/p/MLB49198475), [Usina Info](https://www.usinainfo.com.br/esp32/esp32-s3-devkitc-1-n16r8-16mb-flash-com-wifi-e-bluetooth-com-usb-c-9361.html)
 - Servo MG996R: [Curto Circuito](https://curtocircuito.com.br/servo-motor-mg996r.html), [Mercado Livre](https://lista.mercadolivre.com.br/servo-mg996r)
 - HC-SR04: [Eletrogate](https://www.eletrogate.com/modulo-sensor-de-distancia-ultrassonico-hc-sr04), [Baú da Eletrônica](https://www.baudaeletronica.com.br/produto/sensor-de-distancia-ultrassonico-hc-sr04.html), [Curto Circuito](https://curtocircuito.com.br/sensor-ultrassonico-hc-sr04.html)
-- Tubo PVC 100 mm: [Termoline, barra de 1 m](https://www.termoline.com.br/tubo-pvc-esgoto-100mm-barra-1-metro) (R$ 16,99)
+- Tubo PVC 100 mm: [Hidrauconex, barra de 6 m](https://www.hidrauconex.com/tubo-cano-pvc-esgoto-branco-de-100mm-barra-6-metros) (R$ 98,10 à vista, ~R$ 16/m), [Mercado Livre](https://lista.mercadolivre.com.br/tubo-pvc-100-mm-esgoto)
 - Cap PVC 100 mm: [Hidrauconex](https://www.hidrauconex.com/cap-tampao-pvc-esgoto-de-100mm) (R$ 14,10), [Mercado Livre](https://lista.mercadolivre.com.br/tampao-cap-pvc-100-mm)
 
 ## Por que a ESP32-S3 e não outra

@@ -1,6 +1,6 @@
 # Firmware (ESP32 + ESP-IDF)
 
-Código que roda na ESP32. Escrito em C sobre o [ESP-IDF 5.3](https://docs.espressif.com/projects/esp-idf/pt_BR/v5.3/esp32s3/index.html) ([FreeRTOS](https://www.freertos.org/)), compilado com [PlatformIO](https://platformio.org/).
+Código que roda na ESP32. Escrito em C sobre o [ESP-IDF 5.3](https://docs.espressif.com/projects/esp-idf/en/v5.3/esp32s3/index.html) ([FreeRTOS](https://www.freertos.org/)), compilado com [PlatformIO](https://platformio.org/).
 
 | Placa | Ambiente | Status |
 |---|---|---|
