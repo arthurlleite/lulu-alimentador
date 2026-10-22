@@ -1,0 +1,75 @@
+# Compila o firmware das duas placas e publica no GitHub Pages:
+#   /                -> app do alimentador (web/index.html)
+#   /instalar.html   -> instalador pelo navegador (ESP Web Tools)
+#   /firmware/*.bin  -> binários completos para gravar no endereço 0x0
+name: Firmware e site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ hashFiles('firmware/platformio.ini', 'firmware/src/idf_component.yml') }}
+
+      - name: Instalar PlatformIO e esptool
+        run: pip install platformio esptool
+
+      - name: Compilar (ESP32-S3 e ESP32)
+        working-directory: firmware
+        run: pio run -e esp32s3 -e esp32
+
+      - name: Montar o site
+        run: |
+          mkdir -p _site/firmware
+          cp -r web/. _site/
+          b=firmware/.pio/build
+          esptool.py --chip esp32s3 merge_bin -o _site/firmware/esp32s3.bin --flash_size keep \
+            0x0 $b/esp32s3/bootloader.bin 0x8000 $b/esp32s3/partitions.bin 0x10000 $b/esp32s3/firmware.bin
+          esptool.py --chip esp32 merge_bin -o _site/firmware/esp32.bin --flash_size keep \
+            0x1000 $b/esp32/bootloader.bin 0x8000 $b/esp32/partitions.bin 0x10000 $b/esp32/firmware.bin
+          version=$(grep -oP 'FW_VERSION "\K[^"]+' firmware/src/app.h)
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" _site/firmware/manifest.json
+          ls -la _site _site/firmware
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: _site/firmware/*.bin
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
