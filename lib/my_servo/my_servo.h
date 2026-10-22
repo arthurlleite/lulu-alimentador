@@ -1,1 +1,0 @@
-void rotate_servo(int intensity);

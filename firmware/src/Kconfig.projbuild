@@ -1,0 +1,157 @@
+menu "Alimentador - Rede e nuvem"
+
+    config FEEDER_AP_PREFIX
+        string "Prefixo do Wi-Fi de configuração"
+        default "Alimentador"
+        help
+            Sem Wi-Fi salvo, a ESP32 cria a rede "<prefixo>-XXXX" (XXXX = final do MAC).
+            Conecte o celular nela e a página de configuração abre sozinha.
+
+    config FEEDER_AP_PASSWORD
+        string "Senha do Wi-Fi de configuração (vazio = aberta, ou 8+ caracteres)"
+        default ""
+
+    config FEEDER_HOSTNAME
+        string "Nome mDNS na rede local"
+        default "alimentador"
+        help
+            O app local fica em http://<nome>.local
+
+    config FEEDER_PORTAL_FALLBACK_S
+        int "Segundos sem conectar antes de reabrir a rede de configuração"
+        range 15 600
+        default 60
+
+    config FEEDER_MQTT_URI
+        string "Broker MQTT (ESP32)"
+        default "mqtts://broker.hivemq.com:8883"
+        help
+            Broker público e gratuito da HiveMQ, com TLS. O app web usa o mesmo broker
+            via WebSocket seguro (wss://broker.hivemq.com:8884/mqtt).
+
+    config FEEDER_MQTT_PREFIX
+        string "Prefixo dos tópicos MQTT"
+        default "alimentador"
+
+    config FEEDER_APP_URL
+        string "Endereço do app web (GitHub Pages)"
+        default "https://arthurlleite.github.io/Alimentador-Automatico-de-Pets/"
+
+    config FEEDER_TZ
+        string "Fuso horário (formato POSIX)"
+        default "<-03>3"
+        help
+            Brasília = <-03>3. Manaus = <-04>4. Fernando de Noronha = <-02>2.
+
+endmenu
+
+menu "Alimentador - Pinos"
+
+    config FEEDER_SERVO_GPIO
+        int "Servo (sinal PWM)"
+        default 4 if IDF_TARGET_ESP32S3
+        default 18
+
+    config FEEDER_BUTTON_GPIO
+        int "Botão externo (para GND)"
+        default 15 if IDF_TARGET_ESP32S3
+        default 27
+
+    config FEEDER_BUZZER_GPIO
+        int "Buzzer ativo"
+        default 16 if IDF_TARGET_ESP32S3
+        default 26
+
+    config FEEDER_LED_R_GPIO
+        int "LED RGB - vermelho"
+        default 17 if IDF_TARGET_ESP32S3
+        default 21
+
+    config FEEDER_LED_G_GPIO
+        int "LED RGB - verde"
+        default 18 if IDF_TARGET_ESP32S3
+        default 22
+
+    config FEEDER_LED_B_GPIO
+        int "LED RGB - azul"
+        default 8 if IDF_TARGET_ESP32S3
+        default 23
+
+    config FEEDER_LED_COMMON_ANODE
+        bool "LED RGB de anodo comum"
+        default n
+
+    config FEEDER_LEVEL_SENSOR
+        bool "Usar sensor ultrassônico HC-SR04 (nível de ração)"
+        default y
+
+    config FEEDER_US_TRIG_GPIO
+        int "HC-SR04 TRIG"
+        depends on FEEDER_LEVEL_SENSOR
+        default 5 if IDF_TARGET_ESP32S3
+        default 25
+
+    config FEEDER_US_ECHO_GPIO
+        int "HC-SR04 ECHO (via divisor de tensão 5V -> 3,3V)"
+        depends on FEEDER_LEVEL_SENSOR
+        default 6 if IDF_TARGET_ESP32S3
+        default 34
+
+    config FEEDER_DHT11
+        bool "Usar DHT11 (temperatura e umidade do reservatório)"
+        default y
+
+    config FEEDER_DHT_GPIO
+        int "DHT11 DATA"
+        depends on FEEDER_DHT11
+        default 7 if IDF_TARGET_ESP32S3
+        default 4
+
+    config FEEDER_FOOD_SENSOR
+        bool "Usar sensor IR na saída (confirma que a ração caiu)"
+        default y
+
+    config FEEDER_FOOD_GPIO
+        int "Sensor IR de obstáculo / bloqueio de luz (saída digital)"
+        depends on FEEDER_FOOD_SENSOR
+        default 9 if IDF_TARGET_ESP32S3
+        default 32
+
+endmenu
+
+menu "Alimentador - Mecânica"
+
+    config FEEDER_SERVO_MIN_US
+        int "Pulso do servo em 0 graus (us)"
+        default 500
+
+    config FEEDER_SERVO_MAX_US
+        int "Pulso do servo em 180 graus (us)"
+        default 2500
+
+    config FEEDER_SERVO_CLOSED_ANGLE
+        int "Ângulo fechado"
+        range 0 180
+        default 0
+
+    config FEEDER_SERVO_OPEN_ANGLE
+        int "Ângulo aberto"
+        range 0 180
+        default 180
+
+    config FEEDER_OPEN_MS
+        int "Tempo aberto por porção (ms)"
+        default 800
+        help
+            Mesmo valor do projeto original (MAX_ROTATE_MS). Calibre pesando a ração.
+
+    config FEEDER_CLOSE_MS
+        int "Tempo para fechar entre porções (ms)"
+        default 800
+
+    config FEEDER_LOW_LEVEL_PCT
+        int "Alarme de ração baixa abaixo de (%)"
+        range 0 100
+        default 20
+
+endmenu

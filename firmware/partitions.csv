@@ -1,0 +1,5 @@
+# Nome,   Tipo, Subtipo, Offset,  Tamanho
+# App único de 1,875 MB (TLS + Wi-Fi + HTTP + MQTT passam de 1 MB). Cabe em flash de 4 MB.
+nvs,      data, nvs,     0x9000,  0x6000,
+phy_init, data, phy,     0xf000,  0x1000,
+factory,  app,  factory, 0x10000, 0x1E0000,
