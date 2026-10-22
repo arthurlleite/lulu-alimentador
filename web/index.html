@@ -106,6 +106,7 @@ details[open].cartao summary::after{transform:rotate(90deg)}
 .campo .junto input{flex:1}
 .dica{color:var(--suave);font-size:.82rem;margin:6px 0 0}
 .codigo{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--cartao-2);padding:8px 10px;border-radius:10px;word-break:break-all;font-size:.85rem}
+.dica .codigo{padding:1px 6px;border-radius:6px}
 .conectar input{width:100%;border:1px solid var(--borda);background:var(--cartao-2);border-radius:12px;padding:12px;font-family:ui-monospace,Consolas,monospace}
 footer{text-align:center;color:var(--suave);font-size:.8rem;margin-top:22px}
 footer a{color:inherit}
@@ -251,7 +252,7 @@ footer a{color:inherit}
   </main>
 
   <footer>
-    <span id="versao"></span> · <a href="https://github.com/arthurlleite/lulu-alimentador" target="_blank" rel="noopener">código no GitHub</a>
+    <span id="versao"></span><a href="https://github.com/arthurlleite/lulu-alimentador" target="_blank" rel="noopener">código no GitHub</a>
   </footer>
 </div>
 <div id="recado" role="status" aria-live="polite"></div>
@@ -317,7 +318,7 @@ function desenhar(e) {
   const conectado = modo === "local" || online;
   $("titulo").textContent = e.nome || "Alimentador";
   document.title = (e.nome || "Alimentador") + " · Alimentador";
-  $("versao").textContent = "firmware v" + (e.firmware || "?");
+  $("versao").textContent = "firmware v" + (e.firmware || "?") + " · ";
 
   if (modo === "local") {
     mudarSelo(e.servindo ? "atencao" : "bom", e.servindo ? "Servindo" : "Rede local");

@@ -8,3 +8,4 @@ sdkconfig*
 managed_components/
 dependencies.lock
 .firebase*
+__pycache__/
