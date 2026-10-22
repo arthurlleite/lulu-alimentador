@@ -9,7 +9,7 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 | # | Item | Qtd | Preço aprox. | Por que este |
 |---|---|---|---|---|
 | 1 | **ESP32-S3-DevKitC-1 N16R8** (USB-C) | 1 | R$ 85 – 115 | ESP32 atual, com Wi-Fi 2,4 GHz + Bluetooth 5 (LE), dois núcleos de 240 MHz, 16 MB de flash e 8 MB de PSRAM. Compatível com ESP-IDF. A versão N8R2 também serve. |
-| 2 | **Servo MG996R 180°** (engrenagem metálica) | 1 | R$ 35 – 50 | Torque de ~10 kgf·cm: não trava com ração seca. **Compre o de 180°, não o "360°"**: o firmware posiciona o servo por ângulo. |
+| 2 | **Servo MG996R 180°** (engrenagem metálica) | 1 | R$ 35 – 50 | O [suporte do motor](../hardware/3d/README.md) foi desenhado para ele (54 mm entre as abas). Torque de ~10 kgf·cm: não trava com ração seca. **Compre o de 180°, não o "360°"**: o firmware posiciona o servo por ângulo. |
 | 3 | **Sensor ultrassônico HC-SR04** | 1 | R$ 8 – 14 | Nível de ração no tubo (sugestão de um comentário no vídeo do projeto: infravermelho tem alcance curto). |
 | 4 | **Módulo DHT11** (3 pinos, com resistor) | 1 | R$ 10 – 15 (estimado) | Temperatura e umidade dentro do reservatório. |
 | 5 | **Sensor IR de obstáculo** (FC-51 ou "bloqueio de luz") | 1 | R$ 5 – 10 (estimado) | Confirma que a ração caiu, como o sensor de saída do PETLIBRO. |
@@ -30,16 +30,16 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 
 | # | Item | Qtd | Preço aprox. | Observação |
 |---|---|---|---|---|
-| 16 | **Tubo PVC esgoto 100 mm**, barra de 1 m | 1 | R$ 17 – 25 | Usa ~30 cm (reservatório). Sobra para um segundo protótipo. Esgoto série normal, branco. |
-| 17 | **Cap (tampão) PVC esgoto 100 mm** | 2 | R$ 12 – 25 cada | Um em cima (tampa, com o HC-SR04) e um embaixo (fecha a base). |
-| 18 | Filamento **PETG** (ou PLA) | ~250 g | R$ 25 – 35 (de um rolo de 1 kg, estimado) | PETG aguenta melhor umidade e é mais indicado para contato com ração. Se a faculdade tiver impressora, sai só o filamento. |
+| 16 | **Tubo PVC esgoto 100 mm**, barra de 1 m | 1 | R$ 17 – 25 | O modelo 3D usa **300 mm** de tubo (diâmetro externo 101,5 mm, o padrão do esgoto de 100 mm). Sobra tubo para um segundo protótipo. Série normal, branco. |
+| 17 | **Cap (tampão) PVC esgoto 100 mm** | 1 (+1 opcional) | R$ 12 – 25 cada | Fecha a base. A tampa de cima já é impressa ([`tampa_tubo.stl`](../hardware/3d/stl/tampa_tubo.stl)); um segundo cap só se preferir tampa de PVC. |
+| 18 | Filamento **PETG** (ou PLA) | ~150 g | R$ 15 – 25 (de um rolo de 1 kg, estimado) | As 8 peças somam ~138 cm³. PETG aguenta melhor umidade e é mais indicado para contato com ração. Se a faculdade tiver impressora, sai só o filamento. |
 | 19 | Parafusos M3 × 10 mm + porcas, e um parafuso longo (~M5 × 50 mm) | kit | R$ 10 – 15 (estimado) | O parafuso longo vira o "agitador" que mexe a ração (ideia do vídeo). |
 | 20 | Cola epóxi ou Super Bonder | 1 | R$ 10 – 20 (estimado) | Fixar o braço do servo na peça giratória. |
 | 21 | Tinta spray branca (opcional) | 1 | R$ 20 – 30 (estimado) | Acabamento **só por fora**. |
 
-**Subtotal da estrutura: ~R$ 80 – 150**
+**Subtotal da estrutura: ~R$ 65 – 140**
 
-## Total estimado: **R$ 280 – 450**
+## Total estimado: **R$ 270 – 440**
 
 O valor maior inclui itens que vocês talvez já tenham (fonte, cabo, cola, tinta). Dividido entre o grupo, fica barato.
 
