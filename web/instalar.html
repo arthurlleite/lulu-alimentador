@@ -6,28 +6,28 @@
 <title>Instalar firmware</title>
 <meta name="description" content="Grave o firmware do alimentador na ESP32 direto pelo navegador">
 <meta name="theme-color" content="#f59e45">
-<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/svg+xml" href="icone.svg">
 <script type="module" src="https://unpkg.com/esp-web-tools@10.1.0/dist/web/install-button.js?module"></script>
 <style>
-:root{--bg:#fff8f0;--surface:#fff;--surface-2:#fff2e3;--line:#f3e1cc;--text:#2b2118;--muted:#8a7461;--brand:#f08a2c;--brand-2:#d9701c;--bad:#dc2626;--bad-soft:#fee2e2;
+:root{--fundo:#fff8f0;--surface:#fff;--surface-2:#fff2e3;--line:#f3e1cc;--text:#2b2118;--muted:#8a7461;--brand:#f08a2c;--brand-2:#d9701c;--bad:#dc2626;--bad-soft:#fee2e2;
   --shadow:0 1px 2px rgba(80,40,0,.05),0 10px 28px rgba(80,40,0,.07);color-scheme:light}
-@media (prefers-color-scheme:dark){:root{--bg:#16110d;--surface:#211a14;--surface-2:#2b2219;--line:#3b2f24;--text:#f7ede3;--muted:#b39e8a;--brand:#fb9a4b;--brand-2:#f08a2c;--bad:#f87171;--bad-soft:#3a1717;
+@media (prefers-color-scheme:dark){:root{--fundo:#16110d;--surface:#211a14;--surface-2:#2b2219;--line:#3b2f24;--text:#f7ede3;--muted:#b39e8a;--brand:#fb9a4b;--brand-2:#f08a2c;--bad:#f87171;--bad-soft:#3a1717;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.wrap{max-width:620px;margin:0 auto;padding:24px 16px 48px}
-.top{text-align:center}
-.top svg{width:120px;height:120px}
+body{margin:0;background:var(--fundo);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.pagina{max-width:620px;margin:0 auto;padding:24px 16px 48px}
+.topo{text-align:center}
+.topo svg{width:120px;height:120px}
 h1{margin:4px 0;font-size:1.5rem}
-.lead{color:var(--muted);text-align:center;margin:0 0 20px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:20px;margin-bottom:14px}
+.chamada{color:var(--muted);text-align:center;margin:0 0 20px}
+.cartao{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:20px;margin-bottom:14px}
 ol{margin:0;padding-left:22px}
 ol li{margin-bottom:8px}
-.install{text-align:center;padding:26px 20px}
+.instalar{text-align:center;padding:26px 20px}
 esp-web-install-button button[slot=activate]{border:0;border-radius:16px;padding:16px 28px;font:700 1.1rem system-ui,sans-serif;color:#fff;cursor:pointer;
   background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 8px 20px rgba(240,138,44,.35)}
-.warn{background:var(--bad-soft);color:var(--bad);border-radius:12px;padding:12px;font-weight:600}
-.muted{color:var(--muted);font-size:.9rem}
+.alerta{background:var(--bad-soft);color:var(--bad);border-radius:12px;padding:12px;font-weight:600}
+.suave{color:var(--muted);font-size:.9rem}
 code{background:var(--surface-2);padding:2px 6px;border-radius:6px}
 a{color:var(--brand-2)}
 </style>
@@ -64,14 +64,14 @@ a{color:var(--brand-2)}
 <path d="M120 149v6" stroke="#D85858" stroke-width="1.2" stroke-linecap="round"/>
 </symbol>
 </svg>
-<div class="wrap">
-  <div class="top">
+<div class="pagina">
+  <div class="topo">
     <svg viewBox="0 0 256 256" aria-hidden="true"><use href="#lulu"/></svg>
     <h1>Instalar o firmware na ESP32</h1>
   </div>
-  <p class="lead">Grava o alimentador na placa direto pelo navegador. Não precisa instalar nada.</p>
+  <p class="chamada">Grava o alimentador na placa direto pelo navegador. Não precisa instalar nada.</p>
 
-  <section class="card">
+  <section class="cartao">
     <ol>
       <li>Use o <b>Chrome</b> ou o <b>Edge</b> no computador (celular não funciona).</li>
       <li>Ligue a ESP32 no USB com um cabo <b>de dados</b>. Na ESP32-S3 DevKitC-1, use a porta marcada <b>COM</b> ou <b>UART</b>.</li>
@@ -80,23 +80,23 @@ a{color:var(--brand-2)}
     </ol>
   </section>
 
-  <section class="card install">
+  <section class="cartao instalar">
     <esp-web-install-button manifest="firmware/manifest.json">
       <button slot="activate">Instalar</button>
-      <span slot="unsupported"><div class="warn">Este navegador não acessa a porta USB. Abra esta página no Chrome ou no Edge do computador.</div></span>
-      <span slot="not-allowed"><div class="warn">A página precisa ser aberta por HTTPS.</div></span>
+      <span slot="unsupported"><div class="alerta">Este navegador não acessa a porta USB. Abra esta página no Chrome ou no Edge do computador.</div></span>
+      <span slot="not-allowed"><div class="alerta">A página precisa ser aberta por HTTPS.</div></span>
     </esp-web-install-button>
-    <p class="muted">Placas aceitas: ESP32-S3 e ESP32 (clássica). O instalador detecta qual é.</p>
+    <p class="suave">Placas aceitas: ESP32-S3 e ESP32 (clássica). O instalador detecta qual é.</p>
   </section>
 
-  <section class="card">
+  <section class="cartao">
     <b>A porta não aparece?</b>
-    <ul class="muted">
+    <ul class="suave">
       <li>Troque o cabo: muitos cabos USB só carregam e não passam dados.</li>
       <li>Placas com chip CH340 ou CP2102 podem precisar do driver no Windows.</li>
       <li>Segure o botão <b>BOOT</b> da placa enquanto clica em Instalar.</li>
     </ul>
-    <p class="muted">Prefere compilar? Veja <a href="https://github.com/arthurlleite/Alimentador-Automatico-de-Pets/tree/main/firmware">firmware/README.md</a>.</p>
+    <p class="suave">Prefere compilar? Veja <a href="https://github.com/arthurlleite/lulu-alimentador/tree/main/firmware">firmware/README.md</a>.</p>
   </section>
 </div>
 </body>

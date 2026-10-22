@@ -7,52 +7,52 @@
 <meta name="theme-color" content="#f59e45">
 <style>
 :root{
-  --bg:#fff8f0;--surface:#fff;--surface-2:#fff2e3;--line:#f3e1cc;--text:#2b2118;--muted:#8a7461;
-  --brand:#f08a2c;--brand-2:#d9701c;--brand-soft:#ffe9cf;--ok:#15803d;--ok-soft:#dcfce7;--bad:#dc2626;--bad-soft:#fee2e2;
-  --shadow:0 1px 2px rgba(80,40,0,.05),0 10px 28px rgba(80,40,0,.07);color-scheme:light;
+  --fundo:#fff8f0;--cartao:#fff;--cartao-2:#fff2e3;--borda:#f3e1cc;--texto:#2b2118;--suave:#8a7461;
+  --marca:#f08a2c;--marca-2:#d9701c;--marca-clara:#ffe9cf;--bom:#15803d;--bom-claro:#dcfce7;--erro:#dc2626;--erro-claro:#fee2e2;
+  --sombra:0 1px 2px rgba(80,40,0,.05),0 10px 28px rgba(80,40,0,.07);color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root{
-  --bg:#16110d;--surface:#211a14;--surface-2:#2b2219;--line:#3b2f24;--text:#f7ede3;--muted:#b39e8a;
-  --brand:#fb9a4b;--brand-2:#f08a2c;--brand-soft:#3a2516;--ok:#4ade80;--ok-soft:#133020;--bad:#f87171;--bad-soft:#3a1717;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);color-scheme:dark;
+  --fundo:#16110d;--cartao:#211a14;--cartao-2:#2b2219;--borda:#3b2f24;--texto:#f7ede3;--suave:#b39e8a;
+  --marca:#fb9a4b;--marca-2:#f08a2c;--marca-clara:#3a2516;--bom:#4ade80;--bom-claro:#133020;--erro:#f87171;--erro-claro:#3a1717;
+  --sombra:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);color-scheme:dark;
 }}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+body{background:var(--fundo);color:var(--texto);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 button,input{font:inherit;color:inherit}
-.wrap{max-width:480px;margin:0 auto;padding:16px 16px 40px}
-.top{text-align:center;padding:8px 0 4px}
-.top svg{width:120px;height:120px}
+.pagina{max-width:480px;margin:0 auto;padding:16px 16px 40px}
+.topo{text-align:center;padding:8px 0 4px}
+.topo svg{width:120px;height:120px}
 h1{font-size:1.4rem;margin:4px 0}
-.lead{color:var(--muted);margin:0 0 18px;text-align:center}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
-.step{display:flex;align-items:center;gap:10px;font-weight:700;margin:0 0 12px}
-.step b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--brand);color:#fff;font-size:.85rem;flex:none}
-.step button{margin-left:auto}
-input[type=text],input[type=password]{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:12px}
-input:focus{outline:2px solid var(--brand);outline-offset:1px}
-.nets{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto}
-.nets li button{width:100%;display:flex;align-items:center;gap:10px;padding:12px;border:1px solid transparent;border-radius:12px;background:none;text-align:left;cursor:pointer}
-.nets li button:hover{background:var(--surface-2)}
-.nets li button.sel{border-color:var(--brand);background:var(--brand-soft)}
-.nets .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
-.bars{display:inline-flex;gap:2px;align-items:flex-end;height:14px}
-.bars i{width:4px;border-radius:1px;background:var(--line)}
-.bars i:nth-child(1){height:5px}.bars i:nth-child(2){height:9px}.bars i:nth-child(3){height:14px}
-.bars i.on{background:var(--ok)}
-.lock{color:var(--muted);font-size:.85rem}
-.muted{color:var(--muted);font-size:.88rem}
-.pass{position:relative}
-.pass button{position:absolute;right:6px;top:6px;bottom:6px;border:0;background:none;color:var(--muted);cursor:pointer;padding:0 10px}
-.btn{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:10px 14px;font-weight:600;cursor:pointer}
-.btn.small{padding:6px 10px;font-size:.85rem}
-.go{width:100%;border:0;border-radius:16px;padding:16px;font-size:1.05rem;font-weight:700;color:#fff;cursor:pointer;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 8px 20px rgba(240,138,44,.35)}
-.go:disabled{filter:grayscale(.6) opacity(.6);box-shadow:none;cursor:not-allowed}
-.err{background:var(--bad-soft);color:var(--bad);padding:10px 12px;border-radius:12px;font-weight:600;margin-top:12px}
-.done{text-align:center}
-.done .ok{width:56px;height:56px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;font-size:1.8rem;margin:0 auto 8px}
-.code{font-family:ui-monospace,Consolas,monospace;background:var(--surface-2);padding:10px;border-radius:12px;word-break:break-all;margin:8px 0;font-size:.9rem;user-select:all}
+.chamada{color:var(--suave);margin:0 0 18px;text-align:center}
+.cartao{background:var(--cartao);border:1px solid var(--borda);border-radius:20px;box-shadow:var(--sombra);padding:18px;margin-bottom:14px}
+.passo{display:flex;align-items:center;gap:10px;font-weight:700;margin:0 0 12px}
+.passo b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--marca);color:#fff;font-size:.85rem;flex:none}
+.passo button{margin-left:auto}
+input[type=text],input[type=password]{width:100%;border:1px solid var(--borda);background:var(--cartao-2);border-radius:12px;padding:12px}
+input:focus{outline:2px solid var(--marca);outline-offset:1px}
+.redes{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto}
+.redes li button{width:100%;display:flex;align-items:center;gap:10px;padding:12px;border:1px solid transparent;border-radius:12px;background:none;text-align:left;cursor:pointer}
+.redes li button:hover{background:var(--cartao-2)}
+.redes li button.escolhida{border-color:var(--marca);background:var(--marca-clara)}
+.redes .nome{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.barras{display:inline-flex;gap:2px;align-items:flex-end;height:14px}
+.barras i{width:4px;border-radius:1px;background:var(--borda)}
+.barras i:nth-child(1){height:5px}.barras i:nth-child(2){height:9px}.barras i:nth-child(3){height:14px}
+.barras i.cheia{background:var(--bom)}
+.cadeado{color:var(--suave);font-size:.85rem}
+.suave{color:var(--suave);font-size:.88rem}
+.senha{position:relative}
+.senha button{position:absolute;right:6px;top:6px;bottom:6px;border:0;background:none;color:var(--suave);cursor:pointer;padding:0 10px}
+.botao{border:1px solid var(--borda);background:var(--cartao-2);border-radius:12px;padding:10px 14px;font-weight:600;cursor:pointer}
+.botao.pequeno{padding:6px 10px;font-size:.85rem}
+.salvar{width:100%;border:0;border-radius:16px;padding:16px;font-size:1.05rem;font-weight:700;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,var(--marca),var(--marca-2));box-shadow:0 8px 20px rgba(240,138,44,.35)}
+.salvar:disabled{filter:grayscale(.6) opacity(.6);box-shadow:none;cursor:not-allowed}
+.erro{background:var(--erro-claro);color:var(--erro);padding:10px 12px;border-radius:12px;font-weight:600;margin-top:12px}
+.pronto{text-align:center}
+.pronto .ok{width:56px;height:56px;border-radius:50%;background:var(--bom-claro);color:var(--bom);display:grid;place-items:center;font-size:1.8rem;margin:0 auto 8px}
+.codigo{font-family:ui-monospace,Consolas,monospace;background:var(--cartao-2);padding:10px;border-radius:12px;word-break:break-all;margin:8px 0;font-size:.9rem;user-select:all}
 ol{text-align:left;padding-left:20px;margin:12px 0 0}
 ol li{margin-bottom:6px}
 [hidden]{display:none!important}
@@ -90,51 +90,51 @@ ol li{margin-bottom:6px}
 <path d="M120 149v6" stroke="#D85858" stroke-width="1.2" stroke-linecap="round"/>
 </symbol>
 </svg>
-<div class="wrap">
-  <div class="top">
+<div class="pagina">
+  <div class="topo">
     <svg viewBox="0 0 256 256" aria-hidden="true"><use href="#lulu"/></svg>
     <h1>Vamos configurar o alimentador</h1>
   </div>
-  <p class="lead">Leva menos de um minuto. Depois disso ele se conecta sozinho sempre que ligar.</p>
+  <p class="chamada">Leva menos de um minuto. Depois disso ele se conecta sozinho sempre que ligar.</p>
 
-  <form id="form" novalidate>
-    <section class="card">
-      <div class="step"><b>1</b>Qual o nome do seu pet?</div>
-      <input type="text" id="name" maxlength="31" placeholder="Ex.: Mel" autocomplete="off" aria-label="Nome do pet">
+  <form id="formulario" novalidate>
+    <section class="cartao">
+      <div class="passo"><b>1</b>Qual o nome do seu pet?</div>
+      <input type="text" id="nome" maxlength="31" placeholder="Ex.: Mel" autocomplete="off" aria-label="Nome do pet">
     </section>
 
-    <section class="card">
-      <div class="step"><b>2</b>Escolha o Wi-Fi da casa
-        <button type="button" class="btn small" id="rescan">Atualizar</button></div>
-      <ul class="nets" id="nets"><li class="muted">Procurando redes...</li></ul>
-      <p class="muted">A ESP32 só enxerga redes de 2,4 GHz. Rede oculta?
-        <a href="#" id="manualLink">Digitar o nome</a></p>
+    <section class="cartao">
+      <div class="passo"><b>2</b>Escolha o Wi-Fi da casa
+        <button type="button" class="botao pequeno" id="atualizar">Atualizar</button></div>
+      <ul class="redes" id="redes"><li class="suave">Procurando redes...</li></ul>
+      <p class="suave">A ESP32 só enxerga redes de 2,4 GHz. Rede oculta?
+        <a href="#" id="digitarNome">Digitar o nome</a></p>
       <input type="text" id="ssid" maxlength="32" placeholder="Nome da rede (SSID)" hidden aria-label="Nome da rede">
     </section>
 
-    <section class="card">
-      <div class="step"><b>3</b>Senha do Wi-Fi</div>
-      <div class="pass">
-        <input type="password" id="pass" maxlength="63" placeholder="Deixe em branco se a rede for aberta" autocomplete="off" aria-label="Senha do Wi-Fi">
-        <button type="button" id="show">mostrar</button>
+    <section class="cartao">
+      <div class="passo"><b>3</b>Senha do Wi-Fi</div>
+      <div class="senha">
+        <input type="password" id="senha" maxlength="63" placeholder="Deixe em branco se a rede for aberta" autocomplete="off" aria-label="Senha do Wi-Fi">
+        <button type="button" id="mostrar">mostrar</button>
       </div>
-      <div class="err" id="err" hidden></div>
+      <div class="erro" id="erro" hidden></div>
     </section>
 
-    <button class="go" id="save" type="submit">Salvar e conectar</button>
+    <button class="salvar" id="salvar" type="submit">Salvar e conectar</button>
   </form>
 
-  <section class="card done" id="done" hidden>
+  <section class="cartao pronto" id="pronto" hidden>
     <div class="ok">✓</div>
     <h1>Pronto!</h1>
-    <p class="muted">O alimentador está reiniciando para entrar no seu Wi-Fi. Guarde o link abaixo:
+    <p class="suave">O alimentador está reiniciando para entrar no seu Wi-Fi. Guarde o link abaixo:
       é por ele que você controla o alimentador de qualquer lugar.</p>
-    <div class="code" id="link"></div>
-    <button class="btn" id="copy" type="button">Copiar link</button>
+    <div class="codigo" id="link"></div>
+    <button class="botao" id="copiar" type="button">Copiar link</button>
     <ol>
       <li>Volte o celular para o Wi-Fi de casa.</li>
-      <li>Na mesma rede, abra <b id="host">alimentador.local</b>.</li>
-      <li>De qualquer lugar, use o link acima (pode adicionar à tela inicial).</li>
+      <li>Na mesma rede, abra <b id="enderecoLocal">alimentador.local</b>.</li>
+      <li>De qualquer lugar, use o link acima (dá para adicionar à tela inicial).</li>
       <li>LED verde = online. Azul piscando de novo = senha errada: refaça a configuração.</li>
     </ol>
   </section>
@@ -143,99 +143,99 @@ ol li{margin-bottom:6px}
 <script>
 "use strict";
 const $ = (id) => document.getElementById(id);
-let chosen = "";
+let escolhida = "";
 
-function bars(rssi) {
-  const n = rssi > -60 ? 3 : rssi > -72 ? 2 : 1;
+function barras(sinal) {
+  const n = sinal > -60 ? 3 : sinal > -72 ? 2 : 1;
   const s = document.createElement("span");
-  s.className = "bars";
+  s.className = "barras";
   for (let i = 1; i <= 3; i++) {
     const b = document.createElement("i");
-    if (i <= n) b.className = "on";
+    if (i <= n) b.className = "cheia";
     s.append(b);
   }
   return s;
 }
 
-async function scan() {
-  const ul = $("nets");
-  ul.innerHTML = '<li class="muted">Procurando redes...</li>';
+async function buscarRedes() {
+  const ul = $("redes");
+  ul.innerHTML = '<li class="suave">Procurando redes...</li>';
   try {
-    const r = await fetch("/api/scan", { cache: "no-store" });
-    const list = await r.json();
+    const r = await fetch("/api/redes", { cache: "no-store" });
+    const lista = await r.json();
     ul.replaceChildren();
-    if (!list.length) ul.innerHTML = '<li class="muted">Nenhuma rede encontrada. Toque em Atualizar.</li>';
-    for (const n of list) {
+    if (!lista.length) ul.innerHTML = '<li class="suave">Nenhuma rede encontrada. Toque em Atualizar.</li>';
+    for (const rede of lista) {
       const li = document.createElement("li");
       const b = document.createElement("button");
       b.type = "button";
-      const name = document.createElement("span");
-      name.className = "name";
-      name.textContent = n.ssid;
-      const lock = document.createElement("span");
-      lock.className = "lock";
-      lock.textContent = n.lock ? "🔒" : "aberta";
-      b.append(bars(n.rssi), name, lock);
+      const nome = document.createElement("span");
+      nome.className = "nome";
+      nome.textContent = rede.ssid;
+      const cadeado = document.createElement("span");
+      cadeado.className = "cadeado";
+      cadeado.textContent = rede.senha ? "🔒" : "aberta";
+      b.append(barras(rede.sinal), nome, cadeado);
       b.onclick = () => {
-        chosen = n.ssid;
-        $("ssid").value = n.ssid;
-        document.querySelectorAll(".nets button").forEach((x) => x.classList.toggle("sel", x === b));
-        $("pass").focus();
+        escolhida = rede.ssid;
+        $("ssid").value = rede.ssid;
+        document.querySelectorAll(".redes button").forEach((x) => x.classList.toggle("escolhida", x === b));
+        $("senha").focus();
       };
-      if (n.ssid === chosen) b.classList.add("sel");
+      if (rede.ssid === escolhida) b.classList.add("escolhida");
       li.append(b);
       ul.append(li);
     }
   } catch {
-    ul.innerHTML = '<li class="muted">Não consegui buscar as redes. Digite o nome abaixo.</li>';
+    ul.innerHTML = '<li class="suave">Não consegui buscar as redes. Digite o nome abaixo.</li>';
     $("ssid").hidden = false;
   }
 }
 
-$("rescan").onclick = scan;
-$("manualLink").onclick = (e) => { e.preventDefault(); $("ssid").hidden = false; $("ssid").focus(); };
-$("show").onclick = () => {
-  const p = $("pass");
-  p.type = p.type === "password" ? "text" : "password";
-  $("show").textContent = p.type === "password" ? "mostrar" : "ocultar";
+$("atualizar").onclick = buscarRedes;
+$("digitarNome").onclick = (e) => { e.preventDefault(); $("ssid").hidden = false; $("ssid").focus(); };
+$("mostrar").onclick = () => {
+  const s = $("senha");
+  s.type = s.type === "password" ? "text" : "password";
+  $("mostrar").textContent = s.type === "password" ? "mostrar" : "ocultar";
 };
 
-$("form").onsubmit = async (e) => {
+$("formulario").onsubmit = async (e) => {
   e.preventDefault();
-  const err = $("err");
-  err.hidden = true;
-  const body = {
-    name: $("name").value.trim() || "Pet",
+  const erro = $("erro");
+  erro.hidden = true;
+  const dados = {
+    nome: $("nome").value.trim() || "Pet",
     ssid: $("ssid").value.trim(),
-    pass: $("pass").value,
+    senha: $("senha").value,
   };
-  if (!body.ssid) { err.textContent = "Escolha uma rede Wi-Fi."; err.hidden = false; return; }
-  if (body.pass && body.pass.length < 8) { err.textContent = "Senhas de Wi-Fi têm pelo menos 8 caracteres."; err.hidden = false; return; }
-  $("save").disabled = true;
-  $("save").textContent = "Salvando...";
+  if (!dados.ssid) { erro.textContent = "Escolha uma rede Wi-Fi."; erro.hidden = false; return; }
+  if (dados.senha && dados.senha.length < 8) { erro.textContent = "Senhas de Wi-Fi têm pelo menos 8 caracteres."; erro.hidden = false; return; }
+  $("salvar").disabled = true;
+  $("salvar").textContent = "Salvando...";
   try {
-    const r = await fetch("/api/provision", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+    const r = await fetch("/api/configurar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(dados) });
     const j = await r.json();
-    if (!j.ok) throw new Error(j.msg);
-    $("link").textContent = j.app_url;
-    $("host").textContent = j.host;
-    $("form").hidden = true;
-    $("done").hidden = false;
+    if (!j.ok) throw new Error(j.mensagem);
+    $("link").textContent = j.link_app;
+    $("enderecoLocal").textContent = j.endereco_local;
+    $("formulario").hidden = true;
+    $("pronto").hidden = false;
     window.scrollTo(0, 0);
-  } catch (ex) {
-    err.textContent = ex.message || "Falha ao salvar. Tente de novo.";
-    err.hidden = false;
-    $("save").disabled = false;
-    $("save").textContent = "Salvar e conectar";
+  } catch (falha) {
+    erro.textContent = falha.message || "Falha ao salvar. Tente de novo.";
+    erro.hidden = false;
+    $("salvar").disabled = false;
+    $("salvar").textContent = "Salvar e conectar";
   }
 };
 
-$("copy").onclick = async () => {
-  try { await navigator.clipboard.writeText($("link").textContent); $("copy").textContent = "Copiado!"; }
-  catch { $("copy").textContent = "Segure o link para copiar"; }
+$("copiar").onclick = async () => {
+  try { await navigator.clipboard.writeText($("link").textContent); $("copiar").textContent = "Copiado!"; }
+  catch { $("copiar").textContent = "Segure o link para copiar"; }
 };
 
-scan();
+buscarRedes();
 </script>
 </body>
 </html>

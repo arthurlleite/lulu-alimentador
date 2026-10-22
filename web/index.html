@@ -3,117 +3,117 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Alimentador</title>
+<title>Lulu · Alimentador</title>
 <meta name="description" content="Controle do alimentador automático de pets com ESP32">
 <meta name="theme-color" content="#f59e45">
-<link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/svg+xml" href="icone.svg">
+<link rel="apple-touch-icon" href="icone-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
 :root{
-  --bg:#fff8f0;--surface:#ffffff;--surface-2:#fff2e3;--line:#f3e1cc;
-  --text:#2b2118;--muted:#8a7461;--brand:#f08a2c;--brand-2:#d9701c;--brand-soft:#ffe9cf;
-  --ok:#15803d;--ok-soft:#dcfce7;--warn:#b45309;--warn-soft:#fef3c7;--bad:#dc2626;--bad-soft:#fee2e2;
-  --shadow:0 1px 2px rgba(80,40,0,.05),0 10px 28px rgba(80,40,0,.07);--r:20px;color-scheme:light;
+  --fundo:#fff8f0;--cartao:#ffffff;--cartao-2:#fff2e3;--borda:#f3e1cc;
+  --texto:#2b2118;--suave:#8a7461;--marca:#f08a2c;--marca-2:#d9701c;--marca-clara:#ffe9cf;
+  --bom:#15803d;--bom-claro:#dcfce7;--atencao:#b45309;--atencao-claro:#fef3c7;--erro:#dc2626;--erro-claro:#fee2e2;
+  --sombra:0 1px 2px rgba(80,40,0,.05),0 10px 28px rgba(80,40,0,.07);--raio:20px;color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root{
-  --bg:#16110d;--surface:#211a14;--surface-2:#2b2219;--line:#3b2f24;
-  --text:#f7ede3;--muted:#b39e8a;--brand:#fb9a4b;--brand-2:#f08a2c;--brand-soft:#3a2516;
-  --ok:#4ade80;--ok-soft:#133020;--warn:#fbbf24;--warn-soft:#382a0d;--bad:#f87171;--bad-soft:#3a1717;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);color-scheme:dark;
+  --fundo:#16110d;--cartao:#211a14;--cartao-2:#2b2219;--borda:#3b2f24;
+  --texto:#f7ede3;--suave:#b39e8a;--marca:#fb9a4b;--marca-2:#f08a2c;--marca-clara:#3a2516;
+  --bom:#4ade80;--bom-claro:#133020;--atencao:#fbbf24;--atencao-claro:#382a0d;--erro:#f87171;--erro-claro:#3a1717;
+  --sombra:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);color-scheme:dark;
 }}
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;
+body{background:var(--fundo);color:var(--texto);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;
   -webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
 button,input,select{font:inherit;color:inherit}
-.wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+.pagina{max-width:560px;margin:0 auto;padding:16px 16px 40px}
 header{display:flex;align-items:center;gap:12px;margin:4px 0 16px}
-.avatar{width:52px;height:52px;border-radius:16px;background:var(--brand-soft);flex:none;overflow:hidden;display:grid;place-items:center}
+.avatar{width:52px;height:52px;border-radius:16px;background:var(--marca-clara);flex:none;overflow:hidden;display:grid;place-items:center}
 .avatar svg{width:50px;height:50px;margin-top:6px}
 header h1{font-size:1.35rem;margin:0;line-height:1.15}
-header .sub{color:var(--muted);font-size:.85rem}
-.pill{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;font-size:.8rem;font-weight:600;
-  background:var(--surface-2);color:var(--muted);white-space:nowrap}
-.pill i{width:8px;height:8px;border-radius:50%;background:currentColor}
-.pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.bad{background:var(--bad-soft);color:var(--bad)}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
-.card h2{font-size:1rem;margin:0 0 12px;display:flex;align-items:center;gap:8px}
-.card h2 .act{margin-left:auto}
-.banner{display:none;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;margin-bottom:14px;font-weight:600;font-size:.92rem}
-.banner.show{display:flex}
-.banner.warn{background:var(--warn-soft);color:var(--warn)} .banner.bad{background:var(--bad-soft);color:var(--bad)}
-.banner button{margin-left:auto}
-.hero{text-align:center;padding:10px 18px 20px;overflow:hidden;position:relative;
-  background:radial-gradient(120% 80% at 50% 0%,var(--brand-soft),var(--surface) 70%)}
-.hero .pet{width:150px;height:150px;display:block;margin:0 auto -6px;transform-origin:50% 90%}
-.hero.busy .pet{animation:hop .5s ease-in-out infinite alternate}
-@keyframes hop{to{transform:translateY(-8px) scale(1.03,0.98)}}
-.bowl{width:110px;height:16px;margin:0 auto 14px;border-radius:0 0 60px 60px;background:linear-gradient(var(--brand),var(--brand-2));opacity:.85}
-.stepper{display:flex;align-items:center;justify-content:center;gap:18px;margin:0 0 16px}
-.stepper button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:1.4rem;cursor:pointer}
-.stepper button:active{transform:scale(.94)}
-.qty{min-width:92px}
-.qty b{display:block;font-size:2.4rem;line-height:1}
-.qty span{color:var(--muted);font-size:.85rem}
-.feed{width:100%;border:0;border-radius:16px;padding:16px;font-size:1.1rem;font-weight:700;color:#fff;cursor:pointer;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 8px 20px rgba(240,138,44,.35);transition:transform .1s,filter .2s}
-.feed:active{transform:scale(.98)}
-.feed:disabled{filter:grayscale(.6) opacity(.6);cursor:not-allowed;box-shadow:none}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.grid .card{margin:0;padding:16px}
-.stat small{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
-.stat b{display:block;font-size:1.45rem;margin-top:4px;line-height:1.2}
-.stat span{color:var(--muted);font-size:.85rem}
-.gauge{display:flex;align-items:center;gap:12px}
-.gauge svg{width:62px;height:62px;flex:none;transform:rotate(-90deg)}
-.gauge circle{fill:none;stroke-width:8}
-.gauge .track{stroke:var(--surface-2)} .gauge .val{stroke:var(--ok);stroke-linecap:round;transition:stroke-dashoffset .6s}
-.meals{display:flex;flex-direction:column;gap:10px}
-.meal{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;padding:10px;border-radius:14px;background:var(--surface-2)}
-.meal input[type=time],.meal select,.field input{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px;min-width:0}
-.meal input[type=time]{font-weight:700;font-size:1.05rem}
-.icon-btn{border:0;background:none;color:var(--muted);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:1.05rem}
-.icon-btn:hover{background:var(--surface)}
-.switch{position:relative;width:46px;height:28px;flex:none;display:inline-block}
-.switch input{opacity:0;width:0;height:0;position:absolute}
-.switch span{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:.2s;cursor:pointer}
-.switch span::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
-.switch input:checked+span{background:var(--ok)}
-.switch input:checked+span::after{transform:translateX(18px)}
-.switch input:focus-visible+span{outline:2px solid var(--brand);outline-offset:2px}
-.btn{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:10px 14px;font-weight:600;cursor:pointer}
-.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
-.btn.danger{color:var(--bad)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn.small{padding:6px 10px;font-size:.85rem}
-.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.row .btn{flex:1}
-.empty{color:var(--muted);text-align:center;padding:10px;font-size:.92rem}
-.hist{list-style:none;margin:0;padding:0}
-.hist li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.93rem}
-.hist li:last-child{border:0}
-.hist .dot{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--ok-soft);color:var(--ok);flex:none;font-size:.9rem;font-weight:700}
-.hist .dot.fail{background:var(--bad-soft);color:var(--bad)}
-.hist .when{margin-left:auto;color:var(--muted);font-size:.85rem;white-space:nowrap}
-details.card summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center}
-details.card summary::-webkit-details-marker{display:none}
-details.card summary::after{content:"›";margin-left:auto;font-size:1.4rem;transition:.2s;color:var(--muted)}
-details[open].card summary::after{transform:rotate(90deg)}
-.field{display:flex;flex-direction:column;gap:6px;margin-top:14px}
-.field>label{font-size:.85rem;color:var(--muted);font-weight:600}
-.field .inline{display:flex;gap:8px;align-items:center}
-.field .inline input{flex:1}
-.hint{color:var(--muted);font-size:.82rem;margin:6px 0 0}
-.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--surface-2);padding:8px 10px;border-radius:10px;word-break:break-all;font-size:.85rem}
-.connect input{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:12px;font-family:ui-monospace,Consolas,monospace}
-footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:22px}
+header .sub{color:var(--suave);font-size:.85rem}
+.selo{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;font-size:.8rem;font-weight:600;
+  background:var(--cartao-2);color:var(--suave);white-space:nowrap}
+.selo i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.selo.bom{background:var(--bom-claro);color:var(--bom)} .selo.atencao{background:var(--atencao-claro);color:var(--atencao)} .selo.erro{background:var(--erro-claro);color:var(--erro)}
+.cartao{background:var(--cartao);border:1px solid var(--borda);border-radius:var(--raio);box-shadow:var(--sombra);padding:18px;margin-bottom:14px}
+.cartao h2{font-size:1rem;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.cartao h2 .acao{margin-left:auto}
+.aviso{display:none;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;margin-bottom:14px;font-weight:600;font-size:.92rem}
+.aviso.mostrar{display:flex}
+.aviso.atencao{background:var(--atencao-claro);color:var(--atencao)} .aviso.erro{background:var(--erro-claro);color:var(--erro)}
+.aviso button{margin-left:auto}
+.destaque{text-align:center;padding:10px 18px 20px;overflow:hidden;position:relative;
+  background:radial-gradient(120% 80% at 50% 0%,var(--marca-clara),var(--cartao) 70%)}
+.destaque .pet{width:150px;height:150px;display:block;margin:0 auto -6px;transform-origin:50% 90%}
+.destaque.servindo .pet{animation:pulinho .5s ease-in-out infinite alternate}
+@keyframes pulinho{to{transform:translateY(-8px) scale(1.03,0.98)}}
+.pote{width:110px;height:16px;margin:0 auto 14px;border-radius:0 0 60px 60px;background:linear-gradient(var(--marca),var(--marca-2));opacity:.85}
+.seletor{display:flex;align-items:center;justify-content:center;gap:18px;margin:0 0 16px}
+.seletor button{width:46px;height:46px;border-radius:50%;border:1px solid var(--borda);background:var(--cartao);font-size:1.4rem;cursor:pointer}
+.seletor button:active{transform:scale(.94)}
+.quantidade{min-width:92px}
+.quantidade b{display:block;font-size:2.4rem;line-height:1}
+.quantidade span{color:var(--suave);font-size:.85rem}
+.alimentar{width:100%;border:0;border-radius:16px;padding:16px;font-size:1.1rem;font-weight:700;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,var(--marca),var(--marca-2));box-shadow:0 8px 20px rgba(240,138,44,.35);transition:transform .1s,filter .2s}
+.alimentar:active{transform:scale(.98)}
+.alimentar:disabled{filter:grayscale(.6) opacity(.6);cursor:not-allowed;box-shadow:none}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.grade .cartao{margin:0;padding:16px}
+.info small{color:var(--suave);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.info b{display:block;font-size:1.45rem;margin-top:4px;line-height:1.2}
+.info span{color:var(--suave);font-size:.85rem}
+.medidor{display:flex;align-items:center;gap:12px}
+.medidor svg{width:62px;height:62px;flex:none;transform:rotate(-90deg)}
+.medidor circle{fill:none;stroke-width:8}
+.medidor .trilho{stroke:var(--cartao-2)} .medidor .valor{stroke:var(--bom);stroke-linecap:round;transition:stroke-dashoffset .6s}
+.refeicoes{display:flex;flex-direction:column;gap:10px}
+.refeicao{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;padding:10px;border-radius:14px;background:var(--cartao-2)}
+.refeicao input[type=time],.refeicao select,.campo input{border:1px solid var(--borda);background:var(--cartao);border-radius:10px;padding:8px 10px;min-width:0}
+.refeicao input[type=time]{font-weight:700;font-size:1.05rem}
+.botao-icone{border:0;background:none;color:var(--suave);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:1.05rem}
+.botao-icone:hover{background:var(--cartao)}
+.chave{position:relative;width:46px;height:28px;flex:none;display:inline-block}
+.chave input{opacity:0;width:0;height:0;position:absolute}
+.chave span{position:absolute;inset:0;border-radius:99px;background:var(--borda);transition:.2s;cursor:pointer}
+.chave span::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.chave input:checked+span{background:var(--bom)}
+.chave input:checked+span::after{transform:translateX(18px)}
+.chave input:focus-visible+span{outline:2px solid var(--marca);outline-offset:2px}
+.botao{border:1px solid var(--borda);background:var(--cartao-2);border-radius:12px;padding:10px 14px;font-weight:600;cursor:pointer}
+.botao.principal{background:var(--marca);border-color:var(--marca);color:#fff}
+.botao.perigo{color:var(--erro)}
+.botao:disabled{opacity:.5;cursor:not-allowed}
+.botao.pequeno{padding:6px 10px;font-size:.85rem}
+.linha{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.linha .botao{flex:1}
+.vazio{color:var(--suave);text-align:center;padding:10px;font-size:.92rem}
+.historico{list-style:none;margin:0;padding:0}
+.historico li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--borda);font-size:.93rem}
+.historico li:last-child{border:0}
+.historico .marca{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--bom-claro);color:var(--bom);flex:none;font-size:.9rem;font-weight:700}
+.historico .marca.falha{background:var(--erro-claro);color:var(--erro)}
+.historico .quando{margin-left:auto;color:var(--suave);font-size:.85rem;white-space:nowrap}
+details.cartao summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center}
+details.cartao summary::-webkit-details-marker{display:none}
+details.cartao summary::after{content:"›";margin-left:auto;font-size:1.4rem;transition:.2s;color:var(--suave)}
+details[open].cartao summary::after{transform:rotate(90deg)}
+.campo{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.campo>label{font-size:.85rem;color:var(--suave);font-weight:600}
+.campo .junto{display:flex;gap:8px;align-items:center}
+.campo .junto input{flex:1}
+.dica{color:var(--suave);font-size:.82rem;margin:6px 0 0}
+.codigo{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--cartao-2);padding:8px 10px;border-radius:10px;word-break:break-all;font-size:.85rem}
+.conectar input{width:100%;border:1px solid var(--borda);background:var(--cartao-2);border-radius:12px;padding:12px;font-family:ui-monospace,Consolas,monospace}
+footer{text-align:center;color:var(--suave);font-size:.8rem;margin-top:22px}
 footer a{color:inherit}
-#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,140px);background:var(--text);color:var(--bg);
-  padding:12px 18px;border-radius:14px;font-weight:600;font-size:.92rem;transition:transform .25s;max-width:calc(100% - 32px);z-index:9;box-shadow:var(--shadow)}
-#toast.show{transform:translate(-50%,0)}
+#recado{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,140px);background:var(--texto);color:var(--fundo);
+  padding:12px 18px;border-radius:14px;font-weight:600;font-size:.92rem;transition:transform .25s;max-width:calc(100% - 32px);z-index:9;box-shadow:var(--sombra)}
+#recado.mostrar{transform:translate(-50%,0)}
 [hidden]{display:none!important}
-@media (max-width:380px){.grid{grid-template-columns:1fr}}
+@media (max-width:380px){.grade{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -149,517 +149,517 @@ footer a{color:inherit}
 <path d="M120 149v6" stroke="#D85858" stroke-width="1.2" stroke-linecap="round"/>
 </symbol>
 </svg>
-<div class="wrap">
+<div class="pagina">
   <header>
     <div class="avatar"><svg viewBox="0 0 256 256"><use href="#lulu"/></svg></div>
     <div>
-      <h1 id="title">Alimentador</h1>
-      <div class="sub" id="subtitle">Conectando...</div>
+      <h1 id="titulo">Alimentador</h1>
+      <div class="sub" id="subtitulo">Conectando...</div>
     </div>
-    <span class="pill" id="pill"><i></i><span>...</span></span>
+    <span class="selo" id="selo"><i></i><span>...</span></span>
   </header>
 
   <!-- Aberto pelo GitHub Pages sem ?d=CODIGO -->
-  <section class="card connect" id="connectCard" hidden>
+  <section class="cartao conectar" id="cartaoConectar" hidden>
     <h2>Conectar ao alimentador</h2>
-    <p class="hint" style="margin:0 0 12px">Cole o código que apareceu ao configurar o Wi-Fi da ESP32
-      (também aparece em <b>Ajustes</b> no app local, em <span class="code">alimentador.local</span>).</p>
-    <input id="codeInput" placeholder="ex.: 3f9a0c1d2e4b5a6f" maxlength="16" autocomplete="off" spellcheck="false" aria-label="Código do alimentador">
-    <div class="row"><button class="btn primary" id="codeSave">Conectar</button></div>
+    <p class="dica" style="margin:0 0 12px">Cole o código que apareceu ao configurar o Wi-Fi da ESP32
+      (também aparece em <b>Ajustes</b> no app local, em <span class="codigo">alimentador.local</span>).</p>
+    <input id="campoCodigo" placeholder="ex.: 3f9a0c1d2e4b5a6f" maxlength="16" autocomplete="off" spellcheck="false" aria-label="Código do alimentador">
+    <div class="linha"><button class="botao principal" id="salvarCodigo">Conectar</button></div>
   </section>
 
   <main id="app" hidden>
-    <div class="banner" id="alarm" role="alert"><span id="alarmText"></span><button class="btn small" id="alarmClear">Ok</button></div>
+    <div class="aviso" id="aviso" role="alert"><span id="textoAviso"></span><button class="botao pequeno" id="limparAviso">Ok</button></div>
 
-    <section class="card hero" id="hero">
+    <section class="cartao destaque" id="destaque">
       <svg class="pet" viewBox="0 0 256 256" aria-hidden="true"><use href="#lulu"/></svg>
-      <div class="bowl"></div>
-      <div class="stepper">
-        <button id="minus" aria-label="Menos uma porção">−</button>
-        <div class="qty" aria-live="polite"><b id="qty">1</b><span id="qtyLabel">porção</span></div>
-        <button id="plus" aria-label="Mais uma porção">+</button>
+      <div class="pote"></div>
+      <div class="seletor">
+        <button id="menos" aria-label="Menos uma porção">−</button>
+        <div class="quantidade" aria-live="polite"><b id="qtd">1</b><span id="rotuloQtd">porção</span></div>
+        <button id="mais" aria-label="Mais uma porção">+</button>
       </div>
-      <button class="feed" id="feed" disabled>Alimentar agora</button>
+      <button class="alimentar" id="alimentar" disabled>Alimentar agora</button>
     </section>
 
-    <div class="grid">
-      <section class="card stat">
+    <div class="grade">
+      <section class="cartao info">
         <small>Ração no tubo</small>
-        <div class="gauge">
-          <svg viewBox="0 0 70 70" aria-hidden="true"><circle class="track" cx="35" cy="35" r="29"/><circle class="val" id="gaugeVal" cx="35" cy="35" r="29" stroke-dasharray="182.2" stroke-dashoffset="182.2"/></svg>
-          <div><b id="level">--</b><span id="levelSub">sem leitura</span></div>
+        <div class="medidor">
+          <svg viewBox="0 0 70 70" aria-hidden="true"><circle class="trilho" cx="35" cy="35" r="29"/><circle class="valor" id="medidorValor" cx="35" cy="35" r="29" stroke-dasharray="182.2" stroke-dashoffset="182.2"/></svg>
+          <div><b id="nivel">--</b><span id="nivelSub">sem leitura</span></div>
         </div>
       </section>
-      <section class="card stat">
+      <section class="cartao info">
         <small>Próxima refeição</small>
-        <b id="next">--</b><span id="nextSub">sem agenda</span>
+        <b id="proxima">--</b><span id="proximaSub">sem agenda</span>
       </section>
-      <section class="card stat">
+      <section class="cartao info">
         <small>Ambiente</small>
-        <b id="env">--</b><span id="envSub">sem leitura</span>
+        <b id="ambiente">--</b><span id="ambienteSub">sem leitura</span>
       </section>
-      <section class="card stat">
+      <section class="cartao info">
         <small>Última refeição</small>
-        <b id="last">--</b><span id="lastSub">nenhuma ainda</span>
+        <b id="ultima">--</b><span id="ultimaSub">nenhuma ainda</span>
       </section>
     </div>
 
-    <section class="card">
-      <h2>Agenda <span class="act"><button class="btn small" id="addMeal">+ Horário</button></span></h2>
-      <div class="meals" id="meals"></div>
-      <div class="row"><button class="btn primary" id="saveMeals" disabled>Salvar agenda</button></div>
-      <p class="hint">Até 8 horários por dia. Cada porção abre a passagem do servo uma vez.</p>
+    <section class="cartao">
+      <h2>Agenda <span class="acao"><button class="botao pequeno" id="novoHorario">+ Horário</button></span></h2>
+      <div class="refeicoes" id="refeicoes"></div>
+      <div class="linha"><button class="botao principal" id="salvarAgenda" disabled>Salvar agenda</button></div>
+      <p class="dica">Até 8 horários por dia. Cada porção abre a passagem do servo uma vez.</p>
     </section>
 
-    <section class="card">
+    <section class="cartao">
       <h2>Histórico</h2>
-      <ul class="hist" id="hist"></ul>
+      <ul class="historico" id="historico"></ul>
     </section>
 
-    <details class="card" id="settings">
+    <details class="cartao" id="ajustes">
       <summary>Ajustes</summary>
-      <div class="field">
-        <label for="petName">Nome do pet</label>
-        <input id="petName" maxlength="31">
+      <div class="campo">
+        <label for="nomePet">Nome do pet</label>
+        <input id="nomePet" maxlength="31">
       </div>
-      <div class="field">
-        <label for="beep">Bipar antes de servir</label>
-        <label class="switch"><input type="checkbox" id="beep"><span></span></label>
+      <div class="campo">
+        <label for="bip">Bipar antes de servir</label>
+        <label class="chave"><input type="checkbox" id="bip"><span></span></label>
       </div>
-      <div class="field">
+      <div class="campo">
         <label>Calibração do nível (distância do sensor até a ração)</label>
-        <div class="inline"><input id="calEmpty" type="number" min="5" max="200" step="1" aria-label="Distância com o tubo vazio"><span>cm vazio</span></div>
-        <div class="inline"><input id="calFull" type="number" min="0" max="100" step="1" aria-label="Distância com o tubo cheio"><span>cm cheio</span></div>
-        <p class="hint">Leitura atual: <b id="calNow">--</b>. Com o tubo vazio toque em “vazio = agora”; depois de encher, “cheio = agora”.</p>
-        <div class="row"><button class="btn small" id="calSetEmpty">vazio = agora</button><button class="btn small" id="calSetFull">cheio = agora</button></div>
+        <div class="junto"><input id="calVazio" type="number" min="5" max="200" step="1" aria-label="Distância com o tubo vazio"><span>cm vazio</span></div>
+        <div class="junto"><input id="calCheio" type="number" min="0" max="100" step="1" aria-label="Distância com o tubo cheio"><span>cm cheio</span></div>
+        <p class="dica">Leitura atual: <b id="calAgora">--</b>. Com o tubo vazio toque em “vazio = agora”; depois de encher, “cheio = agora”.</p>
+        <div class="linha"><button class="botao pequeno" id="usarVazio">vazio = agora</button><button class="botao pequeno" id="usarCheio">cheio = agora</button></div>
       </div>
-      <div class="row"><button class="btn primary" id="saveSettings">Salvar ajustes</button></div>
+      <div class="linha"><button class="botao principal" id="salvarAjustes">Salvar ajustes</button></div>
 
-      <div id="localOnly" hidden>
-        <div class="field">
+      <div id="soLocal" hidden>
+        <div class="campo">
           <label>Acesso de qualquer lugar</label>
-          <div class="code" id="remoteLink"></div>
-          <div class="row"><button class="btn small" id="copyLink">Copiar link</button></div>
-          <p class="hint">Quem tiver esse link controla o alimentador. Não publique.</p>
+          <div class="codigo" id="linkRemoto"></div>
+          <div class="linha"><button class="botao pequeno" id="copiarLink">Copiar link</button></div>
+          <p class="dica">Quem tiver esse link controla o alimentador. Não publique.</p>
         </div>
-        <div class="row"><button class="btn danger" id="wifiReset">Esquecer Wi-Fi</button></div>
+        <div class="linha"><button class="botao perigo" id="esquecerWifi">Esquecer Wi-Fi</button></div>
       </div>
-      <div id="remoteOnly" hidden>
-        <div class="row"><button class="btn danger" id="forget">Trocar de alimentador</button></div>
+      <div id="soRemoto" hidden>
+        <div class="linha"><button class="botao perigo" id="trocarAlimentador">Trocar de alimentador</button></div>
       </div>
     </details>
   </main>
 
   <footer>
-    <span id="fw"></span> · <a href="https://github.com/arthurlleite/Alimentador-Automatico-de-Pets" target="_blank" rel="noopener">código no GitHub</a>
+    <span id="versao"></span> · <a href="https://github.com/arthurlleite/lulu-alimentador" target="_blank" rel="noopener">código no GitHub</a>
   </footer>
 </div>
-<div id="toast" role="status" aria-live="polite"></div>
+<div id="recado" role="status" aria-live="polite"></div>
 
 <script>
 "use strict";
 // O mesmo arquivo roda em dois lugares:
 //  - servido pela ESP32 (http://alimentador.local): fala direto por HTTP (/api/...)
-//  - no GitHub Pages (https://...github.io/...?d=CODIGO): fala via MQTT pela internet
-const CFG = {
+//  - no GitHub Pages (https://arthurlleite.github.io/lulu-alimentador/?d=CODIGO): fala via MQTT pela internet
+const CONFIG = {
   broker: "wss://broker.hivemq.com:8884/mqtt",
-  prefix: "alimentador",
-  mqttLib: "https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js",
-  maxMeals: 8, maxPortions: 10,
+  prefixo: "alimentador",
+  bibliotecaMqtt: "https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js",
+  maxRefeicoes: 8, maxPorcoes: 10,
 };
-const SRC = { app: "pelo app", agenda: "da agenda", botao: "pelo botão" };
+const ORIGENS = { app: "pelo app", agenda: "da agenda", botao: "pelo botão" };
 const $ = (id) => document.getElementById(id);
 
-let mode = null;        // "local" | "remote"
-let state = null;
-let portions = 1;
-let mealsDirty = false;
-let editMeals = [];
-let mqttClient = null, base = "", online = false;
-const pending = new Map();
+let modo = null;        // "local" | "remoto"
+let estado = null;
+let porcoes = 1;
+let agendaAlterada = false;
+let agendaEditada = [];
+let clienteMqtt = null, base = "", online = false;
+const pendentes = new Map();
 
-let toastTimer;
-function toast(msg) {
-  const t = $("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove("show"), 2800);
+let tempoRecado;
+function recado(texto) {
+  const r = $("recado");
+  r.textContent = texto;
+  r.classList.add("mostrar");
+  clearTimeout(tempoRecado);
+  tempoRecado = setTimeout(() => r.classList.remove("mostrar"), 2800);
 }
 
-function setPill(kind, text) {
-  const p = $("pill");
-  p.className = "pill " + kind;
-  p.lastElementChild.textContent = text;
+function mudarSelo(tipo, texto) {
+  const s = $("selo");
+  s.className = "selo " + tipo;
+  s.lastElementChild.textContent = texto;
 }
 
-const pad = (n) => String(n).padStart(2, "0");
-const hhmm = (h, m) => pad(h) + ":" + pad(m);
-const plural = (n, one, many) => n + " " + (n === 1 ? one : many);
-function duration(min) {
+const doisDigitos = (n) => String(n).padStart(2, "0");
+const horaMinuto = (h, m) => doisDigitos(h) + ":" + doisDigitos(m);
+const plural = (n, um, varios) => n + " " + (n === 1 ? um : varios);
+function daquiA(min) {
   if (min < 60) return "em " + min + " min";
   const h = Math.floor(min / 60), m = min % 60;
-  return "em " + h + "h" + (m ? pad(m) : "");
+  return "em " + h + "h" + (m ? doisDigitos(m) : "");
 }
-function ago(ts) {
-  if (!ts) return "hora desconhecida";
-  const now = state && state.time ? state.time : Date.now() / 1000;
-  const s = Math.max(0, now - ts);
+function haQuanto(quando) {
+  if (!quando) return "hora desconhecida";
+  const agora = estado && estado.agora ? estado.agora : Date.now() / 1000;
+  const s = Math.max(0, agora - quando);
   if (s < 60) return "agora há pouco";
   if (s < 3600) return "há " + Math.round(s / 60) + " min";
   if (s < 86400) return "há " + Math.round(s / 3600) + " h";
-  return new Date(ts * 1000).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
+  return new Date(quando * 1000).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
 }
 
 // ---------- Desenho da tela ----------
-function render(s) {
-  state = s;
-  const connected = mode === "local" || online;
-  $("title").textContent = s.name || "Alimentador";
-  document.title = (s.name || "Alimentador") + " · Alimentador";
-  $("fw").textContent = "firmware v" + (s.fw || "?");
+function desenhar(e) {
+  estado = e;
+  const conectado = modo === "local" || online;
+  $("titulo").textContent = e.nome || "Alimentador";
+  document.title = (e.nome || "Alimentador") + " · Alimentador";
+  $("versao").textContent = "firmware v" + (e.firmware || "?");
 
-  if (mode === "local") {
-    setPill(s.feeding ? "warn" : "ok", s.feeding ? "Servindo" : "Rede local");
-    $("subtitle").textContent = s.wifi && s.wifi.portal ? "Modo configuração" : "No Wi-Fi " + ((s.wifi && s.wifi.ssid) || "");
+  if (modo === "local") {
+    mudarSelo(e.servindo ? "atencao" : "bom", e.servindo ? "Servindo" : "Rede local");
+    $("subtitulo").textContent = e.wifi && e.wifi.portal ? "Modo configuração" : "No Wi-Fi " + ((e.wifi && e.wifi.ssid) || "");
   } else if (!online) {
-    setPill("bad", "Offline");
-    $("subtitle").textContent = "O alimentador está sem internet";
+    mudarSelo("erro", "Offline");
+    $("subtitulo").textContent = "O alimentador está sem internet";
   } else {
-    setPill(s.feeding ? "warn" : "ok", s.feeding ? "Servindo" : "Online");
-    $("subtitle").textContent = "Pela internet";
+    mudarSelo(e.servindo ? "atencao" : "bom", e.servindo ? "Servindo" : "Online");
+    $("subtitulo").textContent = "Pela internet";
   }
 
-  const feed = $("feed");
-  feed.disabled = !connected || s.feeding;
-  feed.textContent = s.feeding ? "Servindo ração..." : "Alimentar agora";
-  $("hero").classList.toggle("busy", !!s.feeding);
+  const botao = $("alimentar");
+  botao.disabled = !conectado || e.servindo;
+  botao.textContent = e.servindo ? "Servindo ração..." : "Alimentar agora";
+  $("destaque").classList.toggle("servindo", !!e.servindo);
 
-  const alarms = {
-    racao_baixa: ["warn", "Ração acabando: hora de reabastecer."],
-    sem_saida: ["bad", "O servo girou mas a ração não caiu. Tubo vazio ou travado?"],
+  const alarmes = {
+    racao_baixa: ["atencao", "Ração acabando: hora de reabastecer."],
+    sem_saida: ["erro", "O servo girou mas a ração não caiu. Tubo vazio ou travado?"],
   };
-  const a = alarms[s.alarm];
-  $("alarm").className = "banner" + (a ? " show " + a[0] : "");
-  if (a) $("alarmText").textContent = a[1];
+  const a = alarmes[e.alarme];
+  $("aviso").className = "aviso" + (a ? " mostrar " + a[0] : "");
+  if (a) $("textoAviso").textContent = a[1];
 
-  const g = $("gaugeVal");
-  if (s.level) {
-    const pct = s.level.pct;
-    $("level").textContent = pct + "%";
-    $("levelSub").textContent = pct < 20 ? "reabasteça logo" : pct < 50 ? "pela metade" : "bem abastecido";
-    g.style.strokeDashoffset = 182.2 * (1 - pct / 100);
-    g.style.stroke = pct < 20 ? "var(--bad)" : pct < 50 ? "var(--warn)" : "var(--ok)";
-    $("calNow").textContent = s.level.cm + " cm";
+  const medidor = $("medidorValor");
+  if (e.nivel) {
+    const pct = e.nivel.pct;
+    $("nivel").textContent = pct + "%";
+    $("nivelSub").textContent = pct < 20 ? "reabasteça logo" : pct < 50 ? "pela metade" : "bem abastecido";
+    medidor.style.strokeDashoffset = 182.2 * (1 - pct / 100);
+    medidor.style.stroke = pct < 20 ? "var(--erro)" : pct < 50 ? "var(--atencao)" : "var(--bom)";
+    $("calAgora").textContent = e.nivel.cm + " cm";
   } else {
-    $("level").textContent = "--";
-    $("levelSub").textContent = "sem leitura";
-    g.style.strokeDashoffset = 182.2;
-    $("calNow").textContent = "sem leitura";
+    $("nivel").textContent = "--";
+    $("nivelSub").textContent = "sem leitura";
+    medidor.style.strokeDashoffset = 182.2;
+    $("calAgora").textContent = "sem leitura";
   }
 
-  if (s.next) {
-    $("next").textContent = hhmm(s.next.h, s.next.m);
-    $("nextSub").textContent = duration(s.next.in_min) + " · " + plural(s.next.p, "porção", "porções");
+  if (e.proxima) {
+    $("proxima").textContent = horaMinuto(e.proxima.h, e.proxima.m);
+    $("proximaSub").textContent = daquiA(e.proxima.em_min) + " · " + plural(e.proxima.p, "porção", "porções");
   } else {
-    $("next").textContent = "--";
-    $("nextSub").textContent = s.time_ok === false ? "relógio sem hora certa" : "sem horários ativos";
+    $("proxima").textContent = "--";
+    $("proximaSub").textContent = e.hora_ok === false ? "relógio sem hora certa" : "sem horários ativos";
   }
 
-  if (s.env) {
-    $("env").textContent = Math.round(s.env.t) + "°C";
-    $("envSub").textContent = "umidade " + Math.round(s.env.h) + "%" + (s.env.h > 70 ? " (alta)" : "");
+  if (e.ambiente) {
+    $("ambiente").textContent = Math.round(e.ambiente.temp) + "°C";
+    $("ambienteSub").textContent = "umidade " + Math.round(e.ambiente.umid) + "%" + (e.ambiente.umid > 70 ? " (alta)" : "");
   } else {
-    $("env").textContent = "--";
-    $("envSub").textContent = "sem leitura";
+    $("ambiente").textContent = "--";
+    $("ambienteSub").textContent = "sem leitura";
   }
 
-  const h = s.history || [];
-  if (h.length) {
-    $("last").textContent = h[0].ts ? new Date(h[0].ts * 1000).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "--";
-    $("lastSub").textContent = ago(h[0].ts) + " · " + plural(h[0].p, "porção", "porções");
+  const hist = e.historico || [];
+  if (hist.length) {
+    $("ultima").textContent = hist[0].quando ? new Date(hist[0].quando * 1000).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "--";
+    $("ultimaSub").textContent = haQuanto(hist[0].quando) + " · " + plural(hist[0].p, "porção", "porções");
   }
-  const list = $("hist");
-  list.replaceChildren();
-  if (!h.length) {
+  const lista = $("historico");
+  lista.replaceChildren();
+  if (!hist.length) {
     const li = document.createElement("li");
-    li.className = "empty";
+    li.className = "vazio";
     li.textContent = "Nenhuma refeição desde que o alimentador ligou.";
-    list.append(li);
+    lista.append(li);
   }
-  for (const f of h) {
+  for (const r of hist) {
     const li = document.createElement("li");
-    const dot = document.createElement("span");
-    dot.className = "dot" + (f.ok ? "" : " fail");
-    dot.textContent = f.ok ? "✓" : "!";
-    const txt = document.createElement("span");
-    txt.textContent = plural(f.p, "porção", "porções") + " " + (SRC[f.src] || "") + (f.ok ? "" : ": nada caiu");
-    const when = document.createElement("span");
-    when.className = "when";
-    when.textContent = ago(f.ts);
-    li.append(dot, txt, when);
-    list.append(li);
+    const marca = document.createElement("span");
+    marca.className = "marca" + (r.ok ? "" : " falha");
+    marca.textContent = r.ok ? "✓" : "!";
+    const texto = document.createElement("span");
+    texto.textContent = plural(r.p, "porção", "porções") + " " + (ORIGENS[r.origem] || "") + (r.ok ? "" : ": nada caiu");
+    const quando = document.createElement("span");
+    quando.className = "quando";
+    quando.textContent = haQuanto(r.quando);
+    li.append(marca, texto, quando);
+    lista.append(li);
   }
 
-  if (!mealsDirty) {
-    editMeals = (s.meals || []).map((m) => ({ ...m }));
-    renderMeals();
+  if (!agendaAlterada) {
+    agendaEditada = (e.refeicoes || []).map((r) => ({ ...r }));
+    desenharAgenda();
   }
 
   // Ajustes: não sobrescreve o campo que a pessoa está editando
-  const active = document.activeElement;
-  if (active !== $("petName")) $("petName").value = s.name || "";
-  $("beep").checked = !!s.beep;
-  if (s.level_cal) {
-    if (active !== $("calEmpty")) $("calEmpty").value = Math.round(s.level_cal.empty_cm);
-    if (active !== $("calFull")) $("calFull").value = Math.round(s.level_cal.full_cm);
+  const ativo = document.activeElement;
+  if (ativo !== $("nomePet")) $("nomePet").value = e.nome || "";
+  $("bip").checked = !!e.bip;
+  if (e.calibracao) {
+    if (ativo !== $("calVazio")) $("calVazio").value = Math.round(e.calibracao.vazio_cm);
+    if (ativo !== $("calCheio")) $("calCheio").value = Math.round(e.calibracao.cheio_cm);
   }
-  if (s.app_url) $("remoteLink").textContent = s.app_url;
+  if (e.link_app) $("linkRemoto").textContent = e.link_app;
 
   $("app").hidden = false;
 }
 
-function renderMeals() {
-  const box = $("meals");
-  box.replaceChildren();
-  if (!editMeals.length) {
+function desenharAgenda() {
+  const caixa = $("refeicoes");
+  caixa.replaceChildren();
+  if (!agendaEditada.length) {
     const p = document.createElement("div");
-    p.className = "empty";
+    p.className = "vazio";
     p.textContent = "Nenhum horário. Toque em “+ Horário”.";
-    box.append(p);
+    caixa.append(p);
   }
-  editMeals.forEach((m, i) => {
-    const row = document.createElement("div");
-    row.className = "meal";
+  agendaEditada.forEach((r, i) => {
+    const linha = document.createElement("div");
+    linha.className = "refeicao";
 
-    const time = document.createElement("input");
-    time.type = "time";
-    time.value = hhmm(m.h, m.m);
-    time.setAttribute("aria-label", "Horário");
-    time.onchange = () => {
-      const [hh, mm] = time.value.split(":").map(Number);
-      if (!isNaN(hh) && !isNaN(mm)) { m.h = hh; m.m = mm; markDirty(); }
+    const hora = document.createElement("input");
+    hora.type = "time";
+    hora.value = horaMinuto(r.h, r.m);
+    hora.setAttribute("aria-label", "Horário");
+    hora.onchange = () => {
+      const [hh, mm] = hora.value.split(":").map(Number);
+      if (!isNaN(hh) && !isNaN(mm)) { r.h = hh; r.m = mm; marcarAlterada(); }
     };
 
-    const sel = document.createElement("select");
-    sel.setAttribute("aria-label", "Porções");
-    for (let p = 1; p <= CFG.maxPortions; p++) {
+    const escolha = document.createElement("select");
+    escolha.setAttribute("aria-label", "Porções");
+    for (let p = 1; p <= CONFIG.maxPorcoes; p++) {
       const o = document.createElement("option");
       o.value = p;
       o.textContent = p + "×";
-      sel.append(o);
+      escolha.append(o);
     }
-    sel.value = m.p;
-    sel.onchange = () => { m.p = Number(sel.value); markDirty(); };
+    escolha.value = r.p;
+    escolha.onchange = () => { r.p = Number(escolha.value); marcarAlterada(); };
 
-    const sw = document.createElement("label");
-    sw.className = "switch";
-    sw.title = "Ativo";
-    const cb = document.createElement("input");
-    cb.type = "checkbox";
-    cb.checked = m.on !== false;
-    cb.setAttribute("aria-label", "Horário ativo");
-    cb.onchange = () => { m.on = cb.checked; markDirty(); };
-    sw.append(cb, document.createElement("span"));
+    const chave = document.createElement("label");
+    chave.className = "chave";
+    chave.title = "Ativo";
+    const caixaMarcar = document.createElement("input");
+    caixaMarcar.type = "checkbox";
+    caixaMarcar.checked = r.ativa !== false;
+    caixaMarcar.setAttribute("aria-label", "Horário ativo");
+    caixaMarcar.onchange = () => { r.ativa = caixaMarcar.checked; marcarAlterada(); };
+    chave.append(caixaMarcar, document.createElement("span"));
 
-    const del = document.createElement("button");
-    del.className = "icon-btn";
-    del.textContent = "✕";
-    del.setAttribute("aria-label", "Remover horário");
-    del.onclick = () => { editMeals.splice(i, 1); markDirty(); renderMeals(); };
+    const remover = document.createElement("button");
+    remover.className = "botao-icone";
+    remover.textContent = "✕";
+    remover.setAttribute("aria-label", "Remover horário");
+    remover.onclick = () => { agendaEditada.splice(i, 1); marcarAlterada(); desenharAgenda(); };
 
-    row.append(time, sel, sw, del);
-    box.append(row);
+    linha.append(hora, escolha, chave, remover);
+    caixa.append(linha);
   });
-  $("addMeal").disabled = editMeals.length >= CFG.maxMeals;
+  $("novoHorario").disabled = agendaEditada.length >= CONFIG.maxRefeicoes;
 }
 
-function markDirty() {
-  mealsDirty = true;
-  $("saveMeals").disabled = false;
+function marcarAlterada() {
+  agendaAlterada = true;
+  $("salvarAgenda").disabled = false;
 }
 
 // ---------- Envio de comandos ----------
-async function send(cmd) {
-  if (mode === "local") {
-    const r = await fetch("api/cmd", {
+async function enviar(pedido) {
+  if (modo === "local") {
+    const r = await fetch("api/comando", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(cmd),
+      body: JSON.stringify(pedido),
     });
     const j = await r.json();
-    if (j.state) render(j.state);
+    if (j.estado) desenhar(j.estado);
     return j;
   }
   if (!online) throw new Error("Alimentador offline");
   const id = Math.random().toString(36).slice(2, 10);
-  return new Promise((resolve, reject) => {
-    const timer = setTimeout(() => { pending.delete(id); reject(new Error("Sem resposta do alimentador")); }, 8000);
-    pending.set(id, (ack) => { clearTimeout(timer); resolve(ack); });
-    mqttClient.publish(base + "/cmd", JSON.stringify({ ...cmd, id }), { qos: 1 });
+  return new Promise((resolver, rejeitar) => {
+    const limite = setTimeout(() => { pendentes.delete(id); rejeitar(new Error("Sem resposta do alimentador")); }, 8000);
+    pendentes.set(id, (resposta) => { clearTimeout(limite); resolver(resposta); });
+    clienteMqtt.publish(base + "/comando", JSON.stringify({ ...pedido, id }), { qos: 1 });
   });
 }
 
-async function run(cmd, okMsg) {
+async function executar(pedido, textoOk) {
   try {
-    const r = await send(cmd);
-    toast(r.ok ? (okMsg || r.msg) : r.msg);
+    const r = await enviar(pedido);
+    recado(r.ok ? (textoOk || r.mensagem) : r.mensagem);
     return r.ok;
-  } catch (e) {
-    toast(e.message);
+  } catch (erro) {
+    recado(erro.message);
     return false;
   }
 }
 
 // ---------- Modo local (página servida pela ESP32) ----------
-async function fetchState() {
-  const r = await fetch("api/state", { cache: "no-store" });
+async function buscarEstado() {
+  const r = await fetch("api/estado", { cache: "no-store" });
   if (!r.ok) throw new Error(r.status);
   return r.json();
 }
 
-function startLocal(first) {
-  mode = "local";
-  $("localOnly").hidden = false;
-  render(first);
+function iniciarLocal(primeiro) {
+  modo = "local";
+  $("soLocal").hidden = false;
+  desenhar(primeiro);
   // Sem internet o relógio da ESP32 não acerta; o navegador empresta a hora.
-  if (!first.time_ok) send({ cmd: "time", epoch: Math.floor(Date.now() / 1000) }).catch(() => {});
+  if (!primeiro.hora_ok) enviar({ comando: "acertar_hora", unix: Math.floor(Date.now() / 1000) }).catch(() => {});
   setInterval(async () => {
     if (document.hidden) return;
-    try { render(await fetchState()); }
-    catch { setPill("bad", "Sem resposta"); }
+    try { desenhar(await buscarEstado()); }
+    catch { mudarSelo("erro", "Sem resposta"); }
   }, 3000);
 }
 
 // ---------- Modo remoto (GitHub Pages + MQTT) ----------
-function loadScript(src) {
-  return new Promise((ok, fail) => {
+function carregarScript(src) {
+  return new Promise((ok, falha) => {
     const s = document.createElement("script");
-    s.src = src; s.onload = ok; s.onerror = fail;
+    s.src = src; s.onload = ok; s.onerror = falha;
     document.head.append(s);
   });
 }
 
-function getCode() {
-  const q = new URLSearchParams(location.search).get("d");
-  let code = q;
+function lerCodigo() {
+  const daUrl = new URLSearchParams(location.search).get("d");
+  let codigo = daUrl;
   try {
-    if (q) localStorage.setItem("feeder.code", q);
-    else code = localStorage.getItem("feeder.code");
+    if (daUrl) localStorage.setItem("alimentador.codigo", daUrl);
+    else codigo = localStorage.getItem("alimentador.codigo");
   } catch {}
-  return code && /^[0-9a-f]{16}$/i.test(code) ? code.toLowerCase() : null;
+  return codigo && /^[0-9a-f]{16}$/i.test(codigo) ? codigo.toLowerCase() : null;
 }
 
-async function startRemote() {
-  mode = "remote";
-  const code = getCode();
-  if (!code) {
-    $("connectCard").hidden = false;
-    setPill("", "Sem código");
-    $("subtitle").textContent = "Informe o código do seu alimentador";
+async function iniciarRemoto() {
+  modo = "remoto";
+  const codigo = lerCodigo();
+  if (!codigo) {
+    $("cartaoConectar").hidden = false;
+    mudarSelo("", "Sem código");
+    $("subtitulo").textContent = "Informe o código do seu alimentador";
     return;
   }
-  $("remoteOnly").hidden = false;
-  base = CFG.prefix + "/" + code;
-  setPill("warn", "Conectando");
-  try { await loadScript(CFG.mqttLib); }
-  catch { setPill("bad", "Sem internet"); return; }
+  $("soRemoto").hidden = false;
+  base = CONFIG.prefixo + "/" + codigo;
+  mudarSelo("atencao", "Conectando");
+  try { await carregarScript(CONFIG.bibliotecaMqtt); }
+  catch { mudarSelo("erro", "Sem internet"); return; }
 
-  mqttClient = mqtt.connect(CFG.broker, {
+  clienteMqtt = mqtt.connect(CONFIG.broker, {
     clientId: "app-" + Math.random().toString(16).slice(2, 10),
     reconnectPeriod: 3000,
     connectTimeout: 10000,
   });
-  mqttClient.on("connect", () => {
-    mqttClient.subscribe([base + "/state", base + "/event", base + "/online"], { qos: 1 });
-    if (!state) $("subtitle").textContent = "Esperando o alimentador...";
+  clienteMqtt.on("connect", () => {
+    clienteMqtt.subscribe([base + "/estado", base + "/evento", base + "/online"], { qos: 1 });
+    if (!estado) $("subtitulo").textContent = "Esperando o alimentador...";
   });
-  mqttClient.on("offline", () => setPill("bad", "Sem internet"));
-  mqttClient.on("message", (topic, payload) => {
-    const leaf = topic.slice(base.length + 1);
-    const text = payload.toString();
-    if (leaf === "online") {
-      online = text === "1";
-      if (state) render(state);
-      else if (!online) { setPill("bad", "Offline"); $("subtitle").textContent = "O alimentador está sem internet"; }
+  clienteMqtt.on("offline", () => mudarSelo("erro", "Sem internet"));
+  clienteMqtt.on("message", (topico, conteudo) => {
+    const folha = topico.slice(base.length + 1);
+    const texto = conteudo.toString();
+    if (folha === "online") {
+      online = texto === "1";
+      if (estado) desenhar(estado);
+      else if (!online) { mudarSelo("erro", "Offline"); $("subtitulo").textContent = "O alimentador está sem internet"; }
       return;
     }
     let j;
-    try { j = JSON.parse(text); } catch { return; }
-    if (leaf === "state") { online = true; render(j); }
-    else if (leaf === "event") {
-      if (j.type === "ack" && j.id && pending.has(j.id)) { pending.get(j.id)(j); pending.delete(j.id); }
-      else if (j.type === "fed" && !j.ok) toast("A ração não caiu! Confira o tubo.");
-      else if (j.type === "low_food") toast("Ração acabando!");
+    try { j = JSON.parse(texto); } catch { return; }
+    if (folha === "estado") { online = true; desenhar(j); }
+    else if (folha === "evento") {
+      if (j.tipo === "resposta" && j.id && pendentes.has(j.id)) { pendentes.get(j.id)(j); pendentes.delete(j.id); }
+      else if (j.tipo === "alimentado" && !j.ok) recado("A ração não caiu! Confira o tubo.");
+      else if (j.tipo === "racao_baixa") recado("Ração acabando!");
     }
   });
 }
 
 // ---------- Ações ----------
-function setPortions(n) {
-  portions = Math.min(CFG.maxPortions, Math.max(1, n));
-  $("qty").textContent = portions;
-  $("qtyLabel").textContent = portions === 1 ? "porção" : "porções";
+function mudarPorcoes(n) {
+  porcoes = Math.min(CONFIG.maxPorcoes, Math.max(1, n));
+  $("qtd").textContent = porcoes;
+  $("rotuloQtd").textContent = porcoes === 1 ? "porção" : "porções";
 }
-$("minus").onclick = () => setPortions(portions - 1);
-$("plus").onclick = () => setPortions(portions + 1);
-$("feed").onclick = () => run({ cmd: "feed", portions });
+$("menos").onclick = () => mudarPorcoes(porcoes - 1);
+$("mais").onclick = () => mudarPorcoes(porcoes + 1);
+$("alimentar").onclick = () => executar({ comando: "alimentar", porcoes });
 
-$("addMeal").onclick = () => {
-  if (editMeals.length >= CFG.maxMeals) return;
-  const last = editMeals[editMeals.length - 1];
-  editMeals.push({ h: last ? (last.h + 6) % 24 : 8, m: last ? last.m : 0, p: 1, on: true });
-  markDirty();
-  renderMeals();
+$("novoHorario").onclick = () => {
+  if (agendaEditada.length >= CONFIG.maxRefeicoes) return;
+  const ultima = agendaEditada[agendaEditada.length - 1];
+  agendaEditada.push({ h: ultima ? (ultima.h + 6) % 24 : 8, m: ultima ? ultima.m : 0, p: 1, ativa: true });
+  marcarAlterada();
+  desenharAgenda();
 };
-$("saveMeals").onclick = async () => {
-  const meals = editMeals.map((m) => ({ h: m.h, m: m.m, p: m.p, on: m.on !== false }));
-  if (await run({ cmd: "schedule", meals }, "Agenda salva")) {
-    mealsDirty = false;
-    $("saveMeals").disabled = true;
+$("salvarAgenda").onclick = async () => {
+  const refeicoes = agendaEditada.map((r) => ({ h: r.h, m: r.m, p: r.p, ativa: r.ativa !== false }));
+  if (await executar({ comando: "agenda", refeicoes }, "Agenda salva")) {
+    agendaAlterada = false;
+    $("salvarAgenda").disabled = true;
   }
 };
 
-$("calSetEmpty").onclick = () => { if (state && state.level) $("calEmpty").value = Math.round(state.level.cm); };
-$("calSetFull").onclick = () => { if (state && state.level) $("calFull").value = Math.round(state.level.cm); };
-$("saveSettings").onclick = () => run({
-  cmd: "settings",
-  name: $("petName").value.trim() || "Pet",
-  beep: $("beep").checked,
-  level_empty_cm: Number($("calEmpty").value),
-  level_full_cm: Number($("calFull").value),
+$("usarVazio").onclick = () => { if (estado && estado.nivel) $("calVazio").value = Math.round(estado.nivel.cm); };
+$("usarCheio").onclick = () => { if (estado && estado.nivel) $("calCheio").value = Math.round(estado.nivel.cm); };
+$("salvarAjustes").onclick = () => executar({
+  comando: "ajustes",
+  nome: $("nomePet").value.trim() || "Pet",
+  bip: $("bip").checked,
+  nivel_vazio_cm: Number($("calVazio").value),
+  nivel_cheio_cm: Number($("calCheio").value),
 }, "Ajustes salvos");
-$("alarmClear").onclick = () => run({ cmd: "clear_alarm" });
+$("limparAviso").onclick = () => executar({ comando: "limpar_alarme" });
 
-$("copyLink").onclick = async () => {
-  try { await navigator.clipboard.writeText($("remoteLink").textContent); toast("Link copiado"); }
-  catch { toast("Copie o link manualmente"); }
+$("copiarLink").onclick = async () => {
+  try { await navigator.clipboard.writeText($("linkRemoto").textContent); recado("Link copiado"); }
+  catch { recado("Copie o link manualmente"); }
 };
-$("wifiReset").onclick = () => {
+$("esquecerWifi").onclick = () => {
   if (confirm("Apagar o Wi-Fi salvo? O alimentador reinicia e cria a rede de configuração de novo."))
-    run({ cmd: "wifi_reset" });
+    executar({ comando: "esquecer_wifi" });
 };
-$("forget").onclick = () => {
-  try { localStorage.removeItem("feeder.code"); } catch {}
+$("trocarAlimentador").onclick = () => {
+  try { localStorage.removeItem("alimentador.codigo"); } catch {}
   location.href = location.pathname;
 };
-$("codeSave").onclick = () => {
-  const c = $("codeInput").value.trim().toLowerCase();
-  if (!/^[0-9a-f]{16}$/.test(c)) { toast("O código tem 16 caracteres (0-9 e a-f)"); return; }
+$("salvarCodigo").onclick = () => {
+  const c = $("campoCodigo").value.trim().toLowerCase();
+  if (!/^[0-9a-f]{16}$/.test(c)) { recado("O código tem 16 caracteres (0-9 e a-f)"); return; }
   location.href = location.pathname + "?d=" + c;
 };
 
 // ---------- Início ----------
 (async () => {
-  setPortions(1);
+  mudarPorcoes(1);
   try {
-    const ctl = new AbortController();
-    setTimeout(() => ctl.abort(), 2500);
-    const r = await fetch("api/state", { cache: "no-store", signal: ctl.signal });
+    const cancelar = new AbortController();
+    setTimeout(() => cancelar.abort(), 2500);
+    const r = await fetch("api/estado", { cache: "no-store", signal: cancelar.signal });
     const j = r.ok ? await r.json() : null;
-    if (j && j.fw) return startLocal(j);
+    if (j && j.firmware) return iniciarLocal(j);
   } catch {}
-  startRemote();
+  iniciarRemoto();
 })();
 </script>
 </body>
