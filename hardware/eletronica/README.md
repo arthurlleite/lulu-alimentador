@@ -51,7 +51,7 @@ flowchart LR
 | **Buzzer ativo (módulo)** | VCC | 3V3 | |
 | | GND | GND | |
 | | I/O ou S | GPIO 16 | |
-| **LED RGB catodo comum** | perna longa (catodo) | GND | se for anodo comum, ligue no 3V3 e ative `FEEDER_LED_COMMON_ANODE` |
+| **LED RGB catodo comum** | perna longa (catodo) | GND | se for anodo comum, ligue no 3V3 e ative `ALIM_LED_ANODO_COMUM` |
 | | R | **220 Ω** → GPIO 17 | |
 | | G | **220 Ω** → GPIO 18 | |
 | | B | **220 Ω** → GPIO 8 | |

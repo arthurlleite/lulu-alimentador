@@ -50,8 +50,8 @@ jobs:
             0x0 $b/esp32s3/bootloader.bin 0x8000 $b/esp32s3/partitions.bin 0x10000 $b/esp32s3/firmware.bin
           esptool.py --chip esp32 merge_bin -o _site/firmware/esp32.bin --flash_size keep \
             0x1000 $b/esp32/bootloader.bin 0x8000 $b/esp32/partitions.bin 0x10000 $b/esp32/firmware.bin
-          version=$(grep -oP 'FW_VERSION "\K[^"]+' firmware/src/app.h)
-          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$version\"/" _site/firmware/manifest.json
+          versao=$(grep -oP 'VERSAO_FIRMWARE "\K[^"]+' firmware/src/estado.h)
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$versao\"/" _site/firmware/manifest.json
           ls -la _site _site/firmware
 
       - uses: actions/upload-artifact@v4
