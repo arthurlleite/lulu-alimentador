@@ -10,7 +10,7 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 |---|---|---|---|---|
 | 1 | **ESP32-S3-DevKitC-1 N16R8** (USB-C) | 1 | ✅ **já possui** | ESP32 atual, com Wi-Fi 2,4 GHz + Bluetooth 5 (LE), dois núcleos de 240 MHz, 16 MB de flash e 8 MB de PSRAM. Compatível com ESP-IDF. A versão N8R2 também serve. |
 | 2 | **Servo MG996R 180°** (engrenagem metálica) | 1 | ✅ **já possui** | O [suporte do motor](../hardware/3d/README.md) foi desenhado para ele (54 mm entre as abas). Torque de ~10 kgf·cm: não trava com ração seca. **Compre o de 180°, não o "360°"**: o firmware posiciona o servo por ângulo. |
-| 3 | **Sensor ultrassônico HC-SR04** | 1 | R$ 8 – 14 | Nível de ração no tubo (sugestão de um comentário no vídeo do projeto: infravermelho tem alcance curto). |
+| 3 | **Sensor ultrassônico HC-SR04** | 1 | R$ 8 – 14 | Opcional: mede o nível de ração no tubo e avisa quando está acabando. Se não quiser usar, desligue `ALIM_SENSOR_NIVEL` no menuconfig. |
 | 4 | **Módulo DHT11** (3 pinos, com resistor) | 1 | R$ 10 – 15 (estimado) | Temperatura e umidade dentro do reservatório. |
 | 5 | **Sensor IR de obstáculo** (FC-51 ou "bloqueio de luz") | 1 | R$ 5 – 10 (estimado) | Confirma que a ração caiu, como o sensor de saída do PETLIBRO. |
 | 6 | **Módulo buzzer ativo** | 1 | R$ 4 – 8 (estimado) | Bipa para chamar o pet e avisa erro. |
