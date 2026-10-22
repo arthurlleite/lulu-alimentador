@@ -86,7 +86,9 @@ flowchart LR
   ESP -->|NTP| NTP[(a.st1.ntp.br)]
 ```
 
-Detalhes: [firmware](firmware/README.md) · [ligações elétricas](hardware/eletronica/README.md) · [peças 3D](hardware/3d/README.md) · [hospedagem e segurança](documentacao/hospedagem.md).
+<p align="center"><a href="hardware/eletronica/README.md"><img src="hardware/eletronica/esquematico.png" width="720" alt="Pré-esquemático da eletrônica"></a></p>
+
+Detalhes: [firmware](firmware/README.md) · [pré-esquemático e ligações](hardware/eletronica/README.md) · [peças 3D](hardware/3d/README.md) · [hospedagem e segurança](documentacao/hospedagem.md).
 
 ## Produto de referência
 
@@ -162,7 +164,7 @@ lulu-alimentador/
 │   │   ├── IoT3D.FCStd    → modelo original no FreeCAD
 │   │   ├── stl/           → peças prontas para fatiar
 │   │   └── imagens/       → renders das peças
-│   └── eletronica/        → ligações, pinos e esquema
+│   └── eletronica/        → pré-esquemático, ligações e pinos
 ├── documentacao/          → compras, montagem, referência comercial, hospedagem
 └── ferramentas/           → scripts (arte do Lulu, exportação do 3D)
 ```

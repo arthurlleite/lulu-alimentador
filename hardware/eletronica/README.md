@@ -2,7 +2,15 @@
 
 Tudo é alimentado por **uma fonte de 5 V / 3 A**. O servo puxa picos de mais de 1 A ao arrancar, por isso ele **não** pode ser ligado no pino de 5 V que vem do USB do computador.
 
-## Diagrama
+## Pré-esquemático
+
+[![Pré-esquemático da eletrônica](esquematico.png)](esquematico.svg)
+
+Versão vetorial: [`esquematico.svg`](esquematico.svg) (abre em qualquer navegador e dá para dar zoom). O desenho é gerado por [`ferramentas/esquematico.py`](../../ferramentas/esquematico.py): para mudar um pino, edite o script e rode `python ferramentas/esquematico.py` na raiz do repositório.
+
+As ligações usam **etiquetas de rede**, como no [KiCad](https://www.kicad.org/): pontos com a mesma etiqueta (`5V`, `GND`, `3V3`, `SERVO`...) estão ligados pelo mesmo fio.
+
+## Diagrama de blocos
 
 ```mermaid
 flowchart LR
