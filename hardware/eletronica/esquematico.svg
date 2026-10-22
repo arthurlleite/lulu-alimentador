@@ -1,0 +1,278 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1060" width="1500" height="1060" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+<rect width="1500" height="1060" fill="#ffffff"/>
+<text x="30" y="44" font-size="22" font-weight="bold" fill="#2b2118" text-anchor="start">Lulu · Alimentador Automático de Pets — pré-esquemático da eletrônica</text>
+<text x="30" y="68" font-size="13.5" font-weight="normal" fill="#8a7461" text-anchor="start">ESP32-S3-DevKitC-1 · etiquetas iguais = mesmo fio · valores entre parênteses são da ESP32 clássica</text>
+<rect x="30" y="95" width="330" height="250" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="42" y="117" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">Alimentação</text>
+<text x="42" y="135" font-size="12" font-weight="normal" fill="#8a7461" text-anchor="start">fonte externa, GND comum a tudo</text>
+<rect x="60" y="160" width="90" height="70" rx="8" fill="#fff" stroke="#222" stroke-width="2"/>
+<text x="105" y="190" font-size="14" font-weight="bold" fill="#222" text-anchor="middle">Fonte</text>
+<text x="105" y="208" font-size="13" font-weight="normal" fill="#222" text-anchor="middle">5 V / 3 A</text>
+<line x1="150" y1="175" x2="200" y2="175" stroke="#d62828" stroke-width="2"/>
+<text x="158" y="170" font-size="14" font-weight="bold" fill="#d62828" text-anchor="start">+</text>
+<line x1="150" y1="215" x2="200" y2="215" stroke="#333333" stroke-width="2"/>
+<text x="158" y="232" font-size="16" font-weight="bold" fill="#333333" text-anchor="start">−</text>
+<polygon points="200,175 208,165 236.4,165 236.4,185 208,185" fill="#fff" stroke="#d62828" stroke-width="1.6"/>
+<text x="222.2" y="180" font-size="12.5" font-weight="bold" fill="#d62828" text-anchor="middle">5V</text>
+<polygon points="200,215 208,205 244.6,205 244.6,225 208,225" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="226.3" y="220" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<text x="60" y="266" font-size="12.5" font-weight="bold" fill="#222" text-anchor="start">C1 1000 µF / 10 V (perto do servo)</text>
+<line x1="105" y1="285" x2="105" y2="299" stroke="#d62828" stroke-width="2"/>
+<line x1="88" y1="299" x2="122" y2="299" stroke="#222" stroke-width="2.5"/>
+<path d="M88 311 Q105 303 122 311" fill="none" stroke="#222" stroke-width="2.5"/>
+<line x1="105" y1="307" x2="105" y2="325" stroke="#333333" stroke-width="2"/>
+<text x="80" y="296" font-size="14" font-weight="bold" fill="#d62828" text-anchor="start">+</text>
+<line x1="105" y1="285" x2="160" y2="285" stroke="#d62828" stroke-width="2"/>
+<polygon points="160,285 168,275 196.4,275 196.4,295 168,295" fill="#fff" stroke="#d62828" stroke-width="1.6"/>
+<text x="182.2" y="290" font-size="12.5" font-weight="bold" fill="#d62828" text-anchor="middle">5V</text>
+<line x1="105" y1="325" x2="160" y2="325" stroke="#333333" stroke-width="2"/>
+<polygon points="160,325 168,315 204.6,315 204.6,335 168,335" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="186.3" y="330" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<text x="132" y="310" font-size="12.5" font-weight="bold" fill="#222" text-anchor="start">C1</text>
+<rect x="470" y="95" width="270" height="640" rx="12" fill="#eef4ff" stroke="#1d5fbf" stroke-width="2.5"/>
+<text x="605.0" y="125" font-size="17" font-weight="bold" fill="#1d3f7a" text-anchor="middle">ESP32-S3-DevKitC-1</text>
+<text x="605.0" y="145" font-size="12.5" font-weight="normal" fill="#4a6696" text-anchor="middle">N16R8 · Wi-Fi 2,4 GHz · USB-C</text>
+<line x1="470" y1="205" x2="430" y2="205" stroke="#d62828" stroke-width="2"/>
+<circle cx="470" cy="205" r="3" fill="#d62828"/>
+<polygon points="430,205 422,195 393.6,195 393.6,215 422,215" fill="#fff" stroke="#d62828" stroke-width="1.6"/>
+<text x="407.8" y="210" font-size="12.5" font-weight="bold" fill="#d62828" text-anchor="middle">5V</text>
+<text x="480" y="210" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="start">5V</text>
+<line x1="470" y1="250" x2="430" y2="250" stroke="#333333" stroke-width="2"/>
+<circle cx="470" cy="250" r="3" fill="#333333"/>
+<polygon points="430,250 422,240 385.4,240 385.4,260 422,260" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="403.7" y="255" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<text x="480" y="255" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="start">GND</text>
+<line x1="470" y1="295" x2="430" y2="295" stroke="#e07a00" stroke-width="2"/>
+<circle cx="470" cy="295" r="3" fill="#e07a00"/>
+<polygon points="430,295 422,285 385.4,285 385.4,305 422,305" fill="#fff" stroke="#e07a00" stroke-width="1.6"/>
+<text x="403.7" y="300" font-size="12.5" font-weight="bold" fill="#e07a00" text-anchor="middle">3V3</text>
+<text x="480" y="300" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="start">3V3</text>
+<line x1="740" y1="205" x2="780" y2="205" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="205" r="3" fill="#1d5fbf"/>
+<polygon points="780,205 788,195 841.0,195 841.0,215 788,215" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="814.5" y="210" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">SERVO</text>
+<text x="730" y="210" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 4 (18)</text>
+<line x1="740" y1="251" x2="780" y2="251" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="251" r="3" fill="#1d5fbf"/>
+<polygon points="780,251 788,241 832.8,241 832.8,261 788,261" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="810.4" y="256" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">TRIG</text>
+<text x="730" y="256" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 5 (25)</text>
+<line x1="740" y1="297" x2="780" y2="297" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="297" r="3" fill="#1d5fbf"/>
+<polygon points="780,297 788,287 865.6,287 865.6,307 788,307" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="826.8" y="302" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">ECHO_3V3</text>
+<text x="730" y="302" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 6 (34)</text>
+<line x1="740" y1="343" x2="780" y2="343" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="343" r="3" fill="#1d5fbf"/>
+<polygon points="780,343 788,333 824.6,333 824.6,353 788,353" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="806.3" y="348" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">DHT</text>
+<text x="730" y="348" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 7 (4)</text>
+<line x1="740" y1="389" x2="780" y2="389" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="389" r="3" fill="#1d5fbf"/>
+<polygon points="780,389 788,379 865.6,379 865.6,399 788,399" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="826.8" y="394" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">IR_SAIDA</text>
+<text x="730" y="394" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 9 (32)</text>
+<line x1="740" y1="435" x2="780" y2="435" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="435" r="3" fill="#1d5fbf"/>
+<polygon points="780,435 788,425 841.0,425 841.0,445 788,445" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="814.5" y="440" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">BOTAO</text>
+<text x="730" y="440" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 15 (27)</text>
+<line x1="740" y1="481" x2="780" y2="481" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="481" r="3" fill="#1d5fbf"/>
+<polygon points="780,481 788,471 849.2,471 849.2,491 788,491" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="818.6" y="486" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">BUZZER</text>
+<text x="730" y="486" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 16 (26)</text>
+<line x1="740" y1="527" x2="780" y2="527" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="527" r="3" fill="#1d5fbf"/>
+<polygon points="780,527 788,517 841.0,517 841.0,537 788,537" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="814.5" y="532" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">LED_R</text>
+<text x="730" y="532" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 17 (21)</text>
+<line x1="740" y1="573" x2="780" y2="573" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="573" r="3" fill="#1d5fbf"/>
+<polygon points="780,573 788,563 841.0,563 841.0,583 788,583" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="814.5" y="578" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">LED_G</text>
+<text x="730" y="578" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 18 (22)</text>
+<line x1="740" y1="619" x2="780" y2="619" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="740" cy="619" r="3" fill="#1d5fbf"/>
+<polygon points="780,619 788,609 841.0,609 841.0,629 788,629" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="814.5" y="624" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">LED_B</text>
+<text x="730" y="624" font-size="13" font-weight="bold" fill="#1d3f7a" text-anchor="end">GPIO 8 (23)</text>
+<text x="484" y="677" font-size="12" font-weight="normal" fill="#4a6696" text-anchor="start">GPIO 0 = botão BOOT da própria placa:</text>
+<text x="484" y="695" font-size="12" font-weight="normal" fill="#4a6696" text-anchor="start">faz o mesmo que o botão externo</text>
+<text x="484" y="713" font-size="12" font-weight="normal" fill="#4a6696" text-anchor="start">(não precisa ligar nada)</text>
+<rect x="900" y="95" width="270" height="150" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="912" y="117" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">Servo MG996R</text>
+<text x="912" y="135" font-size="12" font-weight="normal" fill="#8a7461" text-anchor="start">180°, alimentado direto da fonte</text>
+<line x1="1020" y1="165" x2="1060" y2="165" stroke="#d62828" stroke-width="2"/>
+<circle cx="1020" cy="165" r="3" fill="#d62828"/>
+<text x="1014" y="170" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">vermelho</text>
+<polygon points="1060,165 1068,155 1096.4,155 1096.4,175 1068,175" fill="#fff" stroke="#d62828" stroke-width="1.6"/>
+<text x="1082.2" y="170" font-size="12.5" font-weight="bold" fill="#d62828" text-anchor="middle">5V</text>
+<line x1="1020" y1="195" x2="1060" y2="195" stroke="#333333" stroke-width="2"/>
+<circle cx="1020" cy="195" r="3" fill="#333333"/>
+<text x="1014" y="200" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">marrom</text>
+<polygon points="1060,195 1068,185 1104.6,185 1104.6,205 1068,205" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="1086.3" y="200" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<line x1="1020" y1="225" x2="1060" y2="225" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="1020" cy="225" r="3" fill="#1d5fbf"/>
+<text x="1014" y="230" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">laranja (sinal)</text>
+<polygon points="1060,225 1068,215 1121.0,215 1121.0,235 1068,235" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1094.5" y="230" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">SERVO</text>
+<rect x="900" y="265" width="270" height="250" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="912" y="287" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">HC-SR04 (nível)</text>
+<text x="912" y="305" font-size="12" font-weight="normal" fill="#8a7461" text-anchor="start">na tampa de cima, apontando para baixo</text>
+<line x1="1010" y1="335" x2="1050" y2="335" stroke="#d62828" stroke-width="2"/>
+<circle cx="1010" cy="335" r="3" fill="#d62828"/>
+<text x="1004" y="340" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">VCC</text>
+<polygon points="1050,335 1058,325 1086.4,325 1086.4,345 1058,345" fill="#fff" stroke="#d62828" stroke-width="1.6"/>
+<text x="1072.2" y="340" font-size="12.5" font-weight="bold" fill="#d62828" text-anchor="middle">5V</text>
+<line x1="1010" y1="365" x2="1050" y2="365" stroke="#333333" stroke-width="2"/>
+<circle cx="1010" cy="365" r="3" fill="#333333"/>
+<text x="1004" y="370" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">GND</text>
+<polygon points="1050,365 1058,355 1094.6,355 1094.6,375 1058,375" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="1076.3" y="370" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<line x1="1010" y1="395" x2="1050" y2="395" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="1010" cy="395" r="3" fill="#1d5fbf"/>
+<text x="1004" y="400" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">TRIG</text>
+<polygon points="1050,395 1058,385 1102.8,385 1102.8,405 1058,405" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1080.4" y="400" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">TRIG</text>
+<text x="914" y="430" font-size="12.5" font-weight="bold" fill="#444" text-anchor="start">ECHO (5 V) → divisor → 3,3 V</text>
+<circle cx="930" cy="460" r="3" fill="#1d5fbf"/>
+<text x="914" y="450" font-size="12" font-weight="normal" fill="#444" text-anchor="start">ECHO</text>
+<line x1="930" y1="460" x2="960" y2="460" stroke="#1d5fbf" stroke-width="2"/>
+<rect x="960" y="453" width="34" height="14" fill="#fff" stroke="#222" stroke-width="2"/>
+<text x="977" y="448" font-size="12.5" font-weight="bold" fill="#222" text-anchor="middle">R1 1 kΩ</text>
+<line x1="994" y1="460" x2="1040" y2="460" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="1040" cy="460" r="3.5" fill="#1d5fbf"/>
+<polygon points="1040,460 1048,450 1125.6,450 1125.6,470 1048,470" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1086.8" y="465" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">ECHO_3V3</text>
+<line x1="1040" y1="460" x2="1040" y2="470" stroke="#1d5fbf" stroke-width="2"/>
+<rect x="1033" y="470" width="14" height="34" fill="#fff" stroke="#222" stroke-width="2"/>
+<text x="1052" y="492" font-size="12.5" font-weight="bold" fill="#222" text-anchor="start">R2 2 kΩ</text>
+<line x1="1040" y1="504" x2="1040" y2="510" stroke="#333333" stroke-width="2"/>
+<text x="1052" y="512" font-size="12" font-weight="bold" fill="#333333" text-anchor="start">GND</text>
+<rect x="900" y="535" width="270" height="145" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="912" y="557" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">DHT11 (módulo 3 pinos)</text>
+<text x="912" y="575" font-size="12" font-weight="normal" fill="#8a7461" text-anchor="start">temperatura e umidade no tubo</text>
+<line x1="1010" y1="605" x2="1050" y2="605" stroke="#e07a00" stroke-width="2"/>
+<circle cx="1010" cy="605" r="3" fill="#e07a00"/>
+<text x="1004" y="610" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">VCC</text>
+<polygon points="1050,605 1058,595 1094.6,595 1094.6,615 1058,615" fill="#fff" stroke="#e07a00" stroke-width="1.6"/>
+<text x="1076.3" y="610" font-size="12.5" font-weight="bold" fill="#e07a00" text-anchor="middle">3V3</text>
+<line x1="1010" y1="635" x2="1050" y2="635" stroke="#333333" stroke-width="2"/>
+<circle cx="1010" cy="635" r="3" fill="#333333"/>
+<text x="1004" y="640" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">GND</text>
+<polygon points="1050,635 1058,625 1094.6,625 1094.6,645 1058,645" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="1076.3" y="640" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<line x1="1010" y1="665" x2="1050" y2="665" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="1010" cy="665" r="3" fill="#1d5fbf"/>
+<text x="1004" y="670" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">DATA</text>
+<polygon points="1050,665 1058,655 1094.6,655 1094.6,675 1058,675" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1076.3" y="670" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">DHT</text>
+<rect x="900" y="700" width="270" height="145" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="912" y="722" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">Sensor IR (FC-51)</text>
+<text x="912" y="740" font-size="12" font-weight="normal" fill="#8a7461" text-anchor="start">na saída da ração</text>
+<line x1="1010" y1="770" x2="1050" y2="770" stroke="#e07a00" stroke-width="2"/>
+<circle cx="1010" cy="770" r="3" fill="#e07a00"/>
+<text x="1004" y="775" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">VCC</text>
+<polygon points="1050,770 1058,760 1094.6,760 1094.6,780 1058,780" fill="#fff" stroke="#e07a00" stroke-width="1.6"/>
+<text x="1076.3" y="775" font-size="12.5" font-weight="bold" fill="#e07a00" text-anchor="middle">3V3</text>
+<line x1="1010" y1="800" x2="1050" y2="800" stroke="#333333" stroke-width="2"/>
+<circle cx="1010" cy="800" r="3" fill="#333333"/>
+<text x="1004" y="805" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">GND</text>
+<polygon points="1050,800 1058,790 1094.6,790 1094.6,810 1058,810" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="1076.3" y="805" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<line x1="1010" y1="830" x2="1050" y2="830" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="1010" cy="830" r="3" fill="#1d5fbf"/>
+<text x="1004" y="835" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">OUT</text>
+<polygon points="1050,830 1058,820 1135.6,820 1135.6,840 1058,840" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1096.8" y="835" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">IR_SAIDA</text>
+<rect x="1200" y="95" width="270" height="145" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="1212" y="117" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">Buzzer ativo (módulo)</text>
+<text x="1212" y="135" font-size="12" font-weight="normal" fill="#8a7461" text-anchor="start">chama o pet e avisa erro</text>
+<line x1="1310" y1="165" x2="1350" y2="165" stroke="#e07a00" stroke-width="2"/>
+<circle cx="1310" cy="165" r="3" fill="#e07a00"/>
+<text x="1304" y="170" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">VCC</text>
+<polygon points="1350,165 1358,155 1394.6,155 1394.6,175 1358,175" fill="#fff" stroke="#e07a00" stroke-width="1.6"/>
+<text x="1376.3" y="170" font-size="12.5" font-weight="bold" fill="#e07a00" text-anchor="middle">3V3</text>
+<line x1="1310" y1="195" x2="1350" y2="195" stroke="#333333" stroke-width="2"/>
+<circle cx="1310" cy="195" r="3" fill="#333333"/>
+<text x="1304" y="200" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">GND</text>
+<polygon points="1350,195 1358,185 1394.6,185 1394.6,205 1358,205" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="1376.3" y="200" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<line x1="1310" y1="225" x2="1350" y2="225" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="1310" cy="225" r="3" fill="#1d5fbf"/>
+<text x="1304" y="230" font-size="12.5" font-weight="normal" fill="#444" text-anchor="end">I/O</text>
+<polygon points="1350,225 1358,215 1419.2,215 1419.2,235 1358,235" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1388.6" y="230" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">BUZZER</text>
+<rect x="1200" y="260" width="270" height="120" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="1212" y="282" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">Botão</text>
+<text x="1212" y="300" font-size="12" font-weight="normal" fill="#8a7461" text-anchor="start">toque = 1 porção · 5 s = apagar Wi-Fi</text>
+<line x1="1280" y1="345" x2="1320" y2="345" stroke="#1d5fbf" stroke-width="2"/>
+<circle cx="1320" cy="345" r="3" fill="#222"/>
+<line x1="1322" y1="343" x2="1360" y2="329" stroke="#222" stroke-width="2.5"/>
+<circle cx="1362" cy="345" r="3" fill="#222"/>
+<line x1="1362" y1="345" x2="1400" y2="345" stroke="#333333" stroke-width="2"/>
+<polygon points="1280,345 1272,335 1219.0,335 1219.0,355 1272,355" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1245.5" y="350" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">BOTAO</text>
+<polygon points="1400,345 1408,335 1444.6,335 1444.6,355 1408,355" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="1426.3" y="350" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<text x="1340" y="371" font-size="11.5" font-weight="normal" fill="#8a7461" text-anchor="middle">pull-up interno</text>
+<rect x="1200" y="400" width="270" height="205" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="1212" y="422" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">LED RGB catodo comum</text>
+<text x="1212" y="440" font-size="12" font-weight="normal" fill="#8a7461" text-anchor="start">status: azul, amarelo, verde...</text>
+<polygon points="1280,475 1272,465 1219.0,465 1219.0,485 1272,485" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1245.5" y="480" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">LED_R</text>
+<line x1="1280" y1="475" x2="1298" y2="475" stroke="#1d5fbf" stroke-width="2"/>
+<rect x="1298" y="468" width="34" height="14" fill="#fff" stroke="#222" stroke-width="2"/>
+<text x="1315" y="463" font-size="12.5" font-weight="bold" fill="#222" text-anchor="middle">220 Ω</text>
+<line x1="1332" y1="475" x2="1358" y2="475" stroke="#222" stroke-width="2"/>
+<polygon points="1358,466 1358,484 1376,475" fill="#e53935" stroke="#222" stroke-width="1.5"/>
+<line x1="1376" y1="466" x2="1376" y2="484" stroke="#222" stroke-width="2.5"/>
+<line x1="1376" y1="475" x2="1408" y2="475" stroke="#222" stroke-width="2"/>
+<polygon points="1280,513 1272,503 1219.0,503 1219.0,523 1272,523" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1245.5" y="518" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">LED_G</text>
+<line x1="1280" y1="513" x2="1298" y2="513" stroke="#1d5fbf" stroke-width="2"/>
+<rect x="1298" y="506" width="34" height="14" fill="#fff" stroke="#222" stroke-width="2"/>
+<text x="1315" y="501" font-size="12.5" font-weight="bold" fill="#222" text-anchor="middle">220 Ω</text>
+<line x1="1332" y1="513" x2="1358" y2="513" stroke="#222" stroke-width="2"/>
+<polygon points="1358,504 1358,522 1376,513" fill="#2e9d4b" stroke="#222" stroke-width="1.5"/>
+<line x1="1376" y1="504" x2="1376" y2="522" stroke="#222" stroke-width="2.5"/>
+<line x1="1376" y1="513" x2="1408" y2="513" stroke="#222" stroke-width="2"/>
+<polygon points="1280,551 1272,541 1219.0,541 1219.0,561 1272,561" fill="#fff" stroke="#1d5fbf" stroke-width="1.6"/>
+<text x="1245.5" y="556" font-size="12.5" font-weight="bold" fill="#1d5fbf" text-anchor="middle">LED_B</text>
+<line x1="1280" y1="551" x2="1298" y2="551" stroke="#1d5fbf" stroke-width="2"/>
+<rect x="1298" y="544" width="34" height="14" fill="#fff" stroke="#222" stroke-width="2"/>
+<text x="1315" y="539" font-size="12.5" font-weight="bold" fill="#222" text-anchor="middle">220 Ω</text>
+<line x1="1332" y1="551" x2="1358" y2="551" stroke="#222" stroke-width="2"/>
+<polygon points="1358,542 1358,560 1376,551" fill="#1e6fd9" stroke="#222" stroke-width="1.5"/>
+<line x1="1376" y1="542" x2="1376" y2="560" stroke="#222" stroke-width="2.5"/>
+<line x1="1376" y1="551" x2="1408" y2="551" stroke="#222" stroke-width="2"/>
+<line x1="1408" y1="475" x2="1408" y2="575" stroke="#333333" stroke-width="2"/>
+<line x1="1408" y1="575" x2="1418" y2="575" stroke="#333333" stroke-width="2"/>
+<polygon points="1418,575 1426,565 1462.6,565 1462.6,585 1426,585" fill="#fff" stroke="#333333" stroke-width="1.6"/>
+<text x="1444.3" y="580" font-size="12.5" font-weight="bold" fill="#333333" text-anchor="middle">GND</text>
+<text x="1214" y="596" font-size="11.5" font-weight="normal" fill="#8a7461" text-anchor="start">anodo comum: perna longa no 3V3</text>
+<rect x="30" y="780" width="830" height="250" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="42" y="802" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">Notas</text>
+<text x="50" y="830" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">1. Etiquetas com o mesmo nome estão ligadas (ex.: todo GND junto, todo 5V junto).</text>
+<text x="50" y="857" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">2. O servo puxa picos acima de 1 A: alimente pela fonte, nunca pelo 5 V do USB do computador.</text>
+<text x="50" y="884" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">3. C1 (1000 µF) fica soldado perto do conector do servo, entre 5V e GND.</text>
+<text x="50" y="911" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">4. O ECHO do HC-SR04 sai em 5 V: R1/R2 baixam para 3,3 V (5 × 2k / 3k = 3,3 V).</text>
+<text x="50" y="938" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">5. DHT11, sensor IR e buzzer em módulo já trazem resistores; ligue em 3V3.</text>
+<text x="50" y="965" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">6. Ao gravar pelo USB, desligue a fonte de 5 V externa.</text>
+<text x="50" y="992" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">7. Pinos configuráveis no menuconfig (menu "Alimentador - Pinos").</text>
+<rect x="900" y="870" width="570" height="160" rx="10" fill="#fffaf3" stroke="#c9a77c" stroke-width="1.5"/>
+<text x="912" y="892" font-size="15" font-weight="bold" fill="#5a3a14" text-anchor="start">Legenda</text>
+<line x1="920" y1="915" x2="970" y2="915" stroke="#d62828" stroke-width="3"/>
+<text x="982" y="920" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">5 V (fonte)</text>
+<line x1="920" y1="943" x2="970" y2="943" stroke="#333333" stroke-width="3"/>
+<text x="982" y="948" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">GND</text>
+<line x1="920" y1="971" x2="970" y2="971" stroke="#e07a00" stroke-width="3"/>
+<text x="982" y="976" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">3,3 V (da placa)</text>
+<line x1="920" y1="999" x2="970" y2="999" stroke="#1d5fbf" stroke-width="3"/>
+<text x="982" y="1004" font-size="13.5" font-weight="normal" fill="#222" text-anchor="start">sinal (GPIO)</text>
+<text x="1200" y="920" font-size="13" font-weight="normal" fill="#444" text-anchor="start">Valores entre parênteses ao lado</text>
+<text x="1200" y="940" font-size="13" font-weight="normal" fill="#444" text-anchor="start">dos GPIOs = ESP32 clássica (DevKit V1).</text>
+<text x="1200" y="975" font-size="13" font-weight="bold" fill="#5a3a14" text-anchor="start">github.com/arthurlleite/lulu-alimentador</text>
+</svg>
