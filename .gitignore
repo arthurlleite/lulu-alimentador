@@ -4,3 +4,7 @@
 .vscode/launch.json
 .vscode/ipch
 sdkconfig*
+!sdkconfig.defaults
+managed_components/
+dependencies.lock
+.firebase*
