@@ -1,3 +1,4 @@
+# Pipeline do lulu-alimentador.
 # Compila o firmware das duas placas e publica no GitHub Pages:
 #   /                -> app do alimentador (web/index.html)
 #   /instalar.html   -> instalador pelo navegador (ESP Web Tools)
