@@ -8,15 +8,15 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 
 | # | Item | Qtd | Preço aprox. | Por que este |
 |---|---|---|---|---|
-| 1 | **ESP32-S3-DevKitC-1 N16R8** (USB-C) | 1 | R$ 85 – 115 | ESP32 atual, com Wi-Fi 2,4 GHz + Bluetooth 5 (LE), dois núcleos de 240 MHz, 16 MB de flash e 8 MB de PSRAM. Compatível com ESP-IDF. A versão N8R2 também serve. |
-| 2 | **Servo MG996R 180°** (engrenagem metálica) | 1 | R$ 35 – 50 | O [suporte do motor](../hardware/3d/README.md) foi desenhado para ele (54 mm entre as abas). Torque de ~10 kgf·cm: não trava com ração seca. **Compre o de 180°, não o "360°"**: o firmware posiciona o servo por ângulo. |
+| 1 | **ESP32-S3-DevKitC-1 N16R8** (USB-C) | 1 | ✅ **já possui** | ESP32 atual, com Wi-Fi 2,4 GHz + Bluetooth 5 (LE), dois núcleos de 240 MHz, 16 MB de flash e 8 MB de PSRAM. Compatível com ESP-IDF. A versão N8R2 também serve. |
+| 2 | **Servo MG996R 180°** (engrenagem metálica) | 1 | ✅ **já possui** | O [suporte do motor](../hardware/3d/README.md) foi desenhado para ele (54 mm entre as abas). Torque de ~10 kgf·cm: não trava com ração seca. **Compre o de 180°, não o "360°"**: o firmware posiciona o servo por ângulo. |
 | 3 | **Sensor ultrassônico HC-SR04** | 1 | R$ 8 – 14 | Nível de ração no tubo (sugestão de um comentário no vídeo do projeto: infravermelho tem alcance curto). |
 | 4 | **Módulo DHT11** (3 pinos, com resistor) | 1 | R$ 10 – 15 (estimado) | Temperatura e umidade dentro do reservatório. |
 | 5 | **Sensor IR de obstáculo** (FC-51 ou "bloqueio de luz") | 1 | R$ 5 – 10 (estimado) | Confirma que a ração caiu, como o sensor de saída do PETLIBRO. |
 | 6 | **Módulo buzzer ativo** | 1 | R$ 4 – 8 (estimado) | Bipa para chamar o pet e avisa erro. |
 | 7 | **LED RGB 5 mm catodo comum** + 3 resistores 220 Ω | 1 | R$ 2 – 5 (estimado) | Status (configurando, online, servindo, alarme). |
 | 8 | **Botão táctil 12 mm** (ou de painel) | 1 | R$ 2 – 5 (estimado) | Alimentar na hora e apagar o Wi-Fi. |
-| 9 | **Fonte 5 V 3 A** (plug P4 ou USB-C) | 1 | R$ 25 – 40 (estimado) | Alimenta ESP32 e servo. 2 A é o mínimo; 3 A dá folga para o pico do servo. |
+| 9 | **Fonte 5 V 3 A** (plug P4 ou USB-C) | 1 | ✅ **já possui** | Alimenta ESP32 e servo. 2 A é o mínimo; 3 A dá folga para o pico do servo. |
 | 10 | Conector P4 fêmea (ou módulo USB-C de alimentação) | 1 | R$ 3 – 8 (estimado) | Entrada da fonte. |
 | 11 | Capacitor eletrolítico **1000 µF / 10 V** ou mais | 1 | R$ 2 – 4 (estimado) | Segura o pico do servo e evita a ESP reiniciar. |
 | 12 | Resistores **1 kΩ** e **2 kΩ** | 1 de cada | R$ 1 (estimado) | Divisor do ECHO (5 V → 3,3 V). |
@@ -24,7 +24,7 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 | 14 | Jumpers fêmea-fêmea e fio 22 AWG | 1 kit | R$ 10 – 15 (estimado) | Ligações. |
 | 15 | Cabo USB-C **de dados** | 1 | geralmente já tem | Para gravar o firmware. |
 
-**Subtotal da eletrônica: ~R$ 200 – 300**
+**Subtotal da eletrônica a comprar: ~R$ 55 – 100** (sem ESP32-S3, servo e fonte, que já temos)
 
 ## Estrutura
 
@@ -39,9 +39,9 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 
 **Subtotal da estrutura: ~R$ 65 – 140**
 
-## Total estimado: **R$ 270 – 440**
+## Total a comprar: **R$ 120 – 240**
 
-O valor maior inclui itens que vocês talvez já tenham (fonte, cabo, cola, tinta). Dividido entre o grupo, fica barato.
+ESP32-S3, servo MG996R e fonte 5 V já estão com a equipe e não entram na conta. O valor maior inclui cola e tinta, que talvez já tenham também.
 
 ## Ferramentas
 

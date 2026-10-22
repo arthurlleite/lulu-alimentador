@@ -112,13 +112,13 @@ Preços pesquisados em outubro de 2026 (mudam com promoção e frete). Lista com
 
 | Peça | Para que serve | Preço cotado | Onde |
 |---|---|---|---|
-| **ESP32-S3-DevKitC-1 N16R8** | cérebro do alimentador: Wi-Fi 2,4 GHz, Bluetooth 5, 2 núcleos de 240 MHz | R$ 85 – 115 | [Curto Circuito](https://curtocircuito.com.br/placa-devkitc-1-esp32-s3-n16r8.html) (R$ 94,30), [SmartKits](https://www.smartkits.com.br/placa-esp32-s3-devkitc-n16r8-com-conector-ipex) (R$ 85,41), [Mercado Livre](https://www.mercadolivre.com.br/placa-devkitc-1-esp32-s3-n16r8-16mb-flash-8mb-psram-wifi-tipo-c-duplo/p/MLB49198475) |
-| **Servo MG996R 180°** | abre e fecha a passagem da ração (o suporte 3D foi feito para ele) | R$ 35 – 50 | [Curto Circuito](https://curtocircuito.com.br/servo-motor-mg996r.html), [Mercado Livre](https://lista.mercadolivre.com.br/servo-mg996r) |
+| **ESP32-S3-DevKitC-1 N16R8** | cérebro do alimentador: Wi-Fi 2,4 GHz, Bluetooth 5, 2 núcleos de 240 MHz | ✅ **já possui** | — |
+| **Servo MG996R 180°** | abre e fecha a passagem da ração (o suporte 3D foi feito para ele) | ✅ **já possui** | — |
 | **HC-SR04** | mede o nível de ração no tubo | R$ 8 – 14 | [Eletrogate](https://www.eletrogate.com/modulo-sensor-de-distancia-ultrassonico-hc-sr04), [Baú da Eletrônica](https://www.baudaeletronica.com.br/produto/sensor-de-distancia-ultrassonico-hc-sr04.html) |
 | **DHT11** | temperatura e umidade dentro do tubo | R$ 10 – 15* | lojas de eletrônica |
 | **Sensor IR de obstáculo** | confirma que a ração caiu | R$ 5 – 10* | lojas de eletrônica |
 | **Buzzer ativo, LED RGB, botão** | avisos e controle no aparelho | R$ 8 – 18* | lojas de eletrônica |
-| **Fonte 5 V 3 A** | alimenta a ESP32 e o servo | R$ 25 – 40* | lojas de eletrônica |
+| **Fonte 5 V 3 A** | alimenta a ESP32 e o servo | ✅ **já possui** | — |
 | Capacitor 1000 µF, resistores, placa perfurada, jumpers | montagem | R$ 25 – 40* | lojas de eletrônica |
 
 ### Estrutura
@@ -132,7 +132,7 @@ Preços pesquisados em outubro de 2026 (mudam com promoção e frete). Lista com
 
 \* estimado (sem preço publicado nas buscas).
 
-**Total estimado: R$ 270 – 440.**
+**Total a comprar: R$ 120 – 240** (ESP32-S3, servo e fonte já estão com a equipe).
 
 ## Peças 3D
 
