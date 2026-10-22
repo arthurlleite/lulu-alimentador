@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alimentador</title>
+<meta name="description" content="Controle do alimentador automático de pets com ESP32">
+<meta name="theme-color" content="#f59e45">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{
+  --bg:#fff8f0;--surface:#ffffff;--surface-2:#fff2e3;--line:#f3e1cc;
+  --text:#2b2118;--muted:#8a7461;--brand:#f08a2c;--brand-2:#d9701c;--brand-soft:#ffe9cf;
+  --ok:#15803d;--ok-soft:#dcfce7;--warn:#b45309;--warn-soft:#fef3c7;--bad:#dc2626;--bad-soft:#fee2e2;
+  --shadow:0 1px 2px rgba(80,40,0,.05),0 10px 28px rgba(80,40,0,.07);--r:20px;color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#16110d;--surface:#211a14;--surface-2:#2b2219;--line:#3b2f24;
+  --text:#f7ede3;--muted:#b39e8a;--brand:#fb9a4b;--brand-2:#f08a2c;--brand-soft:#3a2516;
+  --ok:#4ade80;--ok-soft:#133020;--warn:#fbbf24;--warn-soft:#382a0d;--bad:#f87171;--bad-soft:#3a1717;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);color-scheme:dark;
+}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;
+  -webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+header{display:flex;align-items:center;gap:12px;margin:4px 0 16px}
+.avatar{width:52px;height:52px;border-radius:16px;background:var(--brand-soft);flex:none;overflow:hidden;display:grid;place-items:center}
+.avatar svg{width:50px;height:50px;margin-top:6px}
+header h1{font-size:1.35rem;margin:0;line-height:1.15}
+header .sub{color:var(--muted);font-size:.85rem}
+.pill{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:99px;font-size:.8rem;font-weight:600;
+  background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.pill i{width:8px;height:8px;border-radius:50%;background:currentColor}
+.pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.bad{background:var(--bad-soft);color:var(--bad)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+.card h2{font-size:1rem;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.card h2 .act{margin-left:auto}
+.banner{display:none;align-items:center;gap:10px;padding:12px 14px;border-radius:14px;margin-bottom:14px;font-weight:600;font-size:.92rem}
+.banner.show{display:flex}
+.banner.warn{background:var(--warn-soft);color:var(--warn)} .banner.bad{background:var(--bad-soft);color:var(--bad)}
+.banner button{margin-left:auto}
+.hero{text-align:center;padding:10px 18px 20px;overflow:hidden;position:relative;
+  background:radial-gradient(120% 80% at 50% 0%,var(--brand-soft),var(--surface) 70%)}
+.hero .pet{width:150px;height:150px;display:block;margin:0 auto -6px;transform-origin:50% 90%}
+.hero.busy .pet{animation:hop .5s ease-in-out infinite alternate}
+@keyframes hop{to{transform:translateY(-8px) scale(1.03,0.98)}}
+.bowl{width:110px;height:16px;margin:0 auto 14px;border-radius:0 0 60px 60px;background:linear-gradient(var(--brand),var(--brand-2));opacity:.85}
+.stepper{display:flex;align-items:center;justify-content:center;gap:18px;margin:0 0 16px}
+.stepper button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:1.4rem;cursor:pointer}
+.stepper button:active{transform:scale(.94)}
+.qty{min-width:92px}
+.qty b{display:block;font-size:2.4rem;line-height:1}
+.qty span{color:var(--muted);font-size:.85rem}
+.feed{width:100%;border:0;border-radius:16px;padding:16px;font-size:1.1rem;font-weight:700;color:#fff;cursor:pointer;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 8px 20px rgba(240,138,44,.35);transition:transform .1s,filter .2s}
+.feed:active{transform:scale(.98)}
+.feed:disabled{filter:grayscale(.6) opacity(.6);cursor:not-allowed;box-shadow:none}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.grid .card{margin:0;padding:16px}
+.stat small{color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.stat b{display:block;font-size:1.45rem;margin-top:4px;line-height:1.2}
+.stat span{color:var(--muted);font-size:.85rem}
+.gauge{display:flex;align-items:center;gap:12px}
+.gauge svg{width:62px;height:62px;flex:none;transform:rotate(-90deg)}
+.gauge circle{fill:none;stroke-width:8}
+.gauge .track{stroke:var(--surface-2)} .gauge .val{stroke:var(--ok);stroke-linecap:round;transition:stroke-dashoffset .6s}
+.meals{display:flex;flex-direction:column;gap:10px}
+.meal{display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;padding:10px;border-radius:14px;background:var(--surface-2)}
+.meal input[type=time],.meal select,.field input{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 10px;min-width:0}
+.meal input[type=time]{font-weight:700;font-size:1.05rem}
+.icon-btn{border:0;background:none;color:var(--muted);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:1.05rem}
+.icon-btn:hover{background:var(--surface)}
+.switch{position:relative;width:46px;height:28px;flex:none;display:inline-block}
+.switch input{opacity:0;width:0;height:0;position:absolute}
+.switch span{position:absolute;inset:0;border-radius:99px;background:var(--line);transition:.2s;cursor:pointer}
+.switch span::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.switch input:checked+span{background:var(--ok)}
+.switch input:checked+span::after{transform:translateX(18px)}
+.switch input:focus-visible+span{outline:2px solid var(--brand);outline-offset:2px}
+.btn{border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:10px 14px;font-weight:600;cursor:pointer}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.danger{color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.small{padding:6px 10px;font-size:.85rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.row .btn{flex:1}
+.empty{color:var(--muted);text-align:center;padding:10px;font-size:.92rem}
+.hist{list-style:none;margin:0;padding:0}
+.hist li{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:.93rem}
+.hist li:last-child{border:0}
+.hist .dot{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;background:var(--ok-soft);color:var(--ok);flex:none;font-size:.9rem;font-weight:700}
+.hist .dot.fail{background:var(--bad-soft);color:var(--bad)}
+.hist .when{margin-left:auto;color:var(--muted);font-size:.85rem;white-space:nowrap}
+details.card summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center}
+details.card summary::-webkit-details-marker{display:none}
+details.card summary::after{content:"›";margin-left:auto;font-size:1.4rem;transition:.2s;color:var(--muted)}
+details[open].card summary::after{transform:rotate(90deg)}
+.field{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.field>label{font-size:.85rem;color:var(--muted);font-weight:600}
+.field .inline{display:flex;gap:8px;align-items:center}
+.field .inline input{flex:1}
+.hint{color:var(--muted);font-size:.82rem;margin:6px 0 0}
+.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--surface-2);padding:8px 10px;border-radius:10px;word-break:break-all;font-size:.85rem}
+.connect input{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:12px;font-family:ui-monospace,Consolas,monospace}
+footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:22px}
+footer a{color:inherit}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,140px);background:var(--text);color:var(--bg);
+  padding:12px 18px;border-radius:14px;font-weight:600;font-size:.92rem;transition:transform .25s;max-width:calc(100% - 32px);z-index:9;box-shadow:var(--shadow)}
+#toast.show{transform:translate(-50%,0)}
+[hidden]{display:none!important}
+@media (max-width:380px){.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="lulu" viewBox="0 0 256 256">
+<defs>
+<radialGradient id="lulu-bg" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#FFF6EA"/><stop offset="1" stop-color="#FFD9AE"/></radialGradient>
+<radialGradient id="lulu-fur" gradientUnits="userSpaceOnUse" cx="112" cy="96" r="150"><stop offset="0" stop-color="#FFC987"/><stop offset=".55" stop-color="#F59E45"/><stop offset="1" stop-color="#D9701C"/></radialGradient>
+<radialGradient id="lulu-tail" gradientUnits="userSpaceOnUse" cx="176" cy="100" r="60"><stop offset="0" stop-color="#FFE2B8"/><stop offset="1" stop-color="#F59E45"/></radialGradient>
+</defs>
+<ellipse cx="128" cy="228" rx="66" ry="9" fill="#C98A52" opacity=".22"/>
+<path d="M210.7 129.5Q218.3 138.1 214.9 147.4Q206.9 144.9 201.3 144.5Q203.2 155.8 195.5 161.6Q190.2 155.1 185.8 151.7Q181.4 162.2 171.9 162.7Q171.0 154.3 169.1 148.9Q159.8 155.2 151.5 150.2Q155.2 142.5 156.5 136.9Q145.2 137.0 140.7 128.1Q148.0 123.6 152.0 119.5Q142.3 113.4 143.1 103.4Q151.5 103.6 157.0 102.3Q152.0 91.9 157.8 84.0Q164.8 88.7 169.9 90.7Q171.2 79.3 180.2 76.0Q183.5 83.8 186.7 88.4Q193.9 79.7 203.2 82.0Q201.7 90.4 202.0 96.1Q212.8 92.8 219.4 100.0Q213.7 106.4 210.9 111.4Q221.9 114.6 223.8 124.4Q215.6 126.7 210.7 129.5Z" fill="url(#lulu-tail)"/>
+<path d="M179.8 182.2Q188.2 188.1 187.2 196.4Q179.3 196.5 174.1 197.9Q179.3 206.6 174.7 214.0Q167.3 211.1 161.6 210.5Q162.9 220.7 155.4 226.2Q149.5 220.7 144.4 218.2Q141.5 228.4 132.3 231.0Q128.8 223.8 125.0 219.8Q118.3 228.3 108.8 227.7Q108.3 220.0 106.3 215.0Q96.9 220.6 88.5 216.9Q91.1 209.7 91.3 204.6Q80.6 206.5 74.6 200.1Q79.8 194.6 82.1 190.1Q71.8 187.9 69.0 180.0Q76.2 177.0 80.2 173.8Q71.8 167.9 72.8 159.6Q80.7 159.5 85.9 158.1Q80.7 149.4 85.3 142.0Q92.7 144.9 98.4 145.5Q97.1 135.3 104.6 129.8Q110.5 135.3 115.6 137.8Q118.5 127.6 127.7 125.0Q131.2 132.2 135.0 136.2Q141.7 127.7 151.2 128.3Q151.7 136.0 153.7 141.0Q163.1 135.4 171.5 139.1Q168.9 146.3 168.7 151.4Q179.4 149.5 185.4 155.9Q180.2 161.4 177.9 165.9Q188.2 168.1 191.0 176.0Q183.8 179.0 179.8 182.2Z" fill="url(#lulu-fur)"/>
+<g fill="#FFF0DA"><rect x="98" y="196" width="22" height="31" rx="11"/><rect x="134" y="196" width="22" height="31" rx="11"/></g>
+<g fill="#F3CFA6"><path d="M104 221v5M109 221v5M114 221v5M140 221v5M145 221v5M150 221v5" stroke="#E9B985" stroke-width="2" stroke-linecap="round"/></g>
+<path d="M74 86 L82 30 Q86 22 94 30 L118 66 Z" fill="#D9701C"/>
+<path d="M166 86 L158 30 Q154 22 146 30 L122 66 Z" fill="#D9701C"/>
+<path d="M84 74 L87 42 L104 66 Z" fill="#F6B3A0"/>
+<path d="M156 74 L153 42 L136 66 Z" fill="#F6B3A0"/>
+<path d="M171.9 118.5Q182.5 123.8 182.9 131.8Q174.0 132.2 168.6 133.8Q177.0 142.2 174.8 149.9Q166.2 147.5 160.5 147.4Q165.8 157.9 161.3 164.7Q153.8 159.7 148.4 157.9Q150.2 169.6 143.8 174.6Q138.2 167.7 133.6 164.3Q131.6 176.0 123.9 178.9Q120.7 170.5 117.4 165.9Q111.9 176.5 103.7 177.0Q103.2 168.1 101.5 162.7Q93.0 171.2 85.0 169.1Q87.4 160.5 87.4 154.9Q76.7 160.4 69.8 156.0Q74.7 148.6 76.5 143.3Q64.7 145.3 59.5 139.0Q66.4 133.5 69.8 129.1Q58.0 127.3 55.1 119.8Q63.5 116.7 68.1 113.5Q57.5 108.2 57.1 100.2Q66.0 99.8 71.4 98.2Q63.0 89.8 65.2 82.1Q73.8 84.5 79.5 84.6Q74.2 74.1 78.7 67.3Q86.2 72.3 91.6 74.1Q89.8 62.4 96.2 57.4Q101.8 64.3 106.4 67.7Q108.4 56.0 116.1 53.1Q119.3 61.5 122.6 66.1Q128.1 55.5 136.3 55.0Q136.8 63.9 138.5 69.3Q147.0 60.8 155.0 62.9Q152.6 71.5 152.6 77.1Q163.3 71.6 170.2 76.0Q165.3 83.4 163.5 88.7Q175.3 86.7 180.5 93.0Q173.6 98.5 170.2 102.9Q182.0 104.7 184.9 112.2Q176.5 115.3 171.9 118.5Z" fill="url(#lulu-fur)"/>
+<path d="M140.4 165.8Q144.5 171.8 144.4 173.8Q135.1 174.6 131.1 173.4Q129.9 180.8 128.3 182.4Q120.0 177.7 117.5 174.6Q111.6 180.1 109.3 180.5Q105.9 172.6 106.0 169.0Q98.1 169.9 96.2 169.0Q99.3 161.6 102.0 159.2Q95.9 155.1 95.2 153.3Q103.3 149.8 107.4 149.8Q105.8 142.6 106.7 140.7Q116.1 142.8 119.5 145.1Q123.4 138.2 125.4 137.2Q131.6 143.9 132.9 147.4Q140.2 144.0 142.5 144.3Q142.7 152.5 141.1 155.6Q148.6 157.3 150.0 158.8Q144.0 164.6 140.4 165.8Z" fill="#FFF0DA"/>
+<ellipse cx="120" cy="124" rx="40" ry="34" fill="#FFCF94"/>
+<ellipse cx="120" cy="140" rx="22" ry="16" fill="#FFF0DA"/>
+<g fill="#2B1B12"><ellipse cx="101" cy="118" rx="8.5" ry="9.5"/><ellipse cx="139" cy="118" rx="8.5" ry="9.5"/></g>
+<g fill="#fff"><circle cx="104" cy="114" r="3.2"/><circle cx="142" cy="114" r="3.2"/><circle cx="98.5" cy="122" r="1.5"/><circle cx="136.5" cy="122" r="1.5"/></g>
+<path d="M90 106 Q100 100 110 105 M130 105 Q140 100 150 106" stroke="#E59447" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+<g fill="#F38C7C" opacity=".5"><ellipse cx="88" cy="137" rx="8" ry="5"/><ellipse cx="152" cy="137" rx="8" ry="5"/></g>
+<path d="M112 131 Q120 126 128 131 Q128 138 120 140 Q112 138 112 131 Z" fill="#2B1B12"/>
+<ellipse cx="117" cy="131.5" rx="2.4" ry="1.3" fill="#fff" opacity=".75"/>
+<path d="M120 140v4.5M120 144.5q-6 5-11 1M120 144.5q6 5 11 1" stroke="#2B1B12" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+<path d="M114.5 147.5Q120 161 125.5 147.5Z" fill="#EF6F6F"/>
+<path d="M120 149v6" stroke="#D85858" stroke-width="1.2" stroke-linecap="round"/>
+</symbol>
+</svg>
+<div class="wrap">
+  <header>
+    <div class="avatar"><svg viewBox="0 0 256 256"><use href="#lulu"/></svg></div>
+    <div>
+      <h1 id="title">Alimentador</h1>
+      <div class="sub" id="subtitle">Conectando...</div>
+    </div>
+    <span class="pill" id="pill"><i></i><span>...</span></span>
+  </header>
+
+  <!-- Aberto pelo GitHub Pages sem ?d=CODIGO -->
+  <section class="card connect" id="connectCard" hidden>
+    <h2>Conectar ao alimentador</h2>
+    <p class="hint" style="margin:0 0 12px">Cole o código que apareceu ao configurar o Wi-Fi da ESP32
+      (também aparece em <b>Ajustes</b> no app local, em <span class="code">alimentador.local</span>).</p>
+    <input id="codeInput" placeholder="ex.: 3f9a0c1d2e4b5a6f" maxlength="16" autocomplete="off" spellcheck="false" aria-label="Código do alimentador">
+    <div class="row"><button class="btn primary" id="codeSave">Conectar</button></div>
+  </section>
+
+  <main id="app" hidden>
+    <div class="banner" id="alarm" role="alert"><span id="alarmText"></span><button class="btn small" id="alarmClear">Ok</button></div>
+
+    <section class="card hero" id="hero">
+      <svg class="pet" viewBox="0 0 256 256" aria-hidden="true"><use href="#lulu"/></svg>
+      <div class="bowl"></div>
+      <div class="stepper">
+        <button id="minus" aria-label="Menos uma porção">−</button>
+        <div class="qty" aria-live="polite"><b id="qty">1</b><span id="qtyLabel">porção</span></div>
+        <button id="plus" aria-label="Mais uma porção">+</button>
+      </div>
+      <button class="feed" id="feed" disabled>Alimentar agora</button>
+    </section>
+
+    <div class="grid">
+      <section class="card stat">
+        <small>Ração no tubo</small>
+        <div class="gauge">
+          <svg viewBox="0 0 70 70" aria-hidden="true"><circle class="track" cx="35" cy="35" r="29"/><circle class="val" id="gaugeVal" cx="35" cy="35" r="29" stroke-dasharray="182.2" stroke-dashoffset="182.2"/></svg>
+          <div><b id="level">--</b><span id="levelSub">sem leitura</span></div>
+        </div>
+      </section>
+      <section class="card stat">
+        <small>Próxima refeição</small>
+        <b id="next">--</b><span id="nextSub">sem agenda</span>
+      </section>
+      <section class="card stat">
+        <small>Ambiente</small>
+        <b id="env">--</b><span id="envSub">sem leitura</span>
+      </section>
+      <section class="card stat">
+        <small>Última refeição</small>
+        <b id="last">--</b><span id="lastSub">nenhuma ainda</span>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2>Agenda <span class="act"><button class="btn small" id="addMeal">+ Horário</button></span></h2>
+      <div class="meals" id="meals"></div>
+      <div class="row"><button class="btn primary" id="saveMeals" disabled>Salvar agenda</button></div>
+      <p class="hint">Até 8 horários por dia. Cada porção abre a passagem do servo uma vez.</p>
+    </section>
+
+    <section class="card">
+      <h2>Histórico</h2>
+      <ul class="hist" id="hist"></ul>
+    </section>
+
+    <details class="card" id="settings">
+      <summary>Ajustes</summary>
+      <div class="field">
+        <label for="petName">Nome do pet</label>
+        <input id="petName" maxlength="31">
+      </div>
+      <div class="field">
+        <label for="beep">Bipar antes de servir</label>
+        <label class="switch"><input type="checkbox" id="beep"><span></span></label>
+      </div>
+      <div class="field">
+        <label>Calibração do nível (distância do sensor até a ração)</label>
+        <div class="inline"><input id="calEmpty" type="number" min="5" max="200" step="1" aria-label="Distância com o tubo vazio"><span>cm vazio</span></div>
+        <div class="inline"><input id="calFull" type="number" min="0" max="100" step="1" aria-label="Distância com o tubo cheio"><span>cm cheio</span></div>
+        <p class="hint">Leitura atual: <b id="calNow">--</b>. Com o tubo vazio toque em “vazio = agora”; depois de encher, “cheio = agora”.</p>
+        <div class="row"><button class="btn small" id="calSetEmpty">vazio = agora</button><button class="btn small" id="calSetFull">cheio = agora</button></div>
+      </div>
+      <div class="row"><button class="btn primary" id="saveSettings">Salvar ajustes</button></div>
+
+      <div id="localOnly" hidden>
+        <div class="field">
+          <label>Acesso de qualquer lugar</label>
+          <div class="code" id="remoteLink"></div>
+          <div class="row"><button class="btn small" id="copyLink">Copiar link</button></div>
+          <p class="hint">Quem tiver esse link controla o alimentador. Não publique.</p>
+        </div>
+        <div class="row"><button class="btn danger" id="wifiReset">Esquecer Wi-Fi</button></div>
+      </div>
+      <div id="remoteOnly" hidden>
+        <div class="row"><button class="btn danger" id="forget">Trocar de alimentador</button></div>
+      </div>
+    </details>
+  </main>
+
+  <footer>
+    <span id="fw"></span> · <a href="https://github.com/arthurlleite/Alimentador-Automatico-de-Pets" target="_blank" rel="noopener">código no GitHub</a>
+  </footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+// O mesmo arquivo roda em dois lugares:
+//  - servido pela ESP32 (http://alimentador.local): fala direto por HTTP (/api/...)
+//  - no GitHub Pages (https://...github.io/...?d=CODIGO): fala via MQTT pela internet
+const CFG = {
+  broker: "wss://broker.hivemq.com:8884/mqtt",
+  prefix: "alimentador",
+  mqttLib: "https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js",
+  maxMeals: 8, maxPortions: 10,
+};
+const SRC = { app: "pelo app", agenda: "da agenda", botao: "pelo botão" };
+const $ = (id) => document.getElementById(id);
+
+let mode = null;        // "local" | "remote"
+let state = null;
+let portions = 1;
+let mealsDirty = false;
+let editMeals = [];
+let mqttClient = null, base = "", online = false;
+const pending = new Map();
+
+let toastTimer;
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2800);
+}
+
+function setPill(kind, text) {
+  const p = $("pill");
+  p.className = "pill " + kind;
+  p.lastElementChild.textContent = text;
+}
+
+const pad = (n) => String(n).padStart(2, "0");
+const hhmm = (h, m) => pad(h) + ":" + pad(m);
+const plural = (n, one, many) => n + " " + (n === 1 ? one : many);
+function duration(min) {
+  if (min < 60) return "em " + min + " min";
+  const h = Math.floor(min / 60), m = min % 60;
+  return "em " + h + "h" + (m ? pad(m) : "");
+}
+function ago(ts) {
+  if (!ts) return "hora desconhecida";
+  const now = state && state.time ? state.time : Date.now() / 1000;
+  const s = Math.max(0, now - ts);
+  if (s < 60) return "agora há pouco";
+  if (s < 3600) return "há " + Math.round(s / 60) + " min";
+  if (s < 86400) return "há " + Math.round(s / 3600) + " h";
+  return new Date(ts * 1000).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
+}
+
+// ---------- Desenho da tela ----------
+function render(s) {
+  state = s;
+  const connected = mode === "local" || online;
+  $("title").textContent = s.name || "Alimentador";
+  document.title = (s.name || "Alimentador") + " · Alimentador";
+  $("fw").textContent = "firmware v" + (s.fw || "?");
+
+  if (mode === "local") {
+    setPill(s.feeding ? "warn" : "ok", s.feeding ? "Servindo" : "Rede local");
+    $("subtitle").textContent = s.wifi && s.wifi.portal ? "Modo configuração" : "No Wi-Fi " + ((s.wifi && s.wifi.ssid) || "");
+  } else if (!online) {
+    setPill("bad", "Offline");
+    $("subtitle").textContent = "O alimentador está sem internet";
+  } else {
+    setPill(s.feeding ? "warn" : "ok", s.feeding ? "Servindo" : "Online");
+    $("subtitle").textContent = "Pela internet";
+  }
+
+  const feed = $("feed");
+  feed.disabled = !connected || s.feeding;
+  feed.textContent = s.feeding ? "Servindo ração..." : "Alimentar agora";
+  $("hero").classList.toggle("busy", !!s.feeding);
+
+  const alarms = {
+    racao_baixa: ["warn", "Ração acabando: hora de reabastecer."],
+    sem_saida: ["bad", "O servo girou mas a ração não caiu. Tubo vazio ou travado?"],
+  };
+  const a = alarms[s.alarm];
+  $("alarm").className = "banner" + (a ? " show " + a[0] : "");
+  if (a) $("alarmText").textContent = a[1];
+
+  const g = $("gaugeVal");
+  if (s.level) {
+    const pct = s.level.pct;
+    $("level").textContent = pct + "%";
+    $("levelSub").textContent = pct < 20 ? "reabasteça logo" : pct < 50 ? "pela metade" : "bem abastecido";
+    g.style.strokeDashoffset = 182.2 * (1 - pct / 100);
+    g.style.stroke = pct < 20 ? "var(--bad)" : pct < 50 ? "var(--warn)" : "var(--ok)";
+    $("calNow").textContent = s.level.cm + " cm";
+  } else {
+    $("level").textContent = "--";
+    $("levelSub").textContent = "sem leitura";
+    g.style.strokeDashoffset = 182.2;
+    $("calNow").textContent = "sem leitura";
+  }
+
+  if (s.next) {
+    $("next").textContent = hhmm(s.next.h, s.next.m);
+    $("nextSub").textContent = duration(s.next.in_min) + " · " + plural(s.next.p, "porção", "porções");
+  } else {
+    $("next").textContent = "--";
+    $("nextSub").textContent = s.time_ok === false ? "relógio sem hora certa" : "sem horários ativos";
+  }
+
+  if (s.env) {
+    $("env").textContent = Math.round(s.env.t) + "°C";
+    $("envSub").textContent = "umidade " + Math.round(s.env.h) + "%" + (s.env.h > 70 ? " (alta)" : "");
+  } else {
+    $("env").textContent = "--";
+    $("envSub").textContent = "sem leitura";
+  }
+
+  const h = s.history || [];
+  if (h.length) {
+    $("last").textContent = h[0].ts ? new Date(h[0].ts * 1000).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "--";
+    $("lastSub").textContent = ago(h[0].ts) + " · " + plural(h[0].p, "porção", "porções");
+  }
+  const list = $("hist");
+  list.replaceChildren();
+  if (!h.length) {
+    const li = document.createElement("li");
+    li.className = "empty";
+    li.textContent = "Nenhuma refeição desde que o alimentador ligou.";
+    list.append(li);
+  }
+  for (const f of h) {
+    const li = document.createElement("li");
+    const dot = document.createElement("span");
+    dot.className = "dot" + (f.ok ? "" : " fail");
+    dot.textContent = f.ok ? "✓" : "!";
+    const txt = document.createElement("span");
+    txt.textContent = plural(f.p, "porção", "porções") + " " + (SRC[f.src] || "") + (f.ok ? "" : ": nada caiu");
+    const when = document.createElement("span");
+    when.className = "when";
+    when.textContent = ago(f.ts);
+    li.append(dot, txt, when);
+    list.append(li);
+  }
+
+  if (!mealsDirty) {
+    editMeals = (s.meals || []).map((m) => ({ ...m }));
+    renderMeals();
+  }
+
+  // Ajustes: não sobrescreve o campo que a pessoa está editando
+  const active = document.activeElement;
+  if (active !== $("petName")) $("petName").value = s.name || "";
+  $("beep").checked = !!s.beep;
+  if (s.level_cal) {
+    if (active !== $("calEmpty")) $("calEmpty").value = Math.round(s.level_cal.empty_cm);
+    if (active !== $("calFull")) $("calFull").value = Math.round(s.level_cal.full_cm);
+  }
+  if (s.app_url) $("remoteLink").textContent = s.app_url;
+
+  $("app").hidden = false;
+}
+
+function renderMeals() {
+  const box = $("meals");
+  box.replaceChildren();
+  if (!editMeals.length) {
+    const p = document.createElement("div");
+    p.className = "empty";
+    p.textContent = "Nenhum horário. Toque em “+ Horário”.";
+    box.append(p);
+  }
+  editMeals.forEach((m, i) => {
+    const row = document.createElement("div");
+    row.className = "meal";
+
+    const time = document.createElement("input");
+    time.type = "time";
+    time.value = hhmm(m.h, m.m);
+    time.setAttribute("aria-label", "Horário");
+    time.onchange = () => {
+      const [hh, mm] = time.value.split(":").map(Number);
+      if (!isNaN(hh) && !isNaN(mm)) { m.h = hh; m.m = mm; markDirty(); }
+    };
+
+    const sel = document.createElement("select");
+    sel.setAttribute("aria-label", "Porções");
+    for (let p = 1; p <= CFG.maxPortions; p++) {
+      const o = document.createElement("option");
+      o.value = p;
+      o.textContent = p + "×";
+      sel.append(o);
+    }
+    sel.value = m.p;
+    sel.onchange = () => { m.p = Number(sel.value); markDirty(); };
+
+    const sw = document.createElement("label");
+    sw.className = "switch";
+    sw.title = "Ativo";
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = m.on !== false;
+    cb.setAttribute("aria-label", "Horário ativo");
+    cb.onchange = () => { m.on = cb.checked; markDirty(); };
+    sw.append(cb, document.createElement("span"));
+
+    const del = document.createElement("button");
+    del.className = "icon-btn";
+    del.textContent = "✕";
+    del.setAttribute("aria-label", "Remover horário");
+    del.onclick = () => { editMeals.splice(i, 1); markDirty(); renderMeals(); };
+
+    row.append(time, sel, sw, del);
+    box.append(row);
+  });
+  $("addMeal").disabled = editMeals.length >= CFG.maxMeals;
+}
+
+function markDirty() {
+  mealsDirty = true;
+  $("saveMeals").disabled = false;
+}
+
+// ---------- Envio de comandos ----------
+async function send(cmd) {
+  if (mode === "local") {
+    const r = await fetch("api/cmd", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cmd),
+    });
+    const j = await r.json();
+    if (j.state) render(j.state);
+    return j;
+  }
+  if (!online) throw new Error("Alimentador offline");
+  const id = Math.random().toString(36).slice(2, 10);
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => { pending.delete(id); reject(new Error("Sem resposta do alimentador")); }, 8000);
+    pending.set(id, (ack) => { clearTimeout(timer); resolve(ack); });
+    mqttClient.publish(base + "/cmd", JSON.stringify({ ...cmd, id }), { qos: 1 });
+  });
+}
+
+async function run(cmd, okMsg) {
+  try {
+    const r = await send(cmd);
+    toast(r.ok ? (okMsg || r.msg) : r.msg);
+    return r.ok;
+  } catch (e) {
+    toast(e.message);
+    return false;
+  }
+}
+
+// ---------- Modo local (página servida pela ESP32) ----------
+async function fetchState() {
+  const r = await fetch("api/state", { cache: "no-store" });
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+}
+
+function startLocal(first) {
+  mode = "local";
+  $("localOnly").hidden = false;
+  render(first);
+  // Sem internet o relógio da ESP32 não acerta; o navegador empresta a hora.
+  if (!first.time_ok) send({ cmd: "time", epoch: Math.floor(Date.now() / 1000) }).catch(() => {});
+  setInterval(async () => {
+    if (document.hidden) return;
+    try { render(await fetchState()); }
+    catch { setPill("bad", "Sem resposta"); }
+  }, 3000);
+}
+
+// ---------- Modo remoto (GitHub Pages + MQTT) ----------
+function loadScript(src) {
+  return new Promise((ok, fail) => {
+    const s = document.createElement("script");
+    s.src = src; s.onload = ok; s.onerror = fail;
+    document.head.append(s);
+  });
+}
+
+function getCode() {
+  const q = new URLSearchParams(location.search).get("d");
+  let code = q;
+  try {
+    if (q) localStorage.setItem("feeder.code", q);
+    else code = localStorage.getItem("feeder.code");
+  } catch {}
+  return code && /^[0-9a-f]{16}$/i.test(code) ? code.toLowerCase() : null;
+}
+
+async function startRemote() {
+  mode = "remote";
+  const code = getCode();
+  if (!code) {
+    $("connectCard").hidden = false;
+    setPill("", "Sem código");
+    $("subtitle").textContent = "Informe o código do seu alimentador";
+    return;
+  }
+  $("remoteOnly").hidden = false;
+  base = CFG.prefix + "/" + code;
+  setPill("warn", "Conectando");
+  try { await loadScript(CFG.mqttLib); }
+  catch { setPill("bad", "Sem internet"); return; }
+
+  mqttClient = mqtt.connect(CFG.broker, {
+    clientId: "app-" + Math.random().toString(16).slice(2, 10),
+    reconnectPeriod: 3000,
+    connectTimeout: 10000,
+  });
+  mqttClient.on("connect", () => {
+    mqttClient.subscribe([base + "/state", base + "/event", base + "/online"], { qos: 1 });
+    if (!state) $("subtitle").textContent = "Esperando o alimentador...";
+  });
+  mqttClient.on("offline", () => setPill("bad", "Sem internet"));
+  mqttClient.on("message", (topic, payload) => {
+    const leaf = topic.slice(base.length + 1);
+    const text = payload.toString();
+    if (leaf === "online") {
+      online = text === "1";
+      if (state) render(state);
+      else if (!online) { setPill("bad", "Offline"); $("subtitle").textContent = "O alimentador está sem internet"; }
+      return;
+    }
+    let j;
+    try { j = JSON.parse(text); } catch { return; }
+    if (leaf === "state") { online = true; render(j); }
+    else if (leaf === "event") {
+      if (j.type === "ack" && j.id && pending.has(j.id)) { pending.get(j.id)(j); pending.delete(j.id); }
+      else if (j.type === "fed" && !j.ok) toast("A ração não caiu! Confira o tubo.");
+      else if (j.type === "low_food") toast("Ração acabando!");
+    }
+  });
+}
+
+// ---------- Ações ----------
+function setPortions(n) {
+  portions = Math.min(CFG.maxPortions, Math.max(1, n));
+  $("qty").textContent = portions;
+  $("qtyLabel").textContent = portions === 1 ? "porção" : "porções";
+}
+$("minus").onclick = () => setPortions(portions - 1);
+$("plus").onclick = () => setPortions(portions + 1);
+$("feed").onclick = () => run({ cmd: "feed", portions });
+
+$("addMeal").onclick = () => {
+  if (editMeals.length >= CFG.maxMeals) return;
+  const last = editMeals[editMeals.length - 1];
+  editMeals.push({ h: last ? (last.h + 6) % 24 : 8, m: last ? last.m : 0, p: 1, on: true });
+  markDirty();
+  renderMeals();
+};
+$("saveMeals").onclick = async () => {
+  const meals = editMeals.map((m) => ({ h: m.h, m: m.m, p: m.p, on: m.on !== false }));
+  if (await run({ cmd: "schedule", meals }, "Agenda salva")) {
+    mealsDirty = false;
+    $("saveMeals").disabled = true;
+  }
+};
+
+$("calSetEmpty").onclick = () => { if (state && state.level) $("calEmpty").value = Math.round(state.level.cm); };
+$("calSetFull").onclick = () => { if (state && state.level) $("calFull").value = Math.round(state.level.cm); };
+$("saveSettings").onclick = () => run({
+  cmd: "settings",
+  name: $("petName").value.trim() || "Pet",
+  beep: $("beep").checked,
+  level_empty_cm: Number($("calEmpty").value),
+  level_full_cm: Number($("calFull").value),
+}, "Ajustes salvos");
+$("alarmClear").onclick = () => run({ cmd: "clear_alarm" });
+
+$("copyLink").onclick = async () => {
+  try { await navigator.clipboard.writeText($("remoteLink").textContent); toast("Link copiado"); }
+  catch { toast("Copie o link manualmente"); }
+};
+$("wifiReset").onclick = () => {
+  if (confirm("Apagar o Wi-Fi salvo? O alimentador reinicia e cria a rede de configuração de novo."))
+    run({ cmd: "wifi_reset" });
+};
+$("forget").onclick = () => {
+  try { localStorage.removeItem("feeder.code"); } catch {}
+  location.href = location.pathname;
+};
+$("codeSave").onclick = () => {
+  const c = $("codeInput").value.trim().toLowerCase();
+  if (!/^[0-9a-f]{16}$/.test(c)) { toast("O código tem 16 caracteres (0-9 e a-f)"); return; }
+  location.href = location.pathname + "?d=" + c;
+};
+
+// ---------- Início ----------
+(async () => {
+  setPortions(1);
+  try {
+    const ctl = new AbortController();
+    setTimeout(() => ctl.abort(), 2500);
+    const r = await fetch("api/state", { cache: "no-store", signal: ctl.signal });
+    const j = r.ok ? await r.json() : null;
+    if (j && j.fw) return startLocal(j);
+  } catch {}
+  startRemote();
+})();
+</script>
+</body>
+</html>
