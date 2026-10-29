@@ -154,11 +154,13 @@ O firmware antigo (`lib/my_*`, ainda no [histórico do git](https://github.com/a
 | Tarefas com prioridade 0 (igual à tarefa ociosa), pilha de 1 KB no servo | travamentos e estouro de pilha | prioridades 3 a 6 e pilhas de 3 a 4 KB |
 | Senha do Wi-Fi impressa na serial; formulário sem limite com `strcpy` em 30 bytes | vazamento da senha; estouro de buffer | log sem senha, `strlcpy` e limite de tamanho |
 | Portal de configuração só por 10 min e depois reinício | sem Wi-Fi, ficava reiniciando | portal fica ativo até configurar; reconexão com espera crescente |
-| Tópico fixo `exemploMQTT123456` em broker público, sem TLS | qualquer pessoa podia alimentar o pet | código aleatório de 64 bits por placa e MQTT sobre TLS |
+| Tópico fixo `exemploMQTT123456` em broker público, sem TLS | controle exposto e transporte sem criptografia | identificador aleatório de 64 bits por placa e MQTT sobre TLS; autenticação e autorização permanecem pendentes |
 | Servo no GPIO 5 (pino de *strapping*) | pode mexer o servo no boot | GPIO 4 (S3) / 18 (clássica) |
 
 ## Limitações conhecidas
 
-- O [broker público da HiveMQ](https://www.hivemq.com/mqtt/public-mqtt-broker/) não tem senha: a segurança vem do código secreto no tópico. Para algo além de um protótipo, use um broker com usuário e senha (ex.: [HiveMQ Cloud](https://www.hivemq.com/products/mqtt-cloud-broker/), que tem plano gratuito) e troque `ALIM_MQTT_URI`.
+- O [broker público da HiveMQ](https://www.hivemq.com/mqtt/public-mqtt-broker/) não tem senha. O identificador no tópico não substitui autorização. A evolução exige broker autenticado, regras por dispositivo e ajuste das credenciais/configuração nas duas pontas; trocar somente `ALIM_MQTT_URI` não conclui essa proteção.
+- Os comandos de alimentação ainda não são deduplicados por `id`, e comandos MQTT retidos não são rejeitados. Essas condições podem provocar acionamentos adicionais; a agenda também precisa tratar fila cheia e reinício no minuto de disparo. Ver [pendências técnicas](../petlibro-air/entrega.md).
 - Sem bateria de RTC: se faltar energia e a internet não voltar, o relógio só é acertado quando alguém abrir o app local (ele envia a hora do celular).
 - Sem atualização OTA nesta versão (a tabela de partições usa um app único).
+

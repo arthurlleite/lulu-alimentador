@@ -25,8 +25,15 @@
 
 ---
 
+## Relatório acadêmico — entrega 2
+
+O estudo do **PETLIBRO Air PLAF108**, com a proposta de reprodução Lulu, está em **[petlibro-air/README.md](petlibro-air/README.md)**. A pasta reúne [características com fontes](petlibro-air/caracteristicas.md), [oito artigos científicos](petlibro-air/artigos.md), [comparação com cinco outros produtos](petlibro-air/comparativo.md), [proposta e limitações](petlibro-air/proposta.md) e [checklist de entrega](petlibro-air/entrega.md).
+
+As funcionalidades descritas abaixo representam a implementação/proposta do Lulu; testes integrados e calibração ainda precisam ser documentados. O app e o instalador vinculados continuam apontando à publicação no GitHub: alterações neste GitLab não são publicadas automaticamente naquele site.
+
 ## Sumário
 
+- [Relatório acadêmico — entrega 2](petlibro-air/README.md)
 - [O que ele faz](#o-que-ele-faz)
 - [Como ficou o app](#como-ficou-o-app)
 - [Como funciona](#como-funciona)
@@ -196,7 +203,8 @@ Projeto da disciplina **Fundamentos de Sistemas Embarcados (FSE)** — [Trabalho
 
 | Nome | Matrícula |
 |---|---|
-| Arthur Carvalho ([@arthurlleite](https://github.com/arthurlleite)) | _a preencher_ |
-| _a preencher_ | _a preencher_ |
-| _a preencher_ | _a preencher_ |
-| _a preencher_ | _a preencher_ |
+| Antônio Lucas De Araújo Lima ([@Devv-Antonio1](https://gitlab.com/Devv-Antonio1)) | **Pendente de informação pelo integrante** |
+| Amanda Gonçalves Sobrinho Abreu ([@Amandaaaaabreu](https://gitlab.com/Amandaaaaabreu)) | 211030925 |
+| Carlos Henrique De Paiva Munis ([@Depaiiva](https://gitlab.com/Depaiiva)) | 221022480 |
+| Arthur Carvalho Leite ([@arthurlleite](https://gitlab.com/arthurlleite)) | 222037595 |
+

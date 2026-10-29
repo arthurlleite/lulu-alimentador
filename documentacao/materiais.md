@@ -9,7 +9,7 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 | # | Item | Qtd | Preço aprox. | Por que este |
 |---|---|---|---|---|
 | 1 | **ESP32-S3-DevKitC-1 N16R8** (USB-C) | 1 | ✅ **já possui** | ESP32 atual, com Wi-Fi 2,4 GHz + Bluetooth 5 (LE), dois núcleos de 240 MHz, 16 MB de flash e 8 MB de PSRAM. Compatível com ESP-IDF. A versão N8R2 também serve. |
-| 2 | **Servo MG996R 180°** (engrenagem metálica) | 1 | ✅ **já possui** | O [suporte do motor](../hardware/3d/README.md) foi desenhado para ele (54 mm entre as abas). Torque de ~10 kgf·cm: não trava com ração seca. **Compre o de 180°, não o "360°"**: o firmware posiciona o servo por ângulo. |
+| 2 | **Servo MG996R 180°** (engrenagem metálica) | 1 | ✅ **já possui** | O [suporte do motor](../hardware/3d/README.md) foi desenhado para ele. Conferir as medidas da unidade; torque disponível e travamento com ração precisam de teste sob carga. **Compre o de 180°, não o "360°"**: o firmware posiciona o servo por ângulo. |
 | 3 | **Sensor ultrassônico HC-SR04** | 1 | R$ 8 – 14 | Opcional: mede o nível de ração no tubo e avisa quando está acabando. Se não quiser usar, desligue `ALIM_SENSOR_NIVEL` no menuconfig. |
 | 4 | **Módulo DHT11** (3 pinos, com resistor) | 1 | R$ 10 – 15 (estimado) | Temperatura e umidade dentro do reservatório. |
 | 5 | **Sensor IR de obstáculo** (FC-51 ou "bloqueio de luz") | 1 | R$ 5 – 10 (estimado) | Confirma que a ração caiu, como o sensor de saída do PETLIBRO. |
@@ -32,7 +32,7 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 |---|---|---|---|---|
 | 16 | **Tubo PVC esgoto 100 mm**, barra de 1 m | 1 | R$ 17 – 25 | O modelo 3D usa **300 mm** de tubo (diâmetro externo 101,5 mm, o padrão do esgoto de 100 mm). Sobra tubo para um segundo protótipo. Série normal, branco. |
 | 17 | **Cap (tampão) PVC esgoto 100 mm** | 1 (+1 opcional) | R$ 12 – 25 cada | Fecha a base. A tampa de cima já é impressa ([`tampa_tubo.stl`](../hardware/3d/stl/tampa_tubo.stl)); um segundo cap só se preferir tampa de PVC. |
-| 18 | Filamento **PETG** (ou PLA) | ~150 g | R$ 15 – 25 (de um rolo de 1 kg, estimado) | As 8 peças somam ~138 cm³. PETG aguenta melhor umidade e é mais indicado para contato com ração. Se a faculdade tiver impressora, sai só o filamento. |
+| 18 | Filamento **PETG** (ou PLA) | ~150 g | R$ 15 – 25 (de um rolo de 1 kg, estimado) | As 8 peças somam ~138 cm³ geométricos. Confirmar consumo no fatiador e avaliar material, acabamento e limpeza nas superfícies de contato com ração. |
 | 19 | Parafusos M3 × 10 mm + porcas, e um parafuso longo (~M5 × 50 mm) | kit | R$ 10 – 15 (estimado) | O parafuso longo vira o "agitador" que mexe a ração. |
 | 20 | Cola epóxi ou Super Bonder | 1 | R$ 10 – 20 (estimado) | Fixar o braço do servo na peça giratória. |
 | 21 | Tinta spray branca (opcional) | 1 | R$ 20 – 30 (estimado) | Acabamento **só por fora**. |
@@ -65,3 +65,4 @@ Ferro de solda e estanho, mini retífica (ou serra copo de 25–35 mm) para abri
 | ESP32-C6 | Wi-Fi 6 2,4 GHz | Wi-Fi 6, Thread/Zigbee | suporte mais novo; ganho pequeno para este projeto |
 
 Nenhuma ESP32 se conecta em Wi-Fi de **5 GHz**: o roteador precisa ter a rede de 2,4 GHz ligada.
+

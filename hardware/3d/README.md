@@ -2,13 +2,13 @@
 
 Tudo foi modelado no [FreeCAD](https://www.freecad.org/) (gratuito). O arquivo original é o [`IoT3D.FCStd`](IoT3D.FCStd); as peças prontas para fatiar estão em [`stl/`](stl/).
 
-![Montagem: tubo de PVC transparente com as peças impressas dentro](imagens/montagem.png)
+![Renderização da montagem no FreeCAD: tubo transparente com as peças modeladas](imagens/montagem.png)
 
 ## Como funciona
 
 A ração fica no tubo de PVC, apoiada na **rampa inclinada**, que tem um furo. Embaixo da rampa, o **servo** (preso no **suporte do motor**) gira a **tampa do atuador**, que tapa e destapa esse furo. Quando abre, a ração escorrega pelo furo, cai no **funil** e sai pela lateral do tubo, pela **extensão do funil**, direto no pote. Cada abertura é uma porção.
 
-![Peças impressas fora do tubo](imagens/pecas_impressas.png)
+![Renderização das peças modeladas fora do tubo; não é fotografia de impressão](imagens/pecas_impressas.png)
 
 ## Peças
 
@@ -37,7 +37,7 @@ A ração fica no tubo de PVC, apoiada na **rampa inclinada**, que tem um furo. 
 
 | Parâmetro | Valor |
 |---|---|
-| Material | **PETG** (melhor para umidade e contato com ração) ou PLA |
+| Material | **PETG** ou PLA para prototipagem; avaliar material, acabamento e limpeza das superfícies do conjunto que terão contato com ração |
 | Camada | 0,2 mm |
 | Paredes | 3 perímetros |
 | Preenchimento | 20 % (giroide); 40 % no suporte do motor e na tampa do atuador |
@@ -66,3 +66,4 @@ freecadcmd ferramentas/exportar_3d.py
 ```
 
 O script ([`ferramentas/exportar_3d.py`](../../ferramentas/exportar_3d.py)) abre o `IoT3D.FCStd` e regrava os STL desta pasta.
+
