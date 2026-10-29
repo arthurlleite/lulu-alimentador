@@ -10,7 +10,7 @@ Os marcos abaixo orientam a revisão do grupo. A documentação foi adiantada em
 
 | Marco | Entregável | Estado desta revisão |
 | --- | --- | --- |
-| 29–30/10 | Oito artigos e identificação | Quatro de tecnologias e quatro de aplicação selecionados/resumidos, com DOI e PDF; quatro nomes registrados; falta a matrícula de Antônio. |
+| 29–30/10 | Oito artigos e identificação | Quatro de tecnologias e quatro de aplicação selecionados/resumidos, com DOI e PDF; nomes e matrículas dos quatro integrantes registrados. |
 | 30–31/10 | Características e comparativo | Doze grupos e seus subitens documentados; cinco produtos adicionais; lacunas técnicas explicitadas como NI. |
 | 01/11 | Proposta, diagramas e referências | Mapeamento para ESP32-S3, componentes, diagramas e limitações redigidos; ensaios descritos como futuros. |
 | 02/11 | Revisão final e estrutura | Pasta do produto com README e referências; revisão do grupo e decisão sobre o procedimento de submissão ainda necessárias. |
@@ -34,7 +34,7 @@ Os marcos abaixo orientam a revisão do grupo. A documentação foi adiantada em
 - [x] Referências bibliográficas e técnicas reunidas.
 - [x] Nenhuma cópia de PDF acadêmico adicionada à pasta.
 - [x] README principal em pasta sem espaços/acentos, nomeada pelo produto.
-- [ ] Informar a matrícula de Antônio Lucas De Araújo Lima.
+- [x] Identificação dos quatro integrantes completa; matrícula de Antônio Lucas De Araújo Lima: 241025597.
 - [ ] Os quatro integrantes revisarem a interpretação das fontes e os resumos.
 - [ ] Abrir os PDFs no navegador e conferir acesso na rede utilizada para avaliação; alguns servidores restringem robôs ou exigem verificação de navegador.
 - [ ] Confirmar com o professor o envio por link ou cumprir o procedimento de fork/MR descrito no enunciado.
@@ -59,7 +59,7 @@ O firmware não foi modificado para resolver os pontos abaixo nesta revisão doc
 1. Abrir `petlibro-air/README.md` na branch `atualizacoes-antonio`.
 2. Seguir a navegação para características, artigos, proposta e comparativo.
 3. Conferir a fonte de cada afirmação, especialmente os itens NI.
-4. Revisar os dados da equipe e registrar a matrícula pendente.
+4. Conferir os nomes e matrículas dos quatro integrantes.
 5. Manter a distinção entre funcionalidades no código, proposta conceitual e testes realmente executados.
 
 ## Estrutura para a submissão

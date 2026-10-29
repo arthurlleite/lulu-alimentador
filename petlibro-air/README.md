@@ -6,7 +6,7 @@ Estudo de um sistema embarcado comercial e proposta de reprodução parcial com 
 
 | Nome completo | Matrícula | GitLab |
 | --- | --- | --- |
-| Antônio Lucas De Araújo Lima | **Pendente de informação pelo integrante** | [Devv-Antonio1](https://gitlab.com/Devv-Antonio1) |
+| Antônio Lucas De Araújo Lima | 241025597 | [Devv-Antonio1](https://gitlab.com/Devv-Antonio1) |
 | Amanda Gonçalves Sobrinho Abreu | 211030925 | [Amandaaaaabreu](https://gitlab.com/Amandaaaaabreu) |
 | Carlos Henrique De Paiva Munis | 221022480 | [Depaiiva](https://gitlab.com/Depaiiva) |
 | Arthur Carvalho Leite | 222037595 | [arthurlleite](https://gitlab.com/arthurlleite) |
@@ -63,5 +63,5 @@ O **Lulu** reproduz parcialmente agendamento, dispensação e acompanhamento rem
 
 Consulta bibliográfica e técnica realizada em **29/10/2026**. Foram priorizados fabricantes, documentação da Espressif, periódicos e os textos originais dos artigos. A desmontagem de terceiro é identificada como observação de uma unidade. Cada característica diferencia **recurso disponível no componente**, **uso observado no produto** e **informação não identificada**.
 
-Os oito artigos foram selecionados como estudos de tecnologias ou aplicações de alimentadores; não são oito avaliações do modelo PLAF108. Os PDFs são apenas vinculados, sem cópias no repositório. A matrícula pendente e o procedimento de submissão precisam ser resolvidos antes de considerar a entrega encerrada.
+Os oito artigos foram selecionados como estudos de tecnologias ou aplicações de alimentadores; não são oito avaliações do modelo PLAF108. Os PDFs são apenas vinculados, sem cópias no repositório. A identificação dos quatro integrantes está completa. A revisão do grupo e o procedimento de submissão precisam ser concluídos antes de considerar a entrega encerrada.
 

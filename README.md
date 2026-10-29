@@ -203,7 +203,7 @@ Projeto da disciplina **Fundamentos de Sistemas Embarcados (FSE)** — [Trabalho
 
 | Nome | Matrícula |
 |---|---|
-| Antônio Lucas De Araújo Lima ([@Devv-Antonio1](https://gitlab.com/Devv-Antonio1)) | **Pendente de informação pelo integrante** |
+| Antônio Lucas De Araújo Lima ([@Devv-Antonio1](https://gitlab.com/Devv-Antonio1)) | 241025597 |
 | Amanda Gonçalves Sobrinho Abreu ([@Amandaaaaabreu](https://gitlab.com/Amandaaaaabreu)) | 211030925 |
 | Carlos Henrique De Paiva Munis ([@Depaiiva](https://gitlab.com/Depaiiva)) | 221022480 |
 | Arthur Carvalho Leite ([@arthurlleite](https://gitlab.com/arthurlleite)) | 222037595 |
