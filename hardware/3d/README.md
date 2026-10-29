@@ -10,6 +10,22 @@ A ração fica no tubo de PVC, apoiada na **rampa inclinada**, que tem um furo. 
 
 ![Peças impressas fora do tubo](imagens/pecas_impressas.png)
 
+## Onde fica a eletrônica
+
+[![Posicionamento da eletrônica dentro do tubo](imagens/eletronica_posicionamento.png)](imagens/eletronica_posicionamento.svg)
+
+A eletrônica fica **embaixo do funil**, no espaço entre a base do tubo e a parte de baixo do funil (60 a 120 mm de altura, maior do lado de trás, porque o funil desce em direção à saída):
+
+- **Placa perfurada 7 × 9 cm em pé**, encostada na aba lisa do [suporte da placa](stl/suporte_placa.stl), presa com 2 parafusos M3 (as porcas ficam dentro do U). Os componentes ficam na face voltada para o centro do tubo; o topo da placa fica 5 mm abaixo do funil.
+- **ESP32-S3 nas barras fêmea, com a USB-C para baixo**: para gravar, tire o cap e ligue o cabo por baixo.
+- **LED, chave e buzzer** na parede de trás (o lado oposto ao pote), **sensor de chama do alarme** na parede esquerda, **sensor da saída** preso por fora na extensão do funil.
+- **Nenhum furo abaixo de 45 mm** da base: é a parte coberta pelo cap.
+
+O desenho e as medidas vêm de [`ferramentas/eletronica_3d.py`](../../ferramentas/eletronica_3d.py), que usa as coordenadas do `IoT3D.FCStd` e confere colisões com as peças impressas. As medidas dos componentes são de catálogo: confira com paquímetro antes de furar.
+
+- **Gerar o desenho**: `python ferramentas/eletronica_3d.py --png` (na raiz do repositório).
+- **Ver no FreeCAD**: abra o `IoT3D.FCStd` e rode o mesmo arquivo em **Macro → Macros… → Arquivo do usuário**. As peças entram no grupo `Eletronica`, com as cores do desenho.
+
 ## Peças
 
 | Peça | Arquivo | Tamanho (mm) | Volume | O que faz |
@@ -54,7 +70,7 @@ Ideias tiradas da montagem real ([vídeo](https://www.youtube.com/watch?v=HcdWtQ
 
 - **Suporte da rampa integrado**: na primeira montagem o suporte foi impresso à parte e colado. O próximo passo é juntar o [`suporte_rampa`](stl/suporte_rampa.stl) na própria rampa e evitar cola.
 - **Agitador**: um parafuso longo preso na tampa do atuador mexe a ração a cada abertura e evita que os grãos "façam ponte" sobre o furo.
-- **Furos para os sensores novos**: dois furos de 16 mm na tampa do tubo para o HC-SR04 e um furo lateral na extensão do funil para o sensor IR de saída.
+- **Furos para os sensores novos**: um furo lateral na extensão do funil para o sensor de chama da saída (e um furo em frente, para a luz entrar) e um rasgo por fora para o sensor de chama do alarme.
 - **Parafusos em vez de cola** sempre que der, para poder desmontar e limpar.
 
 ## Gerar as imagens e os STL de novo
