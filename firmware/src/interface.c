@@ -11,6 +11,7 @@
 // LED:  azul piscando = rede de configuração | amarelo piscando = conectando
 //       ciano = Wi-Fi sem nuvem | verde = online | magenta = servindo
 //       vermelho piscando por cima = ração baixa ou nada caiu
+//       vermelho piscando rápido = chama detectada (o buzzer também toca)
 // Botão: toque curto = 1 porção | segurar 5 s = apagar Wi-Fi e reconfigurar.
 // O botão BOOT da placa (GPIO0) faz o mesmo que o botão externo.
 
@@ -63,6 +64,8 @@ static int cor_do_status(int passo)
   alarme_t alarme = g_estado.alarme;
   estado_liberar();
 
+  if (alarme == ALARME_CHAMA)
+    return (passo % 4) < 2 ? VERMELHO : APAGADO;
   if (servindo)
     return MAGENTA;
   if (alarme != ALARME_NENHUM && (passo % 20) < 4)
@@ -128,6 +131,8 @@ void interface_iniciar(void)
   };
   gpio_config(&saidas);
   gpio_set_level(CONFIG_ALIM_GPIO_BUZZER, 0);
+  // O buzzer de 3,3 V vai direto no pino (sem transistor) e puxa ~25 mA.
+  gpio_set_drive_capability(CONFIG_ALIM_GPIO_BUZZER, GPIO_DRIVE_CAP_3);
   led_cor(APAGADO);
 
   gpio_config_t entradas = {

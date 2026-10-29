@@ -83,7 +83,9 @@ menu "Alimentador - Pinos"
 
     config ALIM_SENSOR_NIVEL
         bool "Usar sensor ultrassônico HC-SR04 (nível de ração)"
-        default y
+        default n
+        help
+            O HC-SR04 não está na lista de peças da equipe. Ligue só se for usar um.
 
     config ALIM_GPIO_TRIG
         int "HC-SR04 TRIG"
@@ -99,7 +101,9 @@ menu "Alimentador - Pinos"
 
     config ALIM_DHT11
         bool "Usar DHT11 (temperatura e umidade do reservatório)"
-        default y
+        default n
+        help
+            O DHT11 não está na lista de peças da equipe. Ligue só se for usar um.
 
     config ALIM_GPIO_DHT
         int "DHT11 DATA"
@@ -108,14 +112,31 @@ menu "Alimentador - Pinos"
         default 4
 
     config ALIM_SENSOR_SAIDA
-        bool "Usar sensor IR na saída (confirma que a ração caiu)"
+        bool "Usar sensor na saída (confirma que a ração caiu)"
         default y
+        help
+            Módulo de sensor de chama (receptor IR com LM393) virado para a saída:
+            cada grão que passa entre ele e a luz do outro lado gera um pulso no D0.
+            Um sensor IR de obstáculo (FC-51) também serve.
 
     config ALIM_GPIO_SAIDA
-        int "Sensor IR de obstáculo / bloqueio de luz (saída digital)"
+        int "Sensor da saída (D0 do módulo)"
         depends on ALIM_SENSOR_SAIDA
         default 9 if IDF_TARGET_ESP32S3
         default 32
+
+    config ALIM_SENSOR_CHAMA
+        bool "Usar sensor de chama (alarme de fogo)"
+        default y
+        help
+            Segundo módulo de sensor de chama, virado para fora. O D0 vai a 0 quando
+            vê chama: o LED pisca vermelho, o buzzer toca e o app recebe o aviso.
+
+    config ALIM_GPIO_CHAMA
+        int "Sensor de chama (D0 do módulo)"
+        depends on ALIM_SENSOR_CHAMA
+        default 10 if IDF_TARGET_ESP32S3
+        default 33
 
 endmenu
 

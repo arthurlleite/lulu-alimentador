@@ -9,6 +9,7 @@
 #include "esp_log.h"
 #include "estado.h"
 #include "nuvem_mqtt.h"
+#include "interface.h"
 
 #define PERIODO_MS 10000
 #define PUBLICAR_A_CADA 6 // ciclos (~1 min) mesmo sem mudança
@@ -113,6 +114,57 @@ static bool ler_dht11(float *temp, float *umid)
 }
 #endif
 
+#if CONFIG_ALIM_SENSOR_CHAMA
+#define CHAMA_PASSO_MS 100
+#define CHAMA_CONFIRMA 10 // 1 s seguido vendo chama antes de alarmar
+#define CHAMA_LIBERA 50   // 5 s sem chama para limpar o alarme
+
+// O D0 do módulo vai a 0 quando o fotodiodo IR vê chama. Fica numa tarefa própria
+// porque a tarefa de sensores dorme 10 s entre as leituras.
+static void tarefa_chama(void *arg)
+{
+  int vendo = 0, sem_ver = 0;
+  bool alarmado = false;
+  for (;;)
+  {
+    if (gpio_get_level(CONFIG_ALIM_GPIO_CHAMA) == 0)
+    {
+      sem_ver = 0;
+      if (!alarmado && ++vendo >= CHAMA_CONFIRMA)
+      {
+        alarmado = true;
+        ESP_LOGE(TAG, "Chama detectada!");
+        estado_travar();
+        g_estado.alarme = ALARME_CHAMA;
+        estado_liberar();
+        estado_mudou();
+        nuvem_publicar_evento("{\"tipo\":\"chama\"}");
+      }
+    }
+    else
+    {
+      vendo = 0;
+      if (alarmado && ++sem_ver >= CHAMA_LIBERA)
+      {
+        alarmado = false;
+        ESP_LOGW(TAG, "Chama não é mais detectada");
+        estado_travar();
+        if (g_estado.alarme == ALARME_CHAMA)
+          g_estado.alarme = ALARME_NENHUM;
+        estado_liberar();
+        estado_mudou();
+      }
+    }
+    if (alarmado)
+    {
+      interface_bipar(1, 150); // ~3 bipes por segundo enquanto houver chama
+      continue;
+    }
+    vTaskDelay(pdMS_TO_TICKS(CHAMA_PASSO_MS));
+  }
+}
+#endif
+
 static void tarefa_sensores(void *arg)
 {
   int ciclo = 0;
@@ -198,6 +250,12 @@ void sensores_iniciar(void)
 #if CONFIG_ALIM_DHT11
   gpio_reset_pin(CONFIG_ALIM_GPIO_DHT);
   gpio_set_pull_mode(CONFIG_ALIM_GPIO_DHT, GPIO_PULLUP_ONLY);
+#endif
+#if CONFIG_ALIM_SENSOR_CHAMA
+  gpio_reset_pin(CONFIG_ALIM_GPIO_CHAMA);
+  gpio_set_direction(CONFIG_ALIM_GPIO_CHAMA, GPIO_MODE_INPUT);
+  gpio_set_pull_mode(CONFIG_ALIM_GPIO_CHAMA, GPIO_PULLUP_ONLY); // sem módulo = sem alarme
+  xTaskCreate(tarefa_chama, "chama", 3072, NULL, 4, NULL);
 #endif
   xTaskCreate(tarefa_sensores, "sensores", 3072, NULL, 3, NULL);
 }

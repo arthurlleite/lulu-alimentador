@@ -1,95 +1,110 @@
-# Eletrônica: ligações
+# Eletrônica: esquemático e ligações
 
-Tudo é alimentado por **uma fonte de 5 V / 3 A**. O servo puxa picos de mais de 1 A ao arrancar, por isso ele **não** pode ser ligado no pino de 5 V que vem do USB do computador.
+Tudo é alimentado por **uma fonte de 5 V / 5 A** (plugue P4). O servo puxa picos de mais de 1 A ao arrancar, por isso ele **não** pode ser ligado no pino de 5 V que vem do USB do computador.
 
-## Pré-esquemático
+As peças são as que a equipe tem em mãos: ver a [lista de materiais](../../documentacao/materiais.md).
 
-[![Pré-esquemático da eletrônica](esquematico.png)](esquematico.svg)
+## Esquemático
 
-Versão vetorial: [`esquematico.svg`](esquematico.svg) (abre em qualquer navegador e dá para dar zoom). O desenho é gerado por [`ferramentas/esquematico.py`](../../ferramentas/esquematico.py): para mudar um pino, edite o script e rode `python ferramentas/esquematico.py` na raiz do repositório.
+[![Esquemático da eletrônica](esquematico.png)](esquematico.svg)
 
-As ligações usam **etiquetas de rede**, como no [KiCad](https://www.kicad.org/): pontos com a mesma etiqueta (`5V`, `GND`, `3V3`, `SERVO`...) estão ligados pelo mesmo fio.
+Versão vetorial: [`esquematico.svg`](esquematico.svg) (abre em qualquer navegador e dá para dar zoom). O desenho é gerado por [`ferramentas/esquematico.py`](../../ferramentas/esquematico.py): para mudar um pino, edite o script e rode na raiz do repositório:
+
+```bash
+python ferramentas/esquematico.py --png   # --png precisa do Chrome/Chromium e do Pillow
+```
+
+A folha segue o padrão do EasyEDA: blocos por função (alimentação, processamento, atuador, sensores, interface), componentes com designador (U1, M1, R1...) e **etiquetas de rede**. Pontos com a mesma etiqueta (`SERVO_PWM`, `LED_R`...) ou o mesmo símbolo de alimentação (`+5V`, `+3.3V`, `GND`) estão ligados pelo mesmo fio.
 
 ## Diagrama de blocos
 
 ```mermaid
 flowchart LR
-  FONTE["Fonte 5 V / 3 A"] -->|5 V| BUS5(["Trilho 5 V"])
+  FONTE["Fonte 5 V / 5 A<br/>J1 (P4 com borne)"] -->|+5V| BUS5(["+5V"])
   FONTE -->|GND| GND(["GND comum"])
-  CAP["Capacitor 1000 µF<br/>no trilho do servo"] --- BUS5
-  BUS5 --> ESP["ESP32-S3 DevKitC-1<br/>pino 5V"]
-  BUS5 --> SERVO["Servo MG996R<br/>fio vermelho"]
-  BUS5 --> US["HC-SR04<br/>VCC"]
-  ESP -->|3V3| DHT["DHT11"]
-  ESP -->|3V3| IR["Sensor IR"]
+  CAP["C1 1000 µF<br/>junto ao servo"] --- BUS5
+  BUS5 --> ESP["U1 ESP32-S3 DevKitC-1<br/>pino 5V"]
+  BUS5 --> SERVO["M1 Servo MG996R"]
+  ESP -->|+3.3V| S1["U2 sensor de chama<br/>saída da ração"]
+  ESP -->|+3.3V| S2["U3 sensor de chama<br/>alarme de fogo"]
   ESP -->|GPIO 4| SERVO
-  ESP -->|GPIO 5 TRIG| US
-  US -->|ECHO 5 V → divisor → GPIO 6| ESP
-  DHT -->|GPIO 7| ESP
-  IR -->|GPIO 9| ESP
-  BTN["Botão"] -->|GPIO 15| ESP
-  ESP -->|GPIO 16| BUZ["Buzzer ativo"]
-  ESP -->|GPIO 17/18/8 + 220 Ω| LED["LED RGB"]
+  S1 -->|D0 → GPIO 9| ESP
+  S2 -->|D0 → GPIO 10| ESP
+  BTN["SW1 chave táctil"] -->|GPIO 15| ESP
+  ESP -->|GPIO 16| BUZ["BZ1 buzzer ativo 3,3 V"]
+  ESP -->|GPIO 17/18/8 + 220 Ω| LED["D1 LED RGB"]
 ```
 
 ## Tabela de ligações (ESP32-S3-DevKitC-1)
 
-| Componente | Pino do componente | Liga em | Observação |
-|---|---|---|---|
-| **Fonte 5 V** | + | trilho 5 V | |
-| | − | trilho GND | GND de tudo junto |
-| **ESP32-S3** | 5V (ou 5Vin) | trilho 5 V | |
-| | GND | trilho GND | |
-| **Servo MG996R** | vermelho | trilho 5 V | |
-| | marrom/preto | trilho GND | |
-| | laranja/amarelo (sinal) | GPIO 4 | |
-| **Capacitor 1000 µF / 10 V** | + / − | 5 V / GND, perto do servo | segura os picos do motor (evita reset da ESP) |
-| **HC-SR04** | VCC | trilho 5 V | |
-| | GND | GND | |
-| | TRIG | GPIO 5 | 3,3 V é suficiente para disparar |
-| | ECHO | **resistor 1 kΩ** → GPIO 6, e GPIO 6 → **resistor 2 kΩ** → GND | o eco sai em 5 V; o divisor baixa para 3,3 V |
-| **DHT11 (módulo 3 pinos)** | VCC / + | 3V3 | |
-| | GND / − | GND | |
-| | DATA / S | GPIO 7 | o módulo já tem pull-up |
-| **Sensor IR de obstáculo** | VCC | 3V3 | ajuste a sensibilidade no trimpot |
-| | GND | GND | |
-| | OUT | GPIO 9 | |
-| **Botão** | um terminal | GPIO 15 | pull-up interno ligado |
-| | outro terminal | GND | |
-| **Buzzer ativo (módulo)** | VCC | 3V3 | |
-| | GND | GND | |
-| | I/O ou S | GPIO 16 | |
-| **LED RGB catodo comum** | perna longa (catodo) | GND | se for anodo comum, ligue no 3V3 e ative `ALIM_LED_ANODO_COMUM` |
-| | R | **220 Ω** → GPIO 17 | |
-| | G | **220 Ω** → GPIO 18 | |
-| | B | **220 Ω** → GPIO 8 | |
+| Ref. | Componente | Pino do componente | Liga em | Observação |
+|---|---|---|---|---|
+| J1 | **P4 fêmea com borne** | + | +5V | entrada da fonte de 5 V / 5 A |
+| | | − | GND | GND de tudo junto |
+| U1 | **ESP32-S3** | 5V (pino 21) | +5V | |
+| | | GND (22, 23, 24, 44) | GND | |
+| | | 3V3 (1, 2) | +3.3V | alimenta os sensores de chama |
+| M1 | **Servo MG996R** | vermelho | +5V | |
+| | | marrom | GND | |
+| | | laranja (sinal) | GPIO 4 | `SERVO_PWM` |
+| C1 | **Capacitor 1000 µF / 16 V** | + / − | +5V / GND | soldado junto ao conector do servo |
+| U2 | **Sensor de chama (saída)** | VCC | +3.3V | |
+| | | GND | GND | |
+| | | D0 | GPIO 9 | `SAIDA_D0`; A0 fica sem ligação |
+| U3 | **Sensor de chama (alarme)** | VCC | +3.3V | |
+| | | GND | GND | |
+| | | D0 | GPIO 10 | `CHAMA_D0`; A0 fica sem ligação |
+| SW1 | **Chave táctil** | um terminal | GPIO 15 | pull-up interno ligado |
+| | | terminal oposto | GND | os 4 pinos são dois pares: use pinos de lados opostos |
+| BZ1 | **Buzzer ativo 3,3 V** | + (perna longa) | GPIO 16 | direto no pino, sem transistor |
+| | | − | GND | |
+| D1 | **LED RGB catodo comum** | perna longa (catodo) | GND | se for anodo comum, ligue no 3V3 e ative `ALIM_LED_ANODO_COMUM` |
+| | | R | **R1 220 Ω** → GPIO 17 | |
+| | | G | **R2 220 Ω** → GPIO 18 | |
+| | | B | **R3 220 Ω** → GPIO 8 | |
 
 Na **ESP32 clássica** a ligação é a mesma, só mudam os GPIOs (ver a tabela em [`firmware/README.md`](../../firmware/README.md#pinos)).
 
-## Divisor de tensão do ECHO
+## Os dois sensores de chama
 
-```
-HC-SR04 ECHO ──[ 1 kΩ ]──┬── GPIO 6
-                         │
-                      [ 2 kΩ ]
-                         │
-                        GND
-```
+O módulo é um fotodiodo infravermelho (760 – 1100 nm) com um comparador LM393. A saída **D0 vai a 0** quando a luz IR passa do limite ajustado no **trimpot**; o LED do próprio módulo acende junto. A ordem dos pinos muda entre fabricantes (A0/D0/GND/VCC ou VCC/GND/D0/A0): confira a serigrafia antes de soldar.
 
-5 V × 2 k / (1 k + 2 k) = **3,3 V**. Sem o divisor, o pino da ESP32 pode queimar com o tempo.
+- **U2, na saída da ração**: fica de um lado da extensão do funil, olhando para a luz que entra pelo outro lado. Cada grão que passa faz sombra e gera um pulso no D0. O firmware conta esses pulsos: se o servo abriu e nada passou, ele sacode, tenta de novo e avisa no app. Ajuste o trimpot com o funil vazio, até o LED do módulo ficar no limite de acender.
+- **U3, alarme de fogo**: fica do lado de fora, virado para o ambiente. Se ele vir chama por 1 s seguido, o LED pisca vermelho rápido, o buzzer bipa sem parar e o app mostra "Chama detectada". O alarme some sozinho 5 s depois que a chama sai do alcance. Teste com um isqueiro a uns 30 cm e ajuste o trimpot para não disparar com a luz do sol.
 
-## Onde fica cada sensor
+## Buzzer direto no GPIO
 
-- **HC-SR04**: na **tampa de cima**, apontando para baixo, no centro do tubo. Faça dois furos de 16 mm para os "olhos". Ele mede a distância até a ração.
-- **DHT11**: dentro do tubo, perto do topo, fora do caminho da ração (umidade alta estraga a ração).
-- **Sensor IR**: na **rampa de saída**, de lado, com o LED apontando para onde a ração passa. Cada grão que passa gera um pulso.
-- **LED RGB, botão e buzzer**: na frente da caixa da eletrônica, visíveis.
+O buzzer ativo de 3,3 V puxa cerca de 25 mA. O firmware liga o GPIO 16 com a força máxima de corrente da ESP32-S3 (`GPIO_DRIVE_CAP_3`, até 40 mA), então ele funciona sem transistor. Se o som sair fraco, um transistor NPN (2N2222 ou BC548) com resistor de 1 kΩ na base resolve, mas não faz parte das peças atuais.
+
+## Pinos que não devem ser usados
+
+- **GPIO 35, 36 e 37**: ligados à PSRAM octal da N16R8.
+- **GPIO 0**: é o botão BOOT da placa (o firmware usa como segundo botão).
+- **GPIO 5, 6 e 7**: estavam reservados para HC-SR04 e DHT11, que saíram do projeto. Estão livres.
+
+## Conectores da placa
+
+A placa tem duas barras macho: a **1×3 do servo** e a **1×14 dos sensores e do painel**, com um pino por fio. As duas recebem jumpers fêmea.
+
+| Barra 1×14 | Ligação | | Barra 1×14 | Ligação |
+|---|---|---|---|---|
+| 1 | U2 GND | | 8 | LED G (via R2) ← GPIO 18 |
+| 2 | U2 VCC (3,3 V) | | 9 | LED B (via R3) ← GPIO 8 |
+| 3 | U2 D0 → GPIO 9 | | 10 | LED catodo (GND) |
+| 4 | U3 GND | | 11 | Buzzer + ← GPIO 16 |
+| 5 | U3 VCC (3,3 V) | | 12 | Buzzer − (GND) |
+| 6 | U3 D0 → GPIO 10 | | 13 | Chave ← GPIO 15 |
+| 7 | LED R (via R1) ← GPIO 17 | | 14 | Chave (GND) |
+
+Barra 1×3 do servo: **1 GND (marrom), 2 +5 V (vermelho), 3 sinal ← GPIO 4 (laranja)**. Marque o lado do marrom na placa: invertido, o servo recebe 5 V no sinal.
+
+Onde fica cada peça dentro do tubo, o caminho dos fios e os cuidados contra curto estão nas [folhas de montagem](../3d/README.md#onde-fica-a-eletrônica).
 
 ## Montagem da placa
 
-1. Solde a ESP32 em barras de pinos fêmea numa **placa perfurada 5×7 cm**, para poder tirá-la.
-2. Faça dois trilhos (5 V e GND) ao longo da placa e solde o capacitor perto do conector do servo.
-3. Use barras de pinos macho para servo, sensores e botão. Assim tudo encaixa com jumpers e dá para trocar peças.
-4. Entrada da fonte: conector P4 fêmea ou um módulo USB-C só de alimentação.
+1. Solde barras de pinos fêmea na **placa perfurada 7 × 9 cm** (colunas 1 e 11, a 25,4 mm; confira na sua ESP) e encaixe a ESP32 nelas, para poder tirá-la.
+2. Faça dois trilhos (+5V e GND) ao longo da placa com o fio de 20 AWG e solde o **C1** perto do conector do servo (atenção à polaridade: a faixa do capacitor é o −).
+3. Use barras de pinos macho para o servo, os sensores e o botão. Assim tudo encaixa com jumpers e dá para trocar peças.
+4. Entrada da fonte pelo **J1** (P4 fêmea com borne).
 
 > **Ao gravar pelo USB**, desligue a fonte de 5 V. Algumas placas não têm diodo entre o USB e o pino de 5 V, e as duas fontes juntas podem aquecer o regulador.

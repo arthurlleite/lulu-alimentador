@@ -184,7 +184,7 @@ footer a{color:inherit}
     </section>
 
     <div class="grade">
-      <section class="cartao info">
+      <section class="cartao info" id="cartaoNivel">
         <small>Ração no tubo</small>
         <div class="medidor">
           <svg viewBox="0 0 70 70" aria-hidden="true"><circle class="trilho" cx="35" cy="35" r="29"/><circle class="valor" id="medidorValor" cx="35" cy="35" r="29" stroke-dasharray="182.2" stroke-dashoffset="182.2"/></svg>
@@ -195,7 +195,7 @@ footer a{color:inherit}
         <small>Próxima refeição</small>
         <b id="proxima">--</b><span id="proximaSub">sem agenda</span>
       </section>
-      <section class="cartao info">
+      <section class="cartao info" id="cartaoAmbiente">
         <small>Ambiente</small>
         <b id="ambiente">--</b><span id="ambienteSub">sem leitura</span>
       </section>
@@ -227,7 +227,7 @@ footer a{color:inherit}
         <label for="bip">Bipar antes de servir</label>
         <label class="chave"><input type="checkbox" id="bip"><span></span></label>
       </div>
-      <div class="campo">
+      <div class="campo" id="campoCalibracao">
         <label>Calibração do nível (distância do sensor até a ração)</label>
         <div class="junto"><input id="calVazio" type="number" min="5" max="200" step="1" aria-label="Distância com o tubo vazio"><span>cm vazio</span></div>
         <div class="junto"><input id="calCheio" type="number" min="0" max="100" step="1" aria-label="Distância com o tubo cheio"><span>cm cheio</span></div>
@@ -339,10 +339,17 @@ function desenhar(e) {
   const alarmes = {
     racao_baixa: ["atencao", "Ração acabando: hora de reabastecer."],
     sem_saida: ["erro", "O servo girou mas a ração não caiu. Tubo vazio ou travado?"],
+    chama: ["erro", "Chama detectada perto do alimentador! Confira agora."],
   };
   const a = alarmes[e.alarme];
   $("aviso").className = "aviso" + (a ? " mostrar " + a[0] : "");
   if (a) $("textoAviso").textContent = a[1];
+
+  // Firmware antigo não manda "sensores": mostra tudo, como antes.
+  const sensores = e.sensores || {};
+  $("cartaoNivel").hidden = sensores.nivel === false;
+  $("campoCalibracao").hidden = sensores.nivel === false;
+  $("cartaoAmbiente").hidden = sensores.ambiente === false;
 
   const medidor = $("medidorValor");
   if (e.nivel) {
@@ -592,6 +599,7 @@ async function iniciarRemoto() {
       if (j.tipo === "resposta" && j.id && pendentes.has(j.id)) { pendentes.get(j.id)(j); pendentes.delete(j.id); }
       else if (j.tipo === "alimentado" && !j.ok) recado("A ração não caiu! Confira o tubo.");
       else if (j.tipo === "racao_baixa") recado("Ração acabando!");
+      else if (j.tipo === "chama") recado("Chama detectada perto do alimentador!");
     }
   });
 }

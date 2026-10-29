@@ -177,7 +177,9 @@ void estado_registrar_refeicao(uint8_t porcoes, origem_t origem, bool ok)
   if (g_estado.tam_historico < TAM_HISTORICO)
     g_estado.tam_historico++;
   g_estado.servindo = false;
-  if (!ok)
+  if (g_estado.alarme == ALARME_CHAMA)
+    ; // o alarme de chama só é limpo pelo próprio sensor
+  else if (!ok)
     g_estado.alarme = ALARME_SEM_SAIDA;
   else if (g_estado.alarme == ALARME_SEM_SAIDA)
     g_estado.alarme = ALARME_NENHUM;
@@ -207,6 +209,8 @@ static const char *nome_alarme(alarme_t a)
     return "racao_baixa";
   case ALARME_SEM_SAIDA:
     return "sem_saida";
+  case ALARME_CHAMA:
+    return "chama";
   default:
     return NULL;
   }
@@ -243,6 +247,13 @@ char *estado_json(bool com_segredo)
     cJSON_AddStringToObject(raiz, "alarme", alarme);
   else
     cJSON_AddNullToObject(raiz, "alarme");
+
+  // Sensores ligados no menuconfig: o app esconde os cartões dos que não existem.
+  cJSON *sens = cJSON_AddObjectToObject(raiz, "sensores");
+  cJSON_AddBoolToObject(sens, "nivel", TEM_NIVEL);
+  cJSON_AddBoolToObject(sens, "ambiente", TEM_DHT11);
+  cJSON_AddBoolToObject(sens, "saida", TEM_SAIDA);
+  cJSON_AddBoolToObject(sens, "chama", TEM_CHAMA);
 
   cJSON *wifi = cJSON_AddObjectToObject(raiz, "wifi");
   cJSON_AddStringToObject(wifi, "ssid", e->ssid);
