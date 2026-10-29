@@ -46,7 +46,7 @@ Fontes on-line consultadas em **29 de outubro de 2026**. Fontes de fabricante de
 **F13. FUNDAMENTOS DE SISTEMAS EMBARCADOS, FGA/UnB.** *Lista de Sensores e Atuadores Disponíveis*. Trabalho 2, 2026/2. [Lista oficial](https://gitlab.com/fse_fga/trabalhos-2026_2/trabalho-2-2026-2/-/blob/main/Lista_de_Sensores.md).
 
 <a id="f14"></a>
-**F14. ELECFREAKS.** *Ultrasonic Ranging Module HC-SR04*. Ficha técnica distribuída pela SparkFun. [PDF técnico](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf).
+**F14. WAVESHARE.** *Flame Sensor*. Módulo detector de chama com comparador LM393: faixa de 760 a 1100 nm, saídas digital e analógica e ajuste de sensibilidade. [Página do produto](https://www.waveshare.com/product/modules/sensors/flame-sensor.htm) e [wiki técnica](https://www.waveshare.com/wiki/Flame_Sensor).
 
 <a id="f15"></a>
 **F15. OASIS.** BANKS, Andrew; GUPTA, Rahul (ed.). *MQTT Version 3.1.1*. OASIS Standard, 29 out. 2014. [Especificação](https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html).
@@ -55,7 +55,10 @@ Fontes on-line consultadas em **29 de outubro de 2026**. Fontes de fabricante de
 **F16. HIVEMQ.** *Free MQTT Broker*. Limites do serviço público compartilhado. [Informações oficiais](https://www.hivemq.com/mqtt/public-mqtt-broker/).
 
 <a id="f17"></a>
-**F17.** ABREU, David; TOLEDO, Jonay; CODINA, Benito; SUÁREZ, Arminda. *Low-Cost Ultrasonic Range Improvements for an Assistive Device*. **Sensors**, v. 21, n. 12, art. 4250, 2021. Fonte complementar para a proposta de nível ultrassônico, fora dos oito artigos selecionados na seção 3.4. [Texto original](https://pmc.ncbi.nlm.nih.gov/articles/PMC8234202/).
+**F17. TEXAS INSTRUMENTS.** *LM393, LM293, LM2903 Dual Differential Comparators*. Datasheet do comparador usado nos módulos detectores de chama. [PDF](https://www.ti.com/lit/ds/symlink/lm393.pdf).
+
+<a id="f18"></a>
+**F18. TOWER PRO.** *MG996R — Metal Gear Servo*. Especificações do servo usado no dosador. [Página do fabricante](https://www.towerpro.com.tw/product/mg996r/).
 
 ## Artigos sobre tecnologias
 
@@ -84,6 +87,25 @@ Fontes on-line consultadas em **29 de outubro de 2026**. Fontes de fabricante de
 
 <a id="a8"></a>
 **A8 / U4.** AMANS, Faida Bako; UMAR, Umar Ali. *Design and Fabrication of an Automatic Pet Food Dispenser*. **Journal of Mechatronics and Artificial Intelligence**, v. 2, n. 1, p. 11–20, 2025. DOI: [10.17509/jmai.v2i1.80389](https://doi.org/10.17509/jmai.v2i1.80389). [PDF](https://ejournal.upi.edu/index.php/JMAI/article/download/80389/31419).
+
+## Artigos complementares sobre tecnologias
+
+<a id="a9"></a>
+**A9 / T5.** PLAUSKA, Ignas; LIUTKEVIČIUS, Agnius; JANAVIČIŪTĖ, Audronė. *Performance Evaluation of C/C++, MicroPython, Rust and TinyGo Programming Languages on ESP32 Microcontroller*. **Electronics**, v. 12, n. 1, art. 143, 2023. DOI: [10.3390/electronics12010143](https://doi.org/10.3390/electronics12010143). [PDF](https://www.mdpi.com/2079-9292/12/1/143/pdf).
+
+<a id="a10"></a>
+**A10 / T6.** AZHAR, M. Azhar; AZWAR, Muhamad; ASRONI, Ondi. *Performance and Security Analysis of MQTT over TLS on ESP32-Based IoT Systems*. **Journal of Applied Informatics and Computing**, v. 10, n. 4, p. 4144–4156, 2026. DOI: [10.30871/jaic.v10i4.13355](https://doi.org/10.30871/jaic.v10i4.13355). [PDF](https://jurnal.polibatam.ac.id/index.php/JAIC/article/download/13355/3921).
+
+<a id="a11"></a>
+**A11 / T7.** DEL-VALLE-SOTO, Carolina; ALVAREZ-GARCIA, Maria Fernanda; BRISEÑO, Ramon A.; RODRIGUEZ, Jafet; VISCONTI, Paolo. *Stability-Aware Security–Performance Trade-Off Analysis in Resource-Constrained IoT Systems*. **Digital**, v. 6, n. 2, art. 35, 2026. DOI: [10.3390/digital6020035](https://doi.org/10.3390/digital6020035). [PDF](https://www.mdpi.com/2673-6470/6/2/35/pdf).
+
+## Artigos complementares sobre aplicação e uso
+
+<a id="a12"></a>
+**A12 / U5.** UNTIVEROS-PEÑALOZA, Helder; CASTRO-VARGAS, Cristian. *IoT-Based Smart Pet Feeding System with Dynamic Network Configuration Using ESP32, WiFiManager and Blynk 2.0*. **Ingénierie des Systèmes d'Information**, v. 30, n. 11, p. 2881–2889, 2025. DOI: [10.18280/isi.301106](https://doi.org/10.18280/isi.301106). [PDF](https://www.iieta.org/download/file/fid/190865).
+
+<a id="a13"></a>
+**A13 / U6.** KHUSNI, Mukhamad Iqbal; SUASANA, Iman Saufik; KURNIAWAN, Dendy. *Design of IoT-Based Fire Monitoring Using Flame and Smoke Sensors (Dlimas Village)*. **Jurnal Ilmiah Sistem Informasi**, v. 5, n. 2, p. 33–44, 2026. DOI: [10.51903/aznf0p81](https://doi.org/10.51903/aznf0p81). [PDF](https://ejurnal.provisi.ac.id/index.php/JUISI/article/download/1497/1031).
 
 ## Produtos do comparativo
 
@@ -119,5 +141,5 @@ Fontes on-line consultadas em **29 de outubro de 2026**. Fontes de fabricante de
 <a id="i2"></a>
 **I2. PINECONE DATA.** Fotografia da placa PLAF108, publicada no relato F3. [Arquivo original](https://www.pineconedata.com/assets/img/posts/2026-06-19-flashing-esphome-on-wifi-pet-feeder/IMG_20260605_163636_790.jpg). Imagem incorporada pelo endereço da fonte: [placa-plaf108.jpg](https://www.pineconedata.com/assets/img/posts/2026-06-19-flashing-esphome-on-wifi-pet-feeder/IMG_20260605_163636_790.jpg). Crédito e direitos do autor original; não é fotografia produzida pela equipe.
 
-Os diagramas conceituais desta pasta foram elaborados para o relatório com base nas fontes indicadas. As renderizações e peças do Lulu permanecem em [hardware/3d](../hardware/3d/README.md), com seu histórico de desenvolvimento preservado no repositório.
+Os diagramas conceituais desta pasta foram elaborados para o relatório com base nas fontes indicadas. As renderizações e peças do Lulu permanecem em [hardware/3d](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/hardware/3d/README.md), com seu histórico de desenvolvimento preservado no repositório.
 
