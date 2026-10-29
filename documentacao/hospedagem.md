@@ -36,10 +36,12 @@ sequenceDiagram
 
 ## Segurança
 
-- O tópico tem um **código aleatório de 64 bits** gerado na primeira vez que a placa liga. Sem ele, ninguém acha o alimentador no broker.
+- O tópico usa um **identificador aleatório de 64 bits** gerado na primeira inicialização. Esse identificador não implementa autenticação ou autorização: tópicos podem ser descobertos por clientes com acesso às assinaturas correspondentes no broker público.
 - A ESP32 fala com o broker por **TLS**, e o app por **WSS** (WebSocket com TLS).
 - Comandos perigosos (`esquecer_wifi`, `acertar_hora`) só funcionam pela rede local.
-- O broker público **não tem senha**: quem tiver o link controla o alimentador. Não publique o link.
+- O broker público **não tem senha**: conhecer o tópico permite enviar comandos. Para acesso remoto com controle de permissão, implementar autenticação e regras de publicação/assinatura por dispositivo. TLS protege o transporte; não substitui essas regras.
+
+O firmware também precisa tratar comandos repetidos e retidos antes de ser usado de forma autônoma. Essas melhorias estão registradas no [plano de validação e limitações](../petlibro-air/proposta.md).
 
 ### Para ir além (opcional)
 
@@ -52,3 +54,4 @@ Crie uma conta gratuita no [HiveMQ Cloud](https://www.hivemq.com/products/mqtt-c
 ## Ativar o GitHub Pages (uma vez só)
 
 Em **Settings → Pages → Build and deployment**, escolha **Source: GitHub Actions**. A partir daí, cada push na `main` recompila e publica.
+
