@@ -16,6 +16,30 @@ Os marcos abaixo orientam a revisão do grupo. A documentação foi adiantada em
 | 02/11 | Revisão final e estrutura | Pasta do produto com README e referências; revisão do grupo e decisão sobre o procedimento de submissão ainda necessárias. |
 | 03/11 | Submissão | Executar o procedimento aceito pelo professor e conferir a versão enviada. |
 
+## Conferência com o enunciado
+
+| Exigência do enunciado | Onde está | Situação |
+| --- | --- | --- |
+| Produto comercial embarcado com sensores e atuadores | [README](README.md): PETLIBRO Air PLAF108 | Atendido |
+| 3.1 Funções, público, contexto, segmento e aplicações | [README](README.md#31-descrição-do-produto-selecionado) | Atendido |
+| 3.1 Fotos do produto e da placa interna | [README](README.md): Figuras 1 e 2, com fonte | Atendido (imagens por link da fonte original) |
+| 3.1 Tecnologias de comunicação e controle | [README](README.md) e [características](caracteristicas.md) | Atendido |
+| 3.2 Doze grupos de características, cada item com fonte | [caracteristicas.md](caracteristicas.md) | Atendido; itens não encontrados marcados como NI |
+| 3.2 Tecnologias críticas destacadas | [caracteristicas.md](caracteristicas.md) | Atendido |
+| 3.3 Implementação com ESP32 / ESP-IDF | [proposta.md](proposta.md) | Atendido, com firmware real |
+| 3.3 Mapeamento 3.2 → ESP32 e Lista de Sensores | [proposta.md](proposta.md#mapeamento-das-características) | Atendido; peças já adquiridas |
+| 3.3 Diagrama conceitual ou esquemático | [proposta.md](proposta.md#esquemático-e-montagem): blocos, esquemático e posicionamento | Atendido |
+| 3.3 Limitações e desafios | [proposta.md](proposta.md#limitações-e-desafios) | Atendido |
+| 3.4 Quatro artigos de periódico sobre tecnologias | [artigos.md](artigos.md): T1–T4 (+ T5–T7) | Atendido; tipo e DOI conferidos na Crossref |
+| 3.4 Quatro artigos de periódico sobre aplicação | [artigos.md](artigos.md): U1–U4 (+ U5–U6) | Atendido; tipo e DOI conferidos na Crossref |
+| 3.4 Resumo de cada artigo e link do PDF original | [artigos.md](artigos.md) | Atendido; nenhum PDF no repositório |
+| 3.5 Cinco produtos e tabela pelos itens da listagem | [comparativo.md](comparativo.md) | Atendido |
+| Referências completas ao final | [referencias.md](referencias.md) | Atendido |
+| Nome completo e matrícula dos integrantes | [README](README.md#equipe) | Atendido |
+| Pasta com nome do produto, sem acento/espaço, `README.md` principal | `petlibro-air/` | Atendido |
+| Markdown; imagens em formato renderizável | `.md` e `imagens/*.png` | Atendido |
+| Fork do repositório da disciplina + MR | — | **Pendente**: ver abaixo |
+
 ## Conferência do conteúdo
 
 - [x] Produto comercial identificado como PETLIBRO Air PLAF108.
@@ -46,13 +70,13 @@ O firmware não foi modificado para resolver os pontos abaixo nesta revisão doc
 
 | Pendência | Local do código | Resultado esperado após correção |
 | --- | --- | --- |
-| Evitar repetição de comandos e execução de comandos MQTT retidos | [comandos.c](../firmware/src/comandos.c), [nuvem_mqtt.c](../firmware/src/nuvem_mqtt.c) | Um pedido não provocar dispensações adicionais por reentrega. |
-| Tratar fila cheia e reinício durante o minuto de disparo | [agenda.c](../firmware/src/agenda.c) | Política explícita para pedidos recusados, perdidos ou repetidos. |
-| Validar números antes da conversão para tipos menores | [comandos.c](../firmware/src/comandos.c), [dosador.c](../firmware/src/dosador.c) | Rejeitar valores inválidos sem truncamento inesperado. |
-| Propagar falha de persistência | [estado.c](../firmware/src/estado.c) | Não afirmar que salvou quando a NVS falhar. |
-| Restringir reconfiguração local e autorizar acesso remoto | [servidor_web.c](../firmware/src/servidor_web.c), [nuvem_mqtt.c](../firmware/src/nuvem_mqtt.c) | Somente clientes autorizados alterarem configuração ou acionarem o motor. |
-| Testar detecção óptica e quantidade efetivamente dispensada | [dosador.c](../firmware/src/dosador.c) | Diferenciar passagem detectada de confirmação de todas as porções. |
-| Integrar sensores à estrutura e verificar movimento/fixação | [CAD](../hardware/3d/README.md) | Montagem mensurável, desmontável e sem interferências no curso previsto. |
+| Evitar repetição de comandos e execução de comandos MQTT retidos | [comandos.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/comandos.c), [nuvem_mqtt.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/nuvem_mqtt.c) | Um pedido não provocar dispensações adicionais por reentrega. |
+| Tratar fila cheia e reinício durante o minuto de disparo | [agenda.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/agenda.c) | Política explícita para pedidos recusados, perdidos ou repetidos. |
+| Validar números antes da conversão para tipos menores | [comandos.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/comandos.c), [dosador.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/dosador.c) | Rejeitar valores inválidos sem truncamento inesperado. |
+| Propagar falha de persistência | [estado.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/estado.c) | Não afirmar que salvou quando a NVS falhar. |
+| Restringir reconfiguração local e autorizar acesso remoto | [servidor_web.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/servidor_web.c), [nuvem_mqtt.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/nuvem_mqtt.c) | Somente clientes autorizados alterarem configuração ou acionarem o motor. |
+| Testar detecção óptica e quantidade efetivamente dispensada | [dosador.c](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/src/dosador.c) | Diferenciar passagem detectada de confirmação de todas as porções. |
+| Integrar sensores à estrutura e verificar movimento/fixação | [CAD](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/hardware/3d/README.md) | Montagem mensurável, desmontável e sem interferências no curso previsto. |
 
 ## Como revisar esta branch
 
@@ -64,11 +88,14 @@ O firmware não foi modificado para resolver os pontos abaixo nesta revisão doc
 
 ## Estrutura para a submissão
 
-O grupo continua desenvolvendo neste repositório. O enunciado escrito pede fork do repositório da disciplina e merge request contendo uma pasta do produto. A pasta acadêmica criada aqui já tem esse formato e pode ser levada posteriormente ao fork, ajustando os links relativos que apontam para firmware/hardware fora dela.
+A pasta `petlibro-air/` é autossuficiente: as figuras do Lulu estão em `imagens/` e os links para firmware, hardware e documentação apontam para a `main` do [projeto no GitLab](https://gitlab.com/Devv-Antonio1/lulu-alimentador). Esses links funcionam depois que esta branch for incorporada à `main`.
 
-Se a pasta for copiada isoladamente, também deverão ser incluídos os materiais do Lulu referenciados ou substituídos esses links por URLs permanentes do commit deste projeto. Não copiar somente o README e deixar os arquivos auxiliares de fora.
+Passos para entregar:
 
-Caso o professor autorize receber apenas o link deste repositório, usar a URL da **branch ou de um commit específico que contenha o relatório**, para evitar apontar à `main` antes da incorporação das mudanças. O procedimento de fork/MR não foi executado nesta etapa; a revisão documental não equivale à submissão.
+1. Incorporar esta branch à `main` do projeto (para os links absolutos funcionarem).
+2. Fazer **fork** de [fse_fga/trabalhos-2026_2/trabalho-2-2026-2](https://gitlab.com/fse_fga/trabalhos-2026_2/trabalho-2-2026-2).
+3. Copiar a pasta `petlibro-air/` inteira (com `imagens/`) para a raiz do fork, numa branch própria.
+4. Abrir o **MR** do fork para o repositório da disciplina até **03/11/2026** e conferir no MR se as imagens e os links abrem.
 
 ## Colaboração
 
