@@ -12,19 +12,37 @@ A ração fica no tubo de PVC, apoiada na **rampa inclinada**, que tem um furo. 
 
 ## Onde fica a eletrônica
 
+Duas folhas de montagem, geradas a partir das coordenadas do `IoT3D.FCStd`:
+
+| Folha | O que mostra |
+|---|---|
+| [Posicionamento](imagens/eletronica_posicionamento.svg) | três vistas do tubo com cada componente, os furos e o caminho de cada fio; tabela com medidas, altura e **folga mínima** de cada peça |
+| [Furação e placa](imagens/eletronica_furacao.svg) | placa perfurada com cotas, parede do tubo planificada com os furos F1 a F10, mapa de pinos, comprimento dos fios e checklist contra curto |
+
 [![Posicionamento da eletrônica dentro do tubo](imagens/eletronica_posicionamento.png)](imagens/eletronica_posicionamento.svg)
 
-A eletrônica fica **embaixo do funil**, no espaço entre a base do tubo e a parte de baixo do funil (60 a 120 mm de altura, maior do lado de trás, porque o funil desce em direção à saída):
+[![Furação do tubo e montagem da placa](imagens/eletronica_furacao.png)](imagens/eletronica_furacao.svg)
 
-- **Placa perfurada 7 × 9 cm em pé**, encostada na aba lisa do [suporte da placa](stl/suporte_placa.stl), presa com 2 parafusos M3 (as porcas ficam dentro do U). Os componentes ficam na face voltada para o centro do tubo; o topo da placa fica 5 mm abaixo do funil.
-- **ESP32-S3 nas barras fêmea, com a USB-C para baixo**: para gravar, tire o cap e ligue o cabo por baixo.
-- **LED, chave e buzzer** na parede de trás (o lado oposto ao pote), **sensor de chama do alarme** na parede esquerda, **sensor da saída** preso por fora na extensão do funil.
-- **Nenhum furo abaixo de 45 mm** da base: é a parte coberta pelo cap.
+### Como foi calculado
 
-O desenho e as medidas vêm de [`ferramentas/eletronica_3d.py`](../../ferramentas/eletronica_3d.py), que usa as coordenadas do `IoT3D.FCStd` e confere colisões com as peças impressas. As medidas dos componentes são de catálogo: confira com paquímetro antes de furar.
+- **Medidas com folga**: cada componente usa a maior medida publicada entre as variantes à venda. A ESP32-S3-DevKitC-1 original tem 62,7 × 25,4 mm, mas há clones de até 69 × 28 mm, com as fileiras de pinos a 25,4 mm. O capacitor de 1000 µF / 16 V vem em 10 × 16 a 10 × 20 mm. Conectores encaixados (servo e jumpers) e as porcas do suporte também entram na conta.
+- **Folga mínima de 3 mm** entre qualquer componente e o funil, a parede ou outro componente. O script para com erro se alguma peça ficar abaixo disso. A menor folga atual é 3,2 mm (a placa até a parede).
+- **Fios**: cada rota é conferida contra o funil, os componentes e o giro da boca do servo. O comprimento leva 30 % de sobra.
+- **Furos dos parafusos do suporte** medidos no STL: Ø3,3 em y = 0, a 46,5 e 61,5 mm da base.
+- **Cap**: considerado com 40 mm de bolsa; nenhum furo encosta nessa faixa. Meça o seu cap: se a bolsa for maior que 43 mm, o furo F9 fica coberto.
 
-- **Gerar o desenho**: `python ferramentas/eletronica_3d.py --png` (na raiz do repositório).
-- **Ver no FreeCAD**: abra o `IoT3D.FCStd` e rode o mesmo arquivo em **Macro → Macros… → Arquivo do usuário**. As peças entram no grupo `Eletronica`, com as cores do desenho.
+### Resumo da montagem
+
+- **Placa perfurada 7 × 9 cm em pé**, encostada na aba lisa do [suporte da placa](stl/suporte_placa.stl). Dois parafusos M3 × 30 atravessam a parede, o suporte e a placa (F8 e F9), com a porca na face da placa. O topo da placa fica 5 mm abaixo do funil.
+- **ESP32-S3 nas barras fêmea, com a USB-C para baixo**: para gravar, tire o cap e ligue o cabo por baixo. As barras ficam nas colunas de furos 1 e 11 (25,4 mm), longe das porcas.
+- **Servo e boca**: a boca menor (tampa do atuador) é colada e parafusada no braço do servo e gira em volta do eixo dele, perpendicular à rampa. O cabo sai pelo lado do suporte oposto à boca e fica preso nele com abraçadeira (a mais de 15 mm do giro). Depois passa por F1, desce por fora até F2 e chega à placa com 3 jumpers macho-fêmea de extensão.
+- **LED, chave e buzzer** na parede de trás, **sensor de chama do alarme** na parede esquerda, **sensor da saída** colado por fora na extensão do funil, com os fios entrando por F10.
+- **Nenhum fio** passa pelo funil, pela saída da ração ou pelo giro da boca.
+
+As medidas são de catálogo: confira as peças recebidas com paquímetro antes de furar.
+
+- **Gerar as folhas**: `python ferramentas/eletronica_3d.py --png` (na raiz do repositório). O mesmo comando refaz a conferência de folgas.
+- **Ver no FreeCAD**: abra o `IoT3D.FCStd` e rode o mesmo arquivo em **Macro → Macros… → Arquivo do usuário**. As peças entram no grupo `Eletronica`, com as cores das folhas.
 
 ## Peças
 

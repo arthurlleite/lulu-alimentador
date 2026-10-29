@@ -25,6 +25,18 @@ A eletrônica está fechada: é exatamente o que aparece no [esquemático](../ha
 
 O HC-SR04 (nível) e o DHT11 (temperatura e umidade) **saíram do projeto**: não fazem parte das peças da equipe. O firmware continua sabendo usá-los, mas eles vêm desligados no `menuconfig` (`ALIM_SENSOR_NIVEL` e `ALIM_DHT11`).
 
+### Itens pequenos para a montagem
+
+Pedidos pela montagem e pelas proteções contra curto (ver as [folhas de montagem](../hardware/3d/README.md#onde-fica-a-eletrônica)). Não estão na nota; use o que houver no acervo.
+
+| Item | Qtd | Para quê |
+|---|---|---|
+| Parafuso M3 × 30 + porca + arruela isolante | 2 | prender o suporte e a placa (furos F8 e F9) |
+| Termo-retrátil fino (2 a 3 mm) | ~30 cm | pernas do LED, buzzer e chave, bornes do J1 |
+| Abraçadeiras pequenas (nylon) | ~10 | cabo do servo no suporte, J1 e feixes de fios |
+| Fita dupla-face de espuma | ~10 cm | colar U2, U3 e a chave isolando o verso |
+| Fita isolante | 1 | verso da placa |
+
 ### Rateio da compra
 
 Itens da nota usados no Lulu que não estavam no acervo. As outras peças da mesma compra foram reposição do que a equipe já tinha e não entram na conta.

@@ -82,9 +82,27 @@ O buzzer ativo de 3,3 V puxa cerca de 25 mA. O firmware liga o GPIO 16 com a for
 - **GPIO 0**: é o botão BOOT da placa (o firmware usa como segundo botão).
 - **GPIO 5, 6 e 7**: estavam reservados para HC-SR04 e DHT11, que saíram do projeto. Estão livres.
 
+## Conectores da placa
+
+A placa tem duas barras macho: a **1×3 do servo** e a **1×14 dos sensores e do painel**, com um pino por fio. As duas recebem jumpers fêmea.
+
+| Barra 1×14 | Ligação | | Barra 1×14 | Ligação |
+|---|---|---|---|---|
+| 1 | U2 GND | | 8 | LED G (via R2) ← GPIO 18 |
+| 2 | U2 VCC (3,3 V) | | 9 | LED B (via R3) ← GPIO 8 |
+| 3 | U2 D0 → GPIO 9 | | 10 | LED catodo (GND) |
+| 4 | U3 GND | | 11 | Buzzer + ← GPIO 16 |
+| 5 | U3 VCC (3,3 V) | | 12 | Buzzer − (GND) |
+| 6 | U3 D0 → GPIO 10 | | 13 | Chave ← GPIO 15 |
+| 7 | LED R (via R1) ← GPIO 17 | | 14 | Chave (GND) |
+
+Barra 1×3 do servo: **1 GND (marrom), 2 +5 V (vermelho), 3 sinal ← GPIO 4 (laranja)**. Marque o lado do marrom na placa: invertido, o servo recebe 5 V no sinal.
+
+Onde fica cada peça dentro do tubo, o caminho dos fios e os cuidados contra curto estão nas [folhas de montagem](../3d/README.md#onde-fica-a-eletrônica).
+
 ## Montagem da placa
 
-1. Solde a ESP32 em barras de pinos fêmea na **placa perfurada 7 × 9 cm**, para poder tirá-la.
+1. Solde barras de pinos fêmea na **placa perfurada 7 × 9 cm** (colunas 1 e 11, a 25,4 mm; confira na sua ESP) e encaixe a ESP32 nelas, para poder tirá-la.
 2. Faça dois trilhos (+5V e GND) ao longo da placa com o fio de 20 AWG e solde o **C1** perto do conector do servo (atenção à polaridade: a faixa do capacitor é o −).
 3. Use barras de pinos macho para o servo, os sensores e o botão. Assim tudo encaixa com jumpers e dá para trocar peças.
 4. Entrada da fonte pelo **J1** (P4 fêmea com borne).

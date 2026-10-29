@@ -26,12 +26,16 @@ Baseado na montagem real do primeiro protótipo, mostrada [neste vídeo](https:/
 
 ## 4. Eletrônica
 
-1. Monte a placa conforme o [guia de ligações](../hardware/eletronica/README.md) (não esqueça o capacitor do servo).
-2. Siga o [desenho de posicionamento](../hardware/3d/README.md#onde-fica-a-eletrônica): ele mostra onde fica cada peça e a altura de cada furo (F1 a F9).
-3. Fixe a placa em pé na aba lisa do [suporte da placa](../hardware/3d/stl/suporte_placa.stl), com 2 parafusos M3, e a ESP32 com a USB-C para baixo.
-4. **Sensor de chama da saída (U2)**: por fora, na extensão do funil, olhando pelo furo F8 para a luz que entra pelo F9. Ajuste o trimpot com o funil vazio.
-5. **Sensor de chama do alarme (U3)**: na parede esquerda, com o fotodiodo dobrado para fora pelo furo F7.
-6. **LED, chave e buzzer**: na parede de trás (furos F4, F5 e F6); a chave fica colada por fora.
+Siga as duas folhas de montagem ([posicionamento](../hardware/3d/imagens/eletronica_posicionamento.svg) e [furação e placa](../hardware/3d/imagens/eletronica_furacao.svg)). Elas têm a altura e a posição de cada furo, as cotas da placa e o mapa de pinos.
+
+1. **Marque os furos**: enrole uma fita de papel no tubo, marque o centro da saída da ração e meça cada furo pela distância **s** (pela volta) e pela altura a partir da base (tabela da folha de furação). Fure F1 a F10 e os furos E1 e E2 na extensão do funil.
+2. **Prepare a placa**: fure Ø3,3 nos dois pontos dos parafusos (a = 35, b = 44,5 e 59,5), raspe as ilhas de cobre no círculo de Ø10 em volta de cada furo e solde barras, resistores, C1 (faixa no GND) e os trilhos de +5 V e GND, conforme o [esquemático](../hardware/eletronica/README.md).
+3. **Isole o verso da placa**: corte os terminais a no máximo 2 mm e cubra com fita isolante.
+4. **Fixe a placa** no suporte com 2 parafusos M3 × 30 (arruela isolante do lado da placa) e encaixe a ESP32 com a USB-C para baixo.
+5. **Servo**: prenda o cabo no suporte do motor com abraçadeira, do lado oposto à boca. Passe-o por F1, desça por fora até F2 e ligue-o à barra 1×3 com 3 jumpers macho-fêmea (marrom no GND). Fixe a emenda com fita.
+6. **Sensores e painel**: U2 colado por fora na extensão (fotodiodo em E1, fios por F10), U3 na parede esquerda (fotodiodo dobrado para fora por F7), LED em F4, chave colada por fora sobre F5, buzzer atrás de F6. Use fita dupla-face de espuma e termo-retrátil em cada perna soldada.
+7. **J1**: aperte os fios de 20 AWG nos bornes, cubra com termo-retrátil e prenda o J1 com abraçadeira; o plugue da fonte entra por F3.
+8. **Antes de ligar**: com o multímetro, confira que **+5 V e GND não têm continuidade**. Só então ligue a fonte.
 
 ## 5. Primeira configuração
 
