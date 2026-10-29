@@ -42,9 +42,8 @@
 
 - **Agenda**: até 8 refeições por dia, cada uma com sua quantidade de porções, ligando e desligando cada horário.
 - **Alimentar agora**: pelo app, de casa ou de qualquer lugar, ou apertando o botão do aparelho.
-- **Nível de ração**: um sensor ultrassônico ([HC-SR04](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf)) mede quanto ainda tem no tubo e avisa quando está acabando.
-- **Confere se a ração caiu**: um sensor infravermelho na saída percebe se nada saiu (tubo vazio ou travado). Nesse caso o alimentador sacode, tenta de novo e avisa.
-- **Ambiente**: temperatura e umidade dentro do reservatório ([DHT11](https://www.mouser.com/datasheet/2/758/DHT11-Technical-Data-Sheet-Translated-Version-1143054.pdf)), porque umidade estraga a ração.
+- **Confere se a ração caiu**: um sensor infravermelho (módulo de sensor de chama) na saída conta os grãos que passam. Se nada saiu (tubo vazio ou travado), o alimentador sacode, tenta de novo e avisa.
+- **Alarme de fogo**: um segundo sensor de chama, virado para fora, faz o LED piscar vermelho, toca o buzzer e avisa no app.
 - **Configuração pelo celular**: na primeira vez, ele cria a rede `Alimentador-XXXX`; ao conectar, abre uma página para escolher o Wi-Fi e dar o nome do pet. Não precisa mexer em código.
 - **Funciona sem internet**: o app também fica na própria ESP32, em `http://alimentador.local`.
 - **LED de status, bip e histórico** das últimas refeições.
@@ -73,9 +72,8 @@ flowchart LR
   subgraph Alimentador
     ESP["ESP32-S3<br/>ESP-IDF + FreeRTOS"]
     ESP -->|PWM| SERVO[Servo MG996R]
-    US[HC-SR04<br/>nível] --> ESP
-    DHT[DHT11<br/>temp. e umidade] --> ESP
-    IR[Sensor IR<br/>saída] --> ESP
+    IR[Sensor de chama<br/>saída da ração] --> ESP
+    FOGO[Sensor de chama<br/>alarme] --> ESP
     BTN[Botão] --> ESP
     ESP --> LED[LED RGB]
     ESP --> BUZ[Buzzer]
@@ -86,9 +84,9 @@ flowchart LR
   ESP -->|NTP| NTP[(a.st1.ntp.br)]
 ```
 
-<p align="center"><a href="hardware/eletronica/README.md"><img src="hardware/eletronica/esquematico.png" width="720" alt="Pré-esquemático da eletrônica"></a></p>
+<p align="center"><a href="hardware/eletronica/README.md"><img src="hardware/eletronica/esquematico.png" width="720" alt="Esquemático da eletrônica"></a></p>
 
-Detalhes: [firmware](firmware/README.md) · [pré-esquemático e ligações](hardware/eletronica/README.md) · [peças 3D](hardware/3d/README.md) · [hospedagem e segurança](documentacao/hospedagem.md).
+Detalhes: [firmware](firmware/README.md) · [esquemático e ligações](hardware/eletronica/README.md) · [peças 3D](hardware/3d/README.md) · [hospedagem e segurança](documentacao/hospedagem.md).
 
 ## Produto de referência
 
@@ -99,8 +97,9 @@ O projeto toma como base o **[PETLIBRO Air Smart Feeder (PLAF108)](https://au.pe
 | Microcontrolador | ESP32-C3 (RISC-V, 1 núcleo) | ESP32-S3 (Xtensa LX7, 2 núcleos) |
 | Refeições por dia | até 10 | até 8 |
 | Dosagem | motor DC + rotor | servo MG996R + tampa giratória |
-| Confere a saída da ração | sensor IR | sensor IR |
-| Nível de ração | alerta de ração baixa | ultrassom com % no app |
+| Confere a saída da ração | sensor IR | sensor IR (módulo de chama) |
+| Nível de ração | alerta de ração baixa | não tem (pelo app, quando a ração não cai) |
+| Alarme de fogo | não tem | sensor de chama |
 | Bateria de reserva | 5200 mAh | não (próximo passo) |
 | App | app do fabricante | app web próprio, local e pela internet |
 
@@ -108,20 +107,24 @@ Comparação completa, pinos do PETLIBRO e outros produtos do mercado: **[docume
 
 ## O que comprar
 
-Preços pesquisados em outubro de 2026 (mudam com promoção e frete). Lista completa, com justificativa de cada item: **[documentacao/materiais.md](documentacao/materiais.md)**.
+Lista completa, com a origem de cada peça: **[documentacao/materiais.md](documentacao/materiais.md)**.
 
-### Eletrônica
+### Eletrônica (já comprada)
 
-| Peça | Para que serve | Preço cotado | Onde |
-|---|---|---|---|
-| **ESP32-S3-DevKitC-1 N16R8** | cérebro do alimentador: Wi-Fi 2,4 GHz, Bluetooth 5, 2 núcleos de 240 MHz | ✅ **já possui** | — |
-| **Servo MG996R 180°** | abre e fecha a passagem da ração (o suporte 3D foi feito para ele) | ✅ **já possui** | — |
-| **HC-SR04** | mede o nível de ração no tubo | R$ 8 – 14 | [Eletrogate](https://www.eletrogate.com/modulo-sensor-de-distancia-ultrassonico-hc-sr04), [Baú da Eletrônica](https://www.baudaeletronica.com.br/produto/sensor-de-distancia-ultrassonico-hc-sr04.html) |
-| **DHT11** | temperatura e umidade dentro do tubo | R$ 10 – 15* | lojas de eletrônica |
-| **Sensor IR de obstáculo** | confirma que a ração caiu | R$ 5 – 10* | lojas de eletrônica |
-| **Buzzer ativo, LED RGB, botão** | avisos e controle no aparelho | R$ 8 – 18* | lojas de eletrônica |
-| **Fonte 5 V 3 A** | alimenta a ESP32 e o servo | ✅ **já possui** | — |
-| Capacitor 1000 µF, resistores, placa perfurada, jumpers | montagem | R$ 25 – 40* | lojas de eletrônica |
+A eletrônica está fechada e segue o [esquemático](hardware/eletronica/README.md). Parte já estava com a equipe; o resto foi comprado em 26/10/2026 e dividido entre os quatro integrantes.
+
+| Peça | Para que serve | Origem |
+|---|---|---|
+| **ESP32-S3-DevKitC-1 N16R8** | cérebro do alimentador: Wi-Fi 2,4 GHz, Bluetooth 5, 2 núcleos de 240 MHz | acervo |
+| **Servo MG996R 180°** | abre e fecha a passagem da ração (o suporte 3D foi feito para ele) | acervo |
+| **Fonte 5 V / 5 A** + conector P4 com borne | alimenta a ESP32 e o servo | acervo |
+| Resistores 220 Ω, placa perfurada 7×9 cm, barras de pinos, jumpers, fio 20 AWG | montagem | acervo |
+| **2 módulos sensor de chama** | um confirma que a ração caiu, o outro é alarme de fogo | R$ 17,99 |
+| **LED RGB catodo comum** | status | R$ 22,48 (10 un.) |
+| **Buzzer ativo 3,3 V** | chama o pet e avisa erro | R$ 18,90 (5 un.) |
+| **Chave táctil 12×12 mm** | alimentar na hora e apagar o Wi-Fi | R$ 19,99 |
+| **Capacitor 1000 µF / 16 V** | segura o pico do servo | R$ 20,00 (20 un.) |
+| **Total do rateio** | | **R$ 99,36** (R$ 24,84 por integrante) |
 
 ### Estrutura
 
@@ -164,7 +167,7 @@ lulu-alimentador/
 │   │   ├── IoT3D.FCStd    → modelo original no FreeCAD
 │   │   ├── stl/           → peças prontas para fatiar
 │   │   └── imagens/       → renders das peças
-│   └── eletronica/        → pré-esquemático, ligações e pinos
+│   └── eletronica/        → esquemático, ligações e pinos
 ├── documentacao/          → compras, montagem, referência comercial, hospedagem
 └── ferramentas/           → scripts (arte do Lulu, exportação do 3D)
 ```

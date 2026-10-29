@@ -1,30 +1,43 @@
 # Lista de materiais (o que comprar)
 
-Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, Eletrogate, Usina Info, Baú da Eletrônica…), no Mercado Livre e em loja de material de construção. Os sensores são os mesmos da lista de sensores da disciplina de FSE, então dá para trocar pelos do laboratório se faltar algum.
+Tudo pensado para comprar no Brasil, em lojas de eletrônica, no Mercado Livre e em loja de material de construção. A eletrônica já foi comprada; falta a estrutura.
 
-> **Preços pesquisados em outubro de 2026.** Mudam com promoção e frete, então confira antes de comprar. Onde está "estimado", não achei um preço publicado e usei a faixa comum de mercado.
+> **Eletrônica**: preços reais da compra de 26/10/2026. **Estrutura**: preços pesquisados em outubro de 2026; mudam com promoção e frete. Onde está "estimado", não achei um preço publicado e usei a faixa comum de mercado.
 
-## Eletrônica
+## Eletrônica (definida e comprada)
 
-| # | Item | Qtd | Preço aprox. | Por que este |
+A eletrônica está fechada: é exatamente o que aparece no [esquemático](../hardware/eletronica/README.md). Parte já estava com a equipe (**acervo**) e o resto foi comprado no Mercado Livre em **26/10/2026** e dividido entre os quatro integrantes (**rateio**).
+
+| Ref. | Item | Qtd usada | Origem | Por que este |
 |---|---|---|---|---|
-| 1 | **ESP32-S3-DevKitC-1 N16R8** (USB-C) | 1 | ✅ **já possui** | ESP32 atual, com Wi-Fi 2,4 GHz + Bluetooth 5 (LE), dois núcleos de 240 MHz, 16 MB de flash e 8 MB de PSRAM. Compatível com ESP-IDF. A versão N8R2 também serve. |
-| 2 | **Servo MG996R 180°** (engrenagem metálica) | 1 | ✅ **já possui** | O [suporte do motor](../hardware/3d/README.md) foi desenhado para ele (54 mm entre as abas). Torque de ~10 kgf·cm: não trava com ração seca. **Compre o de 180°, não o "360°"**: o firmware posiciona o servo por ângulo. |
-| 3 | **Sensor ultrassônico HC-SR04** | 1 | R$ 8 – 14 | Opcional: mede o nível de ração no tubo e avisa quando está acabando. Se não quiser usar, desligue `ALIM_SENSOR_NIVEL` no menuconfig. |
-| 4 | **Módulo DHT11** (3 pinos, com resistor) | 1 | R$ 10 – 15 (estimado) | Temperatura e umidade dentro do reservatório. |
-| 5 | **Sensor IR de obstáculo** (FC-51 ou "bloqueio de luz") | 1 | R$ 5 – 10 (estimado) | Confirma que a ração caiu, como o sensor de saída do PETLIBRO. |
-| 6 | **Módulo buzzer ativo** | 1 | R$ 4 – 8 (estimado) | Bipa para chamar o pet e avisa erro. |
-| 7 | **LED RGB 5 mm catodo comum** + 3 resistores 220 Ω | 1 | R$ 2 – 5 (estimado) | Status (configurando, online, servindo, alarme). |
-| 8 | **Botão táctil 12 mm** (ou de painel) | 1 | R$ 2 – 5 (estimado) | Alimentar na hora e apagar o Wi-Fi. |
-| 9 | **Fonte 5 V 3 A** (plug P4 ou USB-C) | 1 | ✅ **já possui** | Alimenta ESP32 e servo. 2 A é o mínimo; 3 A dá folga para o pico do servo. |
-| 10 | Conector P4 fêmea (ou módulo USB-C de alimentação) | 1 | R$ 3 – 8 (estimado) | Entrada da fonte. |
-| 11 | Capacitor eletrolítico **1000 µF / 10 V** ou mais | 1 | R$ 2 – 4 (estimado) | Segura o pico do servo e evita a ESP reiniciar. |
-| 12 | Resistores **1 kΩ** e **2 kΩ** | 1 de cada | R$ 1 (estimado) | Divisor do ECHO (5 V → 3,3 V). |
-| 13 | Placa perfurada 5×7 cm + barras de pinos macho/fêmea | 1 | R$ 8 – 15 (estimado) | Montagem fixa, sem protoboard dentro do alimentador. |
-| 14 | Jumpers fêmea-fêmea e fio 22 AWG | 1 kit | R$ 10 – 15 (estimado) | Ligações. |
-| 15 | Cabo USB-C **de dados** | 1 | geralmente já tem | Para gravar o firmware. |
+| U1 | **ESP32-S3-DevKitC-1 N16R8** (USB-C) | 1 | acervo | Wi-Fi 2,4 GHz + Bluetooth 5 (LE), dois núcleos de 240 MHz, 16 MB de flash e 8 MB de PSRAM. Compatível com ESP-IDF. |
+| M1 | **Servo MG996R 180°** (engrenagem metálica) | 1 | acervo | O [suporte do motor](../hardware/3d/README.md) foi desenhado para ele (54 mm entre as abas). **180°, não "360°"**: o firmware posiciona o servo por ângulo. |
+| U2, U3 | **Módulo sensor de chama** (receptor IR + LM393, saídas A0/D0) | 2 | rateio | Um fica **na saída da ração** e conta os grãos que passam (confirma que a ração caiu). O outro fica **virado para fora** como alarme de fogo. |
+| D1 | **LED RGB 5 mm catodo comum** | 1 | rateio | Status (configurando, online, servindo, alarme). |
+| R1–R3 | Resistor **220 Ω** 1/4 W | 3 | acervo | Um por cor do LED. |
+| C1 | Capacitor eletrolítico **1000 µF / 16 V** | 1 | rateio | Segura o pico do servo e evita a ESP reiniciar. |
+| BZ1 | **Buzzer ativo 3,3 V** | 1 | rateio | Bipa para chamar o pet e avisa erro e chama. Ligado direto no GPIO 16. |
+| SW1 | **Chave táctil 12 × 12 mm** | 1 | rateio | Alimentar na hora (toque) e apagar o Wi-Fi (5 s). |
+| — | **Fonte 5 V / 5 A**, plugue P4 5,5 mm | 1 | acervo | Alimenta ESP32 e servo, com folga para o pico do servo. |
+| J1 | Conector **P4 fêmea com borne** | 1 | acervo | Entrada da fonte na placa. |
+| — | **Placa perfurada 7 × 9 cm** + barras de pinos macho e fêmea | 1 | acervo | Montagem fixa, sem protoboard dentro do alimentador. |
+| — | Jumpers, fio de silicone 20 AWG, cabo USB-A/USB-C | — | acervo | Ligações e gravação do firmware. |
 
-**Subtotal da eletrônica a comprar: ~R$ 55 – 100** (sem ESP32-S3, servo e fonte, que já temos)
+O HC-SR04 (nível) e o DHT11 (temperatura e umidade) **saíram do projeto**: não fazem parte das peças da equipe. O firmware continua sabendo usá-los, mas eles vêm desligados no `menuconfig` (`ALIM_SENSOR_NIVEL` e `ALIM_DHT11`).
+
+### Rateio da compra
+
+Itens da nota usados no Lulu que não estavam no acervo. As outras peças da mesma compra foram reposição do que a equipe já tinha e não entram na conta.
+
+| Item comprado | Embalagem | Preço |
+|---|---|---|
+| Buzzer ativo 3,3 V | 5 unidades | R$ 18,90 |
+| Capacitor eletrolítico 1000 µF / 16 V | 20 unidades | R$ 20,00 |
+| Chave táctil 12 × 12 mm | kit | R$ 19,99 |
+| Módulo sensor de chama | 2 unidades | R$ 17,99 |
+| LED RGB 5 mm catodo comum | 10 unidades | R$ 22,48 |
+| **Total** | | **R$ 99,36** |
+| **Por integrante (÷ 4)** | | **R$ 24,84** |
 
 ## Estrutura
 
@@ -39,9 +52,10 @@ Tudo pensado para comprar no Brasil, em lojas de eletrônica (Curto Circuito, El
 
 **Subtotal da estrutura: ~R$ 65 – 140**
 
-## Total a comprar: **R$ 120 – 240**
+## Total
 
-ESP32-S3, servo MG996R e fonte 5 V já estão com a equipe e não entram na conta. O valor maior inclui cola e tinta, que talvez já tenham também.
+- **Eletrônica**: R$ 99,36 já gastos (R$ 24,84 por integrante). O resto saiu do acervo.
+- **Estrutura**: ainda a comprar, **~R$ 65 – 140** (estimativa acima).
 
 ## Ferramentas
 
@@ -51,7 +65,6 @@ Ferro de solda e estanho, mini retífica (ou serra copo de 25–35 mm) para abri
 
 - ESP32-S3 N16R8: [Curto Circuito](https://curtocircuito.com.br/placa-devkitc-1-esp32-s3-n16r8.html) (R$ 94,30 na promoção), [SmartKits](https://www.smartkits.com.br/placa-esp32-s3-devkitc-n16r8-com-conector-ipex) (R$ 85,41 à vista), [Mercado Livre](https://www.mercadolivre.com.br/placa-devkitc-1-esp32-s3-n16r8-16mb-flash-8mb-psram-wifi-tipo-c-duplo/p/MLB49198475), [Usina Info](https://www.usinainfo.com.br/esp32/esp32-s3-devkitc-1-n16r8-16mb-flash-com-wifi-e-bluetooth-com-usb-c-9361.html)
 - Servo MG996R: [Curto Circuito](https://curtocircuito.com.br/servo-motor-mg996r.html), [Mercado Livre](https://lista.mercadolivre.com.br/servo-mg996r)
-- HC-SR04: [Eletrogate](https://www.eletrogate.com/modulo-sensor-de-distancia-ultrassonico-hc-sr04), [Baú da Eletrônica](https://www.baudaeletronica.com.br/produto/sensor-de-distancia-ultrassonico-hc-sr04.html), [Curto Circuito](https://curtocircuito.com.br/sensor-ultrassonico-hc-sr04.html)
 - Tubo PVC 100 mm: [Hidrauconex, barra de 6 m](https://www.hidrauconex.com/tubo-cano-pvc-esgoto-branco-de-100mm-barra-6-metros) (R$ 98,10 à vista, ~R$ 16/m), [Mercado Livre](https://lista.mercadolivre.com.br/tubo-pvc-100-mm-esgoto)
 - Cap PVC 100 mm: [Hidrauconex](https://www.hidrauconex.com/cap-tampao-pvc-esgoto-de-100mm) (R$ 14,10), [Mercado Livre](https://lista.mercadolivre.com.br/tampao-cap-pvc-100-mm)
 
