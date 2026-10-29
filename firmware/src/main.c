@@ -1,10 +1,11 @@
 // Alimentador Automático de Pets — ESP32 + ESP-IDF (FreeRTOS)
 //
 // Tarefas:
-//   dosador    (prio 6) fila de refeições -> servo + sensor IR da saída
+//   dosador    (prio 6) fila de refeições -> servo + sensor da saída
 //   agenda     (prio 5) confere os horários a cada segundo
 //   interface  (prio 4) LED RGB de status e botão
-//   sensores   (prio 3) nível (HC-SR04) e temperatura/umidade (DHT11)
+//   chama      (prio 4) alarme de fogo (sensor de chama)
+//   sensores   (prio 3) nível (HC-SR04) e temperatura/umidade (DHT11), se ligados
 //   + tarefas do ESP-IDF: Wi-Fi, HTTP, MQTT, DNS do portal, SNTP, mDNS
 
 #include "freertos/FreeRTOS.h"

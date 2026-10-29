@@ -13,12 +13,35 @@
 #define MAX_PORCOES 10
 #define TAM_HISTORICO 10
 
+// Opções bool desligadas no menuconfig não são definidas no sdkconfig.h.
+#ifdef CONFIG_ALIM_SENSOR_NIVEL
+#define TEM_NIVEL true
+#else
+#define TEM_NIVEL false
+#endif
+#ifdef CONFIG_ALIM_DHT11
+#define TEM_DHT11 true
+#else
+#define TEM_DHT11 false
+#endif
+#ifdef CONFIG_ALIM_SENSOR_SAIDA
+#define TEM_SAIDA true
+#else
+#define TEM_SAIDA false
+#endif
+#ifdef CONFIG_ALIM_SENSOR_CHAMA
+#define TEM_CHAMA true
+#else
+#define TEM_CHAMA false
+#endif
+
 typedef enum { ORIGEM_APP, ORIGEM_AGENDA, ORIGEM_BOTAO } origem_t;
 
 typedef enum {
   ALARME_NENHUM,
   ALARME_RACAO_BAIXA, // ultrassom: reservatório abaixo do limite
-  ALARME_SEM_SAIDA,   // sensor IR: o servo girou mas nada caiu (vazio ou travado)
+  ALARME_SEM_SAIDA,   // sensor da saída: o servo girou mas nada caiu (vazio ou travado)
+  ALARME_CHAMA,       // sensor de chama: tem prioridade sobre os outros
 } alarme_t;
 
 typedef enum { REDE_CONFIGURACAO, REDE_CONECTANDO, REDE_WIFI, REDE_ONLINE } status_rede_t;
