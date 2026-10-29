@@ -48,14 +48,14 @@ Levantado da configuração aberta [`.common.plaf108.yaml`](https://github.com/t
 | Sistema | firmware proprietário (os projetos abertos usam ESPHome) | ESP-IDF 5.3 + FreeRTOS |
 | Reservatório | 2 L | tubo PVC 100 mm × 300 mm (~1 L acima da rampa; cresce com um tubo mais longo) |
 | Dosagem | motor DC + rotor, conta 1/4 de volta por porção | servo MG996R abre/fecha uma passagem por porção |
-| Confirma que a ração saiu | sensor IR na saída | sensor IR de obstáculo na saída (FC-51) |
-| Nível de ração | alerta de ração baixa | HC-SR04 mede a altura da ração (% no app) |
-| Ambiente | não tem | DHT11 mede temperatura e umidade no tubo |
+| Confirma que a ração saiu | sensor IR na saída | sensor de chama (receptor IR) na saída, contando os grãos |
+| Nível de ração | alerta de ração baixa | não tem: o app avisa quando o servo abre e nada cai |
+| Segurança | não tem | segundo sensor de chama como alarme de fogo |
 | Alarme | LED vermelho + notificação | LED RGB, buzzer e notificação no app |
 | Agenda | até 10 refeições | até 8 refeições com porções próprias |
 | App | app PETLIBRO (nuvem do fabricante) | app web: rede local (HTTP) + internet (MQTT/TLS) |
 | Configuração do Wi-Fi | pelo app PETLIBRO | portal cativo: rede `Alimentador-XXXX`, sem instalar app |
-| Energia | fonte + bateria de 5200 mAh | fonte 5 V 3 A (sem bateria nesta versão) |
+| Energia | fonte + bateria de 5200 mAh | fonte 5 V 5 A (sem bateria nesta versão) |
 
 ## O que fica simplificado
 

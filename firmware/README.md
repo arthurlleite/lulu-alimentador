@@ -45,13 +45,13 @@ Para trocar de Wi-Fi: segure o botão por **5 segundos** (ou o BOOT da placa), o
 | Função | ESP32-S3 | ESP32 clássica | Opção no menuconfig |
 |---|---|---|---|
 | Servo (sinal) | GPIO 4 | GPIO 18 | `ALIM_GPIO_SERVO` |
-| HC-SR04 TRIG | GPIO 5 | GPIO 25 | `ALIM_GPIO_TRIG` |
-| HC-SR04 ECHO (**divisor 1 kΩ / 2 kΩ**) | GPIO 6 | GPIO 34 | `ALIM_GPIO_ECHO` |
-| DHT11 DATA | GPIO 7 | GPIO 4 | `ALIM_GPIO_DHT` |
-| Sensor IR da saída | GPIO 9 | GPIO 32 | `ALIM_GPIO_SAIDA` |
+| Sensor de chama da saída (D0) | GPIO 9 | GPIO 32 | `ALIM_GPIO_SAIDA` |
+| Sensor de chama do alarme (D0) | GPIO 10 | GPIO 33 | `ALIM_GPIO_CHAMA` |
 | Botão (para GND) | GPIO 15 | GPIO 27 | `ALIM_GPIO_BOTAO` |
 | Buzzer ativo | GPIO 16 | GPIO 26 | `ALIM_GPIO_BUZZER` |
 | LED RGB R / G / B (220 Ω cada) | GPIO 17 / 18 / 8 | GPIO 21 / 22 / 23 | `ALIM_GPIO_LED_R/G/B` |
+
+O HC-SR04 (nível) e o DHT11 (temperatura e umidade) não fazem parte das peças da equipe e vêm **desligados** (`ALIM_SENSOR_NIVEL` e `ALIM_DHT11`). O código continua no firmware: ao ligar as opções, os pinos padrão são TRIG 5, ECHO 6 (com divisor 1 kΩ / 2 kΩ) e DHT 7 na S3. Com eles desligados, o app esconde os cartões de nível e de ambiente.
 
 Também ficam no `menuconfig` (menus **Alimentador - ...**): ângulos e tempos do servo, calibração, broker MQTT, fuso horário e nome na rede. O esquema completo está em [`hardware/eletronica`](../hardware/eletronica/README.md).
 
@@ -65,6 +65,7 @@ Também ficam no `menuconfig` (menus **Alimentador - ...**): ângulos e tempos d
 | verde | online |
 | magenta | servindo ração |
 | piscada vermelha | alarme: ração baixa ou o servo girou e nada caiu |
+| vermelho piscando rápido + bipes | chama detectada |
 
 ## Arquitetura
 
@@ -75,8 +76,8 @@ flowchart LR
     AG[agenda<br/>confere a cada 1 s] --> F[(fila de<br/>refeições)]
     IF[interface<br/>LED, buzzer, botão] --> F
     CMD[comandos<br/>JSON] --> F
-    F --> DOS[dosador<br/>servo + sensor IR]
-    SEN[sensores<br/>HC-SR04 + DHT11] --> EST[(estado<br/>RAM + NVS)]
+    F --> DOS[dosador<br/>servo + sensor da saída]
+    SEN[sensores<br/>chama; HC-SR04 e DHT11 opcionais] --> EST[(estado<br/>RAM + NVS)]
     DOS --> EST
     WEB[servidor_web<br/>HTTP :80] --> CMD
     MQ[nuvem_mqtt] --> CMD
@@ -91,9 +92,9 @@ flowchart LR
 |---|---|
 | [`main.c`](src/main.c) | inicia os módulos |
 | [`estado.c/h`](src/estado.c) | estado global protegido por mutex, NVS (configuração e Wi-Fi), JSON de status |
-| [`dosador.c/h`](src/dosador.c) | fila de refeições, servo por PWM (LEDC 14 bits, 50 Hz), sensor IR com interrupção |
+| [`dosador.c/h`](src/dosador.c) | fila de refeições, servo por PWM (LEDC 14 bits, 50 Hz), sensor da saída com interrupção |
 | [`agenda.c/h`](src/agenda.c) | até 8 horários por dia, cada um com sua porção |
-| [`sensores.c/h`](src/sensores.c) | HC-SR04 (mediana de 5 leituras) e DHT11 (protocolo de um fio) |
+| [`sensores.c/h`](src/sensores.c) | alarme de chama (tarefa própria, 100 ms) e, se ligados, HC-SR04 (mediana de 5 leituras) e DHT11 (protocolo de um fio) |
 | [`interface.c/h`](src/interface.c) | LED RGB, buzzer e botão |
 | [`comandos.c/h`](src/comandos.c) | comandos JSON, iguais pelo MQTT e pelo HTTP |
 | [`rede_wifi.c/h`](src/rede_wifi.c) | Wi-Fi, portal de configuração, reconexão, SNTP e mDNS |
