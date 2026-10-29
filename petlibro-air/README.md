@@ -57,7 +57,7 @@ flowchart LR
 
 ## Delimitação da reprodução
 
-O **Lulu** reproduz parcialmente agendamento, dispensação e acompanhamento remoto. Usa ESP32-S3, servo, sensor ultrassônico, sensor óptico e DHT11. O [código existente](../firmware/README.md), o [pré-esquemático](../hardware/eletronica/README.md) e o [CAD](../hardware/3d/README.md) fundamentam a proposta. Sua presença no repositório não comprova calibração, integração ou desempenho em bancada. Os ensaios necessários estão na [proposta](proposta.md#plano-de-validacao).
+O **Lulu** reproduz parcialmente agendamento, dispensação e acompanhamento remoto. Usa ESP32-S3-DevKitC-1, servo MG996R, dois detectores de chama (um confirma a saída da ração, o outro é alarme de fogo), LED RGB, buzzer ativo e botão, já adquiridos pela equipe. O [código existente](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/firmware/README.md), o [esquemático](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/hardware/eletronica/README.md) e o [CAD](https://gitlab.com/Devv-Antonio1/lulu-alimentador/-/blob/main/hardware/3d/README.md) fundamentam a proposta. Sua presença no repositório não comprova calibração, integração ou desempenho em bancada. Os ensaios necessários estão na [proposta](proposta.md#plano-de-validacao).
 
 ## Método e limites das evidências
 
